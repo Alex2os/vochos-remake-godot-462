@@ -21,8 +21,11 @@ public partial class Game : Node2D
 	[Export] private NodePath _GameOverLabelPath;
 	[Export] private NodePath _GameOverStatsLabelPath;
 	[Export] private NodePath _AnimationPlayerPath;	
-
 	[Export] private NodePath _GameOverRestartLabelPath;
+	[Export] private NodePath _CarCrashPath;
+	[Export] private NodePath _CarStartingPath;
+	[Export] private NodePath _CoinSoundPath;
+	[Export] private NodePath _GameMusicPath;
 
 	private Marker2D _SpawningRoadMarker;
 	private Timer _SpawningRoadTimer;
@@ -44,6 +47,10 @@ public partial class Game : Node2D
 	private Label _GameOverRestartLabel;
 	private AnimationPlayer _AnimationPlayer;
 	private int _LeftCoins = 0;
+	private AudioStreamPlayer _CarCrash;
+	private AudioStreamPlayer _CarStarting;
+	private AudioStreamPlayer _CoinSound;
+	private AudioStreamPlayer _GameMusic;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -65,6 +72,10 @@ public partial class Game : Node2D
 		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
 		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
 		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
+		_CarCrash = GetNode<AudioStreamPlayer>(_CarCrashPath);
+		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
+		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
+		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -72,6 +83,8 @@ public partial class Game : Node2D
 		_CoinTimer.Timeout += SpawnCoin;
 
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
+		_CarStarting.Play();
+		_GameMusic.Play();
 
 	}
 
@@ -119,13 +132,15 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer.Stop();
 		_CoinTimer.Stop();
 
+		_GameMusic.Stop();
+
 		// final stats message: 
 		_GameOverStatsLabel.Text = "Total Score: " + _TotalScore.ToString() + "\n" + "Money Left: " + _LeftCoins + "\n" + "Total Money Earned: " + _TotalCoins;
 		// change opacity of text to show the game over and stats
 		_GameOverRestartLabel.Modulate = new Color(1, 1, 1, 1);
 		_AnimationPlayer.Play("restart animation"); // animation for the restart label to play it
 
-		_GameOverLabel.Modulate = new Color(1, 1, 1, 1); 
+		_GameOverLabel.Modulate = new Color(1, 1, 1, 1);
 		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
 
 		// stop each process for all the movable objects
@@ -145,6 +160,7 @@ public partial class Game : Node2D
 
 		// stop process for player
 		_Player.SetProcess(false);
+		_CarCrash.Play(); // car crashing sound
 
 	}
 
@@ -161,6 +177,7 @@ public partial class Game : Node2D
 		_TotalCoins++; // total coins are the coins obtained in general in all of the game
 		_LeftCoins++; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
+		_CoinSound.Play();
 	}
 
 	private void SpawnCoin()
@@ -179,7 +196,7 @@ public partial class Game : Node2D
 		_GameOver = false;
 
 		// color function/struct only accepts values from 0 to 1.
-		_GameOverRestartLabel.Modulate = new Color(0, 0, 0 ,0);
+		_GameOverRestartLabel.Modulate = new Color(0, 0, 0, 0);
 		_AnimationPlayer.Stop(); // stop the restart game animation
 		_GameOverLabel.Modulate = new Color(0, 0, 0, 0); // change opacity of text to quit the game over and stats
 		_GameOverStatsLabel.Modulate = new Color(0, 0, 0, 0);
@@ -205,8 +222,10 @@ public partial class Game : Node2D
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
-		
+
 		SpawnRoad();
+		_CarStarting.Play();
+		_GameMusic.Play();
 
 	}
 }
