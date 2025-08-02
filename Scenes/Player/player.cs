@@ -21,20 +21,35 @@ public partial class player : Area2D
 	{
 
 		// player movement
-		if (Input.IsActionPressed("left")) Position -= new Vector2(_MovingXAxis * (float)delta, 0);
+		if (Input.IsActionPressed("left"))
+		{
+			if (Position.X <= 150) ; 
+			else Position -= new Vector2(_MovingXAxis * (float)delta, 0);
+		}
 
-		if (Input.IsActionPressed("right")) Position += new Vector2(_MovingXAxis * (float)delta, 0);
+		if (Input.IsActionPressed("right"))
+		{
+			if (Position.X >= 850) ;
+			else Position += new Vector2(_MovingXAxis * (float)delta, 0);
+		}
 
-		if (Input.IsActionPressed("up")) Position -= new Vector2(0, _MovingYAxis * (float)delta);
-
-		if (Input.IsActionPressed("down")) Position += new Vector2(0, _MovingYAxis * (float)delta);
+		if (Input.IsActionPressed("up"))
+		{
+			if (Position.Y <= 50) ;
+			else Position -= new Vector2(0, _MovingYAxis * (float)delta);
+		}
+		if (Input.IsActionPressed("down"))
+		{
+			if (Position.Y >= 650) ;
+			else Position += new Vector2(0, _MovingYAxis * (float)delta);
+		}
 
 	}
 
 	private void OnAreaEntered(Area2D node)
 	{
-
-		EmitSignal(SignalName.PlayerHitEnemy);
+		if (node is Coin) ; // if it's a coin, then don't send the signal that the player hit an enemy.
+		else EmitSignal(SignalName.PlayerHitEnemy);
 
 	}
 }

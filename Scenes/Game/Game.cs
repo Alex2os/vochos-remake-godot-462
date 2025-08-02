@@ -5,6 +5,7 @@ public partial class Game : Node2D
 {
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
+	[Export] private PackedScene _CoinScene;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
 	[Export] private NodePath _SpawningCarEnemyTimerPath;
@@ -13,8 +14,15 @@ public partial class Game : Node2D
 	[Export] private NodePath _EnemyMarkerRightPath;
 	[Export] private NodePath _EnemyMarkerLeftPath;
 	[Export] private NodePath _PlayerPath;
-
 	[Export] private NodePath _ScoreLabelPath;
+	[Export] private NodePath _CoinContainerPath;
+	[Export] private NodePath _CoinTimerPath;
+	[Export] private NodePath _CoinLabelPath;
+	[Export] private NodePath _GameOverLabelPath;
+	[Export] private NodePath _GameOverStatsLabelPath;
+	[Export] private NodePath _AnimationPlayerPath;	
+
+	[Export] private NodePath _GameOverRestartLabelPath;
 
 	private Marker2D _SpawningRoadMarker;
 	private Timer _SpawningRoadTimer;
@@ -26,6 +34,16 @@ public partial class Game : Node2D
 	private player _Player;
 	private Label _ScoreLabel;
 	private int _TotalScore = 0; // score for the game
+	private int _TotalCoins = 0;// coins for the game
+	private Node2D _CoinContainer;
+	private Timer _CoinTimer;
+	private Label _CoinLabel;
+	private bool _GameOver = false;
+	private Label _GameOverLabel;
+	private Label _GameOverStatsLabel;
+	private Label _GameOverRestartLabel;
+	private AnimationPlayer _AnimationPlayer;
+	private int _LeftCoins = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -40,10 +58,18 @@ public partial class Game : Node2D
 		_EnemyMarkerRight = GetNode<Marker2D>(_EnemyMarkerRightPath);
 		_Player = GetNode<player>(_PlayerPath);
 		_ScoreLabel = GetNode<Label>(_ScoreLabelPath);
+		_CoinTimer = GetNode<Timer>(_CoinTimerPath);
+		_CoinContainer = GetNode<Node2D>(_CoinContainerPath);
+		_CoinLabel = GetNode<Label>(_CoinLabelPath);
+		_GameOverLabel = GetNode<Label>(_GameOverLabelPath);
+		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
+		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
+		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
 		_Player.PlayerHitEnemy += GameOver;
+		_CoinTimer.Timeout += SpawnCoin;
 
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 
@@ -52,6 +78,15 @@ public partial class Game : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		// restarting condition check and function
+		if (_GameOver && Input.IsActionJustPressed("restart"))
+		{
+
+			GD.Print("restarting...");
+			RestartGame();
+
+		}
+
 	}
 
 	private void SpawnRoad()
@@ -66,16 +101,50 @@ public partial class Game : Node2D
 	{
 		CarEnemy enemy = (CarEnemy)_CarEnemyScene.Instantiate();
 		_EnemyContainer.AddChild(enemy);
-		float x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X);
-		float y_position = _EnemyMarkerRight.Position.Y;
-		enemy.Position = new Vector2(x_position, y_position);
+		float enemy_x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X);
+		float enemy_y_position = _EnemyMarkerRight.Position.Y;
+		enemy.Position = new Vector2(enemy_x_position, enemy_y_position);
 		enemy.EnemyDestroyed += OnEnemyDestroyed;
 	}
 
 	private void GameOver()
 	{
+		// this function stops all the processes to show the game over screen
 
 		GD.Print("game over!");
+		_GameOver = true;
+
+		// stop timers
+		_SpawningRoadTimer.Stop();
+		_SpawningCarEnemyTimer.Stop();
+		_CoinTimer.Stop();
+
+		// final stats message: 
+		_GameOverStatsLabel.Text = "Total Score: " + _TotalScore.ToString() + "\n" + "Money Left: " + _LeftCoins + "\n" + "Total Money Earned: " + _TotalCoins;
+		// change opacity of text to show the game over and stats
+		_GameOverRestartLabel.Modulate = new Color(1, 1, 1, 1);
+		_AnimationPlayer.Play("restart animation"); // animation for the restart label to play it
+
+		_GameOverLabel.Modulate = new Color(1, 1, 1, 1); 
+		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
+
+		// stop each process for all the movable objects
+		foreach (Node road in _RoadContainer.GetChildren())
+		{
+			road.SetProcess(false);
+		}
+		foreach (Node coin in _CoinContainer.GetChildren())
+		{
+			coin.SetProcess(false);
+		}
+
+		foreach (Node enemy in _EnemyContainer.GetChildren())
+		{
+			enemy.SetProcess(false);
+		}
+
+		// stop process for player
+		_Player.SetProcess(false);
 
 	}
 
@@ -84,6 +153,60 @@ public partial class Game : Node2D
 
 		_TotalScore++; // every time a enemy dies/gets destroyed, a point gets added to the total score
 		_ScoreLabel.Text = _TotalScore.ToString();
+
+	}
+
+	private void OnCoinHitsPlayer()
+	{
+		_TotalCoins++; // total coins are the coins obtained in general in all of the game
+		_LeftCoins++; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
+		_CoinLabel.Text = "$" + _LeftCoins.ToString();
+	}
+
+	private void SpawnCoin()
+	{
+		Coin coin = (Coin)_CoinScene.Instantiate();
+		_CoinContainer.AddChild(coin);
+		float coin_x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X); // using the same markers as the enemies.
+		float coin_y_position = _EnemyMarkerRight.Position.Y;
+		coin.Position = new Vector2(coin_x_position, coin_y_position);
+		coin.CoinHitsPlayer += OnCoinHitsPlayer;
+	}
+
+	private void RestartGame()
+	{
+
+		_GameOver = false;
+
+		// color function/struct only accepts values from 0 to 1.
+		_GameOverRestartLabel.Modulate = new Color(0, 0, 0 ,0);
+		_AnimationPlayer.Stop(); // stop the restart game animation
+		_GameOverLabel.Modulate = new Color(0, 0, 0, 0); // change opacity of text to quit the game over and stats
+		_GameOverStatsLabel.Modulate = new Color(0, 0, 0, 0);
+
+		_SpawningRoadTimer.Start();
+		_SpawningCarEnemyTimer.Start();
+		_CoinTimer.Start();
+
+
+		foreach (Node road in _RoadContainer.GetChildren())
+		{
+			road.QueueFree();
+		}
+		foreach (Node coin in _CoinContainer.GetChildren())
+		{
+			coin.QueueFree();
+		}
+
+		foreach (Node enemy in _EnemyContainer.GetChildren())
+		{
+			enemy.QueueFree();
+		}
+
+		_Player.SetProcess(true);
+		_Player.Position = new Vector2(500, 530);
+		
+		SpawnRoad();
 
 	}
 }
