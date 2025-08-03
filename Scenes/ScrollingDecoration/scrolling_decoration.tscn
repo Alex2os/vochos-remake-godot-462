@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://fu2iutxllexd"]
+
+[ext_resource type="Script" uid="uid://cpttpyc8alcai" path="res://Scenes/ScrollingDecoration/ScrollingDecoration.cs" id="1_367k6"]
+[ext_resource type="Texture2D" uid="uid://da4v1oy12wnnk" path="res://assets/road/scrolling decoration 1.png" id="1_kteh6"]
+
+[node name="ScrollingDecoration" type="Node2D"]
+script = ExtResource("1_367k6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_kteh6")

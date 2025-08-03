@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://qdh73vj2guf7"]
+[gd_scene load_steps=15 format=3 uid="uid://qdh73vj2guf7"]
 
 [ext_resource type="PackedScene" uid="uid://tpxiid8lmksk" path="res://Scenes/Player/player.tscn" id="1_mv0hc"]
 [ext_resource type="Script" uid="uid://npn0ytnyrjeb" path="res://Scenes/Game/Game.cs" id="1_qikps"]
@@ -6,10 +6,26 @@
 [ext_resource type="PackedScene" uid="uid://5a60j6m0dic3" path="res://Scenes/Coin/coin.tscn" id="4_flgk0"]
 [ext_resource type="PackedScene" uid="uid://c6ohjdcr3ic4v" path="res://Scenes/CarEnemy/car_enemy.tscn" id="4_i1e5p"]
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="5_ciybh"]
+[ext_resource type="PackedScene" uid="uid://fu2iutxllexd" path="res://Scenes/ScrollingDecoration/scrolling_decoration.tscn" id="5_qtymf"]
 [ext_resource type="AudioStream" uid="uid://7d7g8a002n0x" path="res://assets/sound effects/car crash.mp3" id="7_vifcx"]
 [ext_resource type="AudioStream" uid="uid://b1jo4bs2srhcu" path="res://assets/sound effects/car starting.mp3" id="8_xfil1"]
 [ext_resource type="AudioStream" uid="uid://c7cedjeffbdse" path="res://assets/sound effects/game music.mp3" id="9_huoen"]
 [ext_resource type="AudioStream" uid="uid://l87uikl7x3v3" path="res://assets/sound effects/coin sound.mp3" id="10_7jvlm"]
+
+[sub_resource type="Animation" id="Animation_vifcx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOverRestartLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(315, 600)]
+}
 
 [sub_resource type="Animation" id="Animation_flgk0"]
 resource_name = "restart animation"
@@ -28,21 +44,6 @@ tracks/0/keys = {
 "values": [Vector2(315, 550), Vector2(315, 500), Vector2(315, 550)]
 }
 
-[sub_resource type="Animation" id="Animation_vifcx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("GameOverRestartLabel:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(315, 600)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vifcx"]
 _data = {
 &"RESET": SubResource("Animation_vifcx"),
@@ -54,6 +55,7 @@ script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
 _CarEnemyScene = ExtResource("4_i1e5p")
 _CoinScene = ExtResource("4_flgk0")
+_RoadDecorationScene = ExtResource("5_qtymf")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")
 _SpawningCarEnemyTimerPath = NodePath("EnemyTimer")
@@ -156,7 +158,7 @@ theme_override_constants/shadow_offset_y = 0
 theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("5_ciybh")
 theme_override_font_sizes/font_size = 100
-text = "Game over!
+text = "Game Over!
 "
 metadata/_edit_lock_ = true
 

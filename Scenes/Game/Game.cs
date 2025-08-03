@@ -6,6 +6,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
+	[Export] private PackedScene _RoadDecorationScene;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
 	[Export] private NodePath _SpawningCarEnemyTimerPath;
@@ -20,7 +21,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinLabelPath;
 	[Export] private NodePath _GameOverLabelPath;
 	[Export] private NodePath _GameOverStatsLabelPath;
-	[Export] private NodePath _AnimationPlayerPath;	
+	[Export] private NodePath _AnimationPlayerPath;
 	[Export] private NodePath _GameOverRestartLabelPath;
 	[Export] private NodePath _CarCrashPath;
 	[Export] private NodePath _CarStartingPath;
@@ -82,9 +83,7 @@ public partial class Game : Node2D
 		_Player.PlayerHitEnemy += GameOver;
 		_CoinTimer.Timeout += SpawnCoin;
 
-		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
-		_CarStarting.Play();
-		_GameMusic.Play();
+		GameStarted();
 
 	}
 
@@ -108,6 +107,8 @@ public partial class Game : Node2D
 		Road road = (Road)_RoadScene.Instantiate();
 		_RoadContainer.AddChild(road);
 		road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y);
+
+		SpawnDecoration();
 	}
 
 	private void SpawnEnemy()
@@ -195,6 +196,10 @@ public partial class Game : Node2D
 
 		_GameOver = false;
 
+		// cleaning the labels so they don't show the prior score
+		_CoinLabel.Text = "$0";
+		_ScoreLabel.Text = "0";
+
 		// color function/struct only accepts values from 0 to 1.
 		_GameOverRestartLabel.Modulate = new Color(0, 0, 0, 0);
 		_AnimationPlayer.Stop(); // stop the restart game animation
@@ -222,10 +227,32 @@ public partial class Game : Node2D
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
+		GameStarted();
 
-		SpawnRoad();
+	}
+
+	void GameStarted()
+	{
+		_TotalCoins = 0;
+		_LeftCoins = 0;
+		_TotalScore = 0;
+
+		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 		_CarStarting.Play();
 		_GameMusic.Play();
 
+	}
+
+	private void SpawnDecoration()
+	{
+		// left part decoration
+		ScrollingDecoration decoration = (ScrollingDecoration)_RoadDecorationScene.Instantiate();
+		_RoadContainer.AddChild(decoration);
+		decoration.Position = new Vector2(50, _SpawningRoadMarker.Position.Y);
+
+		// right part decoration
+		ScrollingDecoration decoration2 = (ScrollingDecoration)_RoadDecorationScene.Instantiate();
+		_RoadContainer.AddChild(decoration2);
+		decoration2.Position = new Vector2(950, _SpawningRoadMarker.Position.Y);
 	}
 }
