@@ -24,9 +24,11 @@ _data = {
 &"speeding game": SubResource("Animation_d0ldw")
 }
 
-[node name="SpeedingGame" type="Node2D"]
+[node name="SpeedingGame" type="Node2D" node_paths=PackedStringArray("_SpeedingGameTimer", "_AnimationPlayer")]
 z_index = 3
 script = ExtResource("1_sc3or")
+_SpeedingGameTimer = NodePath("SpeedingGameTimer")
+_AnimationPlayer = NodePath("AnimationPlayer")
 
 [node name="SpeedingGameLabel" type="Label" parent="."]
 z_index = 3

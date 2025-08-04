@@ -11,15 +11,18 @@ script = ExtResource("1_2gox3")
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("1_feosf")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(-450, 0)
 scale = Vector2(4, 4)
 texture = ExtResource("3_1lxk5")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(450, 0)
 scale = Vector2(4, 4)
 texture = ExtResource("3_1lxk5")
+metadata/_edit_lock_ = true

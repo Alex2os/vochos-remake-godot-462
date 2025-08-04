@@ -1,14 +1,15 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6ohjdcr3ic4v"]
 
 [ext_resource type="Script" uid="uid://dchpr1jibmskf" path="res://Scenes/CarEnemy/CarEnemy.cs" id="1_06auc"]
-[ext_resource type="Texture2D" uid="uid://fpy3xahy5dma" path="res://assets/cars/carenemy.png" id="1_yrjx6"]
+[ext_resource type="Texture2D" uid="uid://fpy3xahy5dma" path="res://assets/cars/enemy1.png" id="1_yrjx6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06auc"]
 size = Vector2(18, 23)
 
-[node name="CarEnemy" type="Area2D"]
+[node name="CarEnemy" type="Area2D" node_paths=PackedStringArray("_Sprite2D")]
 z_index = 1
 script = ExtResource("1_06auc")
+_Sprite2D = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

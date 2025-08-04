@@ -3,12 +3,14 @@ using System;
 
 public partial class CarEnemy : Area2D
 {
-	[Export] private int _CarEnemySpeed = 200;
-
+	[Export] public int _CarEnemySpeed = 200;
+	[Export] private Sprite2D _Sprite2D;
 	[Signal] public delegate void EnemyDestroyedEventHandler();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fpy3xahy5dma"
-path="res://.godot/imported/carenemy.png-c93d02c1afffcf39e63f8f35f1a5dd88.ctex"
+uid="uid://b2vdn7u6ca6yc"
+path="res://.godot/imported/enemy6.png-2b6ecdb2e33a1d2d4d2a702d91a51968.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cars/carenemy.png"
-dest_files=["res://.godot/imported/carenemy.png-c93d02c1afffcf39e63f8f35f1a5dd88.ctex"]
+source_file="res://assets/cars/enemy6.png"
+dest_files=["res://.godot/imported/enemy6.png-2b6ecdb2e33a1d2d4d2a702d91a51968.ctex"]
 
 [params]
 

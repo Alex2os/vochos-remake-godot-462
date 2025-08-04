@@ -6,6 +6,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
+	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
 	[Export] private NodePath _SpawningCarEnemyTimerPath;
@@ -36,8 +37,6 @@ public partial class Game : Node2D
 	private Marker2D _EnemyMarkerLeft;
 	private player _Player;
 	private Label _ScoreLabel;
-	private int _TotalScore = 0; // score for the game
-	private int _TotalCoins = 0;// coins for the game
 	private Node2D _CoinContainer;
 	private Timer _CoinTimer;
 	private Label _CoinLabel;
@@ -46,11 +45,15 @@ public partial class Game : Node2D
 	private Label _GameOverStatsLabel;
 	private Label _GameOverRestartLabel;
 	private AnimationPlayer _AnimationPlayer;
-	private int _LeftCoins = 0;
 	private AudioStreamPlayer _CarCrash;
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _GameMusic;
+	private SpeedingGame _SpeedingGame;
+	private int _EnemySpeed = 200; // default enemy speed
+	private int _TotalScore = 0; // score for the game
+	private int _TotalCoins = 0;// total coins that the player has collected throughout the game
+	private int _LeftCoins = 0; // coins that the user actually has. this value can be modified if the user buys things in the (future) shop
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -76,11 +79,13 @@ public partial class Game : Node2D
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
 		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
+		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
 		_Player.PlayerHitEnemy += GameOver;
 		_CoinTimer.Timeout += SpawnCoin;
+		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 
 		GameStarted();
 
@@ -112,6 +117,7 @@ public partial class Game : Node2D
 	{
 		CarEnemy enemy = (CarEnemy)_CarEnemyScene.Instantiate();
 		_EnemyContainer.AddChild(enemy);
+		enemy._CarEnemySpeed = _EnemySpeed; // adjust the speed for the new enemy objects that are being generated
 		float enemy_x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X);
 		float enemy_y_position = _EnemyMarkerRight.Position.Y;
 		enemy.Position = new Vector2(enemy_x_position, enemy_y_position);
@@ -142,18 +148,21 @@ public partial class Game : Node2D
 		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
 
 		// stop each process for all the movable objects
-		foreach (Node road in _RoadContainer.GetChildren())
-		{
-			road.SetProcess(false);
-		}
-		foreach (Node coin in _CoinContainer.GetChildren())
-		{
-			coin.SetProcess(false);
-		}
+		foreach (Node road in _RoadContainer.GetChildren()) road.SetProcess(false);
 
-		foreach (Node enemy in _EnemyContainer.GetChildren())
+		foreach (Node coin in _CoinContainer.GetChildren()) coin.SetProcess(false);
+
+		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.SetProcess(false);
+		// change the timer for the speeding game scene and stopping it in case it's active when the game over screen is presented
+		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
-			enemy.SetProcess(false);
+			if (speed is Timer timer)
+			{
+				timer.WaitTime = 10;
+				timer.Stop();
+			}
+
+			if (speed is AnimationPlayer anim) anim.Stop();
 		}
 
 		// stop process for player
@@ -192,6 +201,7 @@ public partial class Game : Node2D
 	{
 
 		_GameOver = false;
+		 _EnemySpeed = 200; // reset enemy speed
 
 		// cleaning the labels so they don't show the prior score
 		_CoinLabel.Text = "$0";
@@ -208,19 +218,13 @@ public partial class Game : Node2D
 		_CoinTimer.Start();
 
 
-		foreach (Node road in _RoadContainer.GetChildren())
-		{
-			road.QueueFree();
-		}
-		foreach (Node coin in _CoinContainer.GetChildren())
-		{
-			coin.QueueFree();
-		}
+		foreach (Node road in _RoadContainer.GetChildren()) road.QueueFree();
 
-		foreach (Node enemy in _EnemyContainer.GetChildren())
-		{
-			enemy.QueueFree();
-		}
+		foreach (Node coin in _CoinContainer.GetChildren()) coin.QueueFree();
+
+		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.QueueFree();
+
+		foreach (Node speed in _SpeedingGame.GetChildren()) if (speed is Timer timer) timer.Start();
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
@@ -238,5 +242,15 @@ public partial class Game : Node2D
 		_CarStarting.Play();
 		_GameMusic.Play();
 
+	}
+
+	private void OnSpeedingTheGame()
+	{
+		GD.Print("speeding the game!");
+
+		// increase the speeds for enemies.
+		_EnemySpeed += 30;
+		// adjust the new speed for all the existing enemy objects
+		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
 	}
 }
