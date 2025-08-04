@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bjilwqedu7kij"]
+[gd_scene load_steps=4 format=3 uid="uid://bjilwqedu7kij"]
 
 [ext_resource type="Script" uid="uid://bxfxo0up6dnue" path="res://Scenes/Road/Road.cs" id="1_2gox3"]
 [ext_resource type="Texture2D" uid="uid://dq4nbdmkt4677" path="res://assets/road/5 row road extended.png" id="1_feosf"]
+[ext_resource type="Texture2D" uid="uid://da4v1oy12wnnk" path="res://assets/road/scrolling decoration 1.png" id="3_1lxk5"]
 
 [node name="Road" type="Node2D"]
 script = ExtResource("1_2gox3")
@@ -10,3 +11,15 @@ script = ExtResource("1_2gox3")
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("1_feosf")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-450, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("3_1lxk5")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(450, 0)
+scale = Vector2(4, 4)
+texture = ExtResource("3_1lxk5")

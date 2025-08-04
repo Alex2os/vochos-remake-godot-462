@@ -6,7 +6,6 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
-	[Export] private PackedScene _RoadDecorationScene;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
 	[Export] private NodePath _SpawningCarEnemyTimerPath;
@@ -107,8 +106,6 @@ public partial class Game : Node2D
 		Road road = (Road)_RoadScene.Instantiate();
 		_RoadContainer.AddChild(road);
 		road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y);
-
-		SpawnDecoration();
 	}
 
 	private void SpawnEnemy()
@@ -241,18 +238,5 @@ public partial class Game : Node2D
 		_CarStarting.Play();
 		_GameMusic.Play();
 
-	}
-
-	private void SpawnDecoration()
-	{
-		// left part decoration
-		ScrollingDecoration decoration = (ScrollingDecoration)_RoadDecorationScene.Instantiate();
-		_RoadContainer.AddChild(decoration);
-		decoration.Position = new Vector2(50, _SpawningRoadMarker.Position.Y);
-
-		// right part decoration
-		ScrollingDecoration decoration2 = (ScrollingDecoration)_RoadDecorationScene.Instantiate();
-		_RoadContainer.AddChild(decoration2);
-		decoration2.Position = new Vector2(950, _SpawningRoadMarker.Position.Y);
 	}
 }
