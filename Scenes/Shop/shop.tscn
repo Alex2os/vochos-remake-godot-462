@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bki1v5suxdqjl"]
+
+[ext_resource type="Script" uid="uid://ljvpot13u3np" path="res://Scenes/Shop/Shop.cs" id="1_78vcx"]
+
+[node name="Shop" type="Node2D"]
+script = ExtResource("1_78vcx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

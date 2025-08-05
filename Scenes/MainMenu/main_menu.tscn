@@ -1,0 +1,177 @@
+[gd_scene load_steps=20 format=3 uid="uid://m3wero5w5cah"]
+
+[ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_uqdog"]
+[ext_resource type="Script" uid="uid://dke6r5m5fn25j" path="res://Scenes/MainMenu/MainMenu.cs" id="1_v763k"]
+[ext_resource type="PackedScene" uid="uid://qdh73vj2guf7" path="res://Scenes/Game/game.tscn" id="2_0qgbs"]
+[ext_resource type="AudioStream" uid="uid://de4jmeyn52rs1" path="res://assets/sound effects/main menu music.mp3" id="4_0qgbs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adu2g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l8wx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0qgbs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5jej"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r307"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qgdf6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omq0y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agesy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mdp32"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v763k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5buf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6c6cs"]
+
+[sub_resource type="Animation" id="Animation_qgdf6"]
+resource_name = "play button anim"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayButton:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ExitButton:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0qgbs"]
+_data = {
+&"play button anim": SubResource("Animation_qgdf6")
+}
+
+[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_PlayButton", "_ExitButton")]
+script = ExtResource("1_v763k")
+_PlayButton = NodePath("PlayButton")
+_ExitButton = NodePath("ExitButton")
+_GameScene = ExtResource("2_0qgbs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="PlayButton" type="Button" parent="."]
+z_index = 3
+texture_filter = 1
+offset_left = 425.0
+offset_top = 250.0
+offset_right = 575.0
+offset_bottom = 338.0
+rotation = -0.174533
+pivot_offset = Vector2(75, 40)
+theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qgdf6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_agesy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v763k")
+text = "Play"
+
+[node name="PlayButtonOutline" type="Label" parent="PlayButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+text = "Play"
+
+[node name="ExitButton" type="Button" parent="."]
+texture_filter = 1
+offset_left = 425.0
+offset_top = 450.0
+offset_right = 581.0
+offset_bottom = 538.0
+rotation = -0.174533
+pivot_offset = Vector2(75, 40)
+theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w5buf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6c6cs")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_agesy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_v763k")
+text = "Exit"
+
+[node name="ExitButtonOutline" type="Label" parent="ExitButton"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+text = "Exit"
+
+[node name="SpeedingGameLabel" type="Label" parent="."]
+z_index = 3
+texture_filter = 1
+offset_left = 125.0
+offset_top = 50.0
+offset_right = 881.0
+offset_bottom = 239.0
+scale = Vector2(1, 0.992188)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+text = "Welcome to Vocho's!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0qgbs")
+}
+autoplay = "play button anim"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_0qgbs")
+volume_db = -8.0
+autoplay = true
