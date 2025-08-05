@@ -19,6 +19,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinContainerPath;
 	[Export] private NodePath _CoinTimerPath;
 	[Export] private NodePath _CoinLabelPath;
+	[Export] private NodePath _MainMenuButtonPath;
 	[Export] private NodePath _GameOverLabelPath;
 	[Export] private NodePath _GameOverStatsLabelPath;
 	[Export] private NodePath _AnimationPlayerPath;
@@ -54,6 +55,8 @@ public partial class Game : Node2D
 	private int _TotalScore = 0; // score for the game
 	private int _TotalCoins = 0;// total coins that the player has collected throughout the game
 	private int _LeftCoins = 0; // coins that the user actually has. this value can be modified if the user buys things in the (future) shop
+	private Button _MainMenuButton;
+	private string _MainMenuScene = "res://Scenes/MainMenu/main_menu.tscn"; // should fix this later --> changing this to an export of type packedscene will cause trouble. so better to use this string as path to the scene.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -80,12 +83,14 @@ public partial class Game : Node2D
 		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
 		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
+		_MainMenuButton = GetNode<Button>(_MainMenuButtonPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
 		_Player.PlayerHitEnemy += GameOver;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
+		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 
 		GameStarted();
 
@@ -95,13 +100,7 @@ public partial class Game : Node2D
 	public override void _Process(double delta)
 	{
 		// restarting condition check and function
-		if (_GameOver && Input.IsActionJustPressed("restart"))
-		{
-
-			GD.Print("restarting...");
-			RestartGame();
-
-		}
+		if (_GameOver && Input.IsActionJustPressed("restart")) RestartGame();
 
 	}
 
@@ -143,9 +142,11 @@ public partial class Game : Node2D
 		// change opacity of text to show the game over and stats
 		_GameOverRestartLabel.Modulate = new Color(1, 1, 1, 1);
 		_AnimationPlayer.Play("restart animation"); // animation for the restart label to play it
-
 		_GameOverLabel.Modulate = new Color(1, 1, 1, 1);
 		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
+
+		// modulate for the main menu button
+		_MainMenuButton.Modulate = new Color(1, 1, 1, 1);
 
 		// stop each process for all the movable objects
 		foreach (Node road in _RoadContainer.GetChildren()) road.SetProcess(false);
@@ -201,7 +202,7 @@ public partial class Game : Node2D
 	{
 
 		_GameOver = false;
-		 _EnemySpeed = 200; // reset enemy speed
+		_EnemySpeed = 200; // reset enemy speed
 
 		// cleaning the labels so they don't show the prior score
 		_CoinLabel.Text = "$0";
@@ -212,6 +213,9 @@ public partial class Game : Node2D
 		_AnimationPlayer.Stop(); // stop the restart game animation
 		_GameOverLabel.Modulate = new Color(0, 0, 0, 0); // change opacity of text to quit the game over and stats
 		_GameOverStatsLabel.Modulate = new Color(0, 0, 0, 0);
+
+		// modulate for the mainmenu button
+		_MainMenuButton.Modulate = new Color(0, 0, 0, 0);
 
 		_SpawningRoadTimer.Start();
 		_SpawningCarEnemyTimer.Start();
@@ -252,5 +256,10 @@ public partial class Game : Node2D
 		_EnemySpeed += 30;
 		// adjust the new speed for all the existing enemy objects
 		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
+	}
+
+	private void OnMainMenuButtonPressed()
+	{
+		GetTree().ChangeSceneToFile(_MainMenuScene);
 	}
 }
