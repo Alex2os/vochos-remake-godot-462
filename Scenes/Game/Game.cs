@@ -6,6 +6,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
+	[Export] private NodePath _ShopScenePath;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -29,19 +30,17 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinSoundPath;
 	[Export] private NodePath _GameMusicPath;
 
-	private Marker2D _SpawningRoadMarker;
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
+	private Timer _CoinTimer;
 	private Node2D _EnemyContainer;
 	private Node2D _RoadContainer;
+	private Node2D _CoinContainer;
 	private Marker2D _EnemyMarkerRight;
 	private Marker2D _EnemyMarkerLeft;
-	private player _Player;
+	private Marker2D _SpawningRoadMarker;
 	private Label _ScoreLabel;
-	private Node2D _CoinContainer;
-	private Timer _CoinTimer;
 	private Label _CoinLabel;
-	private bool _GameOver = false;
 	private Label _GameOverLabel;
 	private Label _GameOverStatsLabel;
 	private Label _GameOverRestartLabel;
@@ -50,12 +49,16 @@ public partial class Game : Node2D
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _GameMusic;
+	private Button _MainMenuButton;
 	private SpeedingGame _SpeedingGame;
+	private Shop _ShopScene;
+	private player _Player;
 	private int _EnemySpeed = 200; // default enemy speed
 	private int _TotalScore = 0; // score for the game
 	private int _TotalCoins = 0;// total coins that the player has collected throughout the game
 	private int _LeftCoins = 0; // coins that the user actually has. this value can be modified if the user buys things in the (future) shop
-	private Button _MainMenuButton;
+	private bool _ShopActive;
+	private bool _GameOver = false;
 	private string _MainMenuScene = "res://Scenes/MainMenu/main_menu.tscn"; // should fix this later --> changing this to an export of type packedscene will cause trouble. so better to use this string as path to the scene.
 
 	// Called when the node enters the scene tree for the first time.
@@ -101,6 +104,9 @@ public partial class Game : Node2D
 	{
 		// restarting condition check and function
 		if (_GameOver && Input.IsActionJustPressed("restart")) RestartGame();
+
+		// going to shop if available
+		if (_ShopActive && Input.IsActionJustPressed("use shop")) ;
 
 	}
 

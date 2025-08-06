@@ -48,6 +48,42 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(639, 495), Vector2(639, 505), Vector2(639, 495)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InventoryPerk1:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(860, 375), Vector2(860, 385), Vector2(860, 375)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InventoryPerk2:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(860, 505), Vector2(860, 515), Vector2(860, 505)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("InventoryPerk3:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(860, 635), Vector2(860, 645), Vector2(860, 635)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dak6"]
 _data = {
@@ -390,9 +426,9 @@ libraries = {
 
 [node name="NotEnoughSpaceLabel" type="Label" parent="."]
 offset_left = 315.0
-offset_top = -99.9995
+offset_top = -100.0
 offset_right = 662.0
-offset_bottom = -54.9995
+offset_bottom = -55.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -620,15 +656,15 @@ texture = ExtResource("6_rjc2l")
 
 [node name="InventoryPerk1" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(860, 380)
+position = Vector2(860, 375)
 scale = Vector2(4, 4)
 
 [node name="InventoryPerk2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(860, 510)
+position = Vector2(860, 505)
 scale = Vector2(4, 4)
 
 [node name="InventoryPerk3" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(860, 640)
+position = Vector2(860, 635)
 scale = Vector2(4, 4)

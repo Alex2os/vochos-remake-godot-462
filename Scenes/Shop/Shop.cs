@@ -40,7 +40,7 @@ public partial class Shop : Node2D
 	[Export] private AnimationPlayer _NotEnoughAnimations;
 	[Export] private AudioStreamPlayer _RerollShopSound;
 	[Export] private AudioStreamPlayer _ClickButtonSound;
-	[Signal] public delegate void Perk1BoughtEventHandler(string _PerkName, int _PerkNumber);
+	[Signal] public delegate void InventoryUpdatedEventHandler(int perk1, int perk2, int perk3);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -109,6 +109,7 @@ public partial class Shop : Node2D
 	{
 		// logic for when the shop is left
 		GD.Print("leaving shop!");
+		EmitSignal(SignalName.InventoryUpdated, _PlayerInventory[0], _PlayerInventory[1], _PlayerInventory[2]);
 		_ClickButtonSound.Play();
 	}
 
@@ -121,10 +122,10 @@ public partial class Shop : Node2D
 		if (_PlayerInventory[0] != -1) _NotEnoughAnimations.Play("not enough space");
 		else
 		{
+			// we update the player inventory in case there's space and money, and also we update the texture in the inventory too.
 			_PlayerInventory[0] = _PerksChosen[0];
 			_InventoryPerk1.Texture = _PerksTextureMedium[_PerksChosen[0]];
 
-			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[0]], " perk id: ", _PerksChosen[0], " in inventory id: ", _PlayerInventory[0]);
 		}
 	}
 
@@ -139,7 +140,6 @@ public partial class Shop : Node2D
 			_PlayerInventory[1] = _PerksChosen[1];
 			_InventoryPerk2.Texture = _PerksTextureMedium[_PerksChosen[1]];
 
-			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[1]], " perk id: ", _PerksChosen[1], " in inventory id: ", _PlayerInventory[1]);
 		}
 	}
 
@@ -154,7 +154,6 @@ public partial class Shop : Node2D
 			_PlayerInventory[2] = _PerksChosen[2];
 			_InventoryPerk3.Texture = _PerksTextureMedium[_PerksChosen[2]];
 
-			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[2]], " perk id: ", _PerksChosen[2], " in inventory id: ", _PlayerInventory[2]);
 		}
 	}
 }
