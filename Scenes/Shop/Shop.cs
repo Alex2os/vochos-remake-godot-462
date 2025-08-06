@@ -5,13 +5,13 @@ public partial class Shop : Node2D
 {
 	// array for all the perks textures
 	private static Texture2D[] _PerksTexture;
-	// this is the perk's frame
-	private static Texture2D _PerksFrameTexture = GD.Load<Texture2D>("res://assets/perks/perks frame.png");
+	// array for all the perks medium-size textures
+	private static Texture2D[] _PerksTextureMedium;
+
 	// number of perks in the game
 	private const int _NumberOfPerks = 6;
 	// array to choose the perks
 	private int[] _PerksChosen = new int[3];
-
 	// array of strings that are the perk's names
 	private string[] _PerksNames = new string[6] { "Shield",
 		"Extra Life",
@@ -26,6 +26,9 @@ public partial class Shop : Node2D
 	[Export] private Sprite2D _Perk1;
 	[Export] private Sprite2D _Perk2;
 	[Export] private Sprite2D _Perk3;
+	[Export] private Sprite2D _InventoryPerk1;
+	[Export] private Sprite2D _InventoryPerk2;
+	[Export] private Sprite2D _InventoryPerk3;
 	[Export] private Label _Perk1Label;
 	[Export] private Label _Perk2Label;
 	[Export] private Label _Perk3Label;
@@ -34,7 +37,9 @@ public partial class Shop : Node2D
 	[Export] private Button _BuyPerk1Button;
 	[Export] private Button _BuyPerk2Button;
 	[Export] private Button _BuyPerk3Button;
+	[Export] private AnimationPlayer _NotEnoughAnimations;
 	[Export] private AudioStreamPlayer _RerollShopSound;
+	[Export] private AudioStreamPlayer _ClickButtonSound;
 	[Signal] public delegate void Perk1BoughtEventHandler(string _PerkName, int _PerkNumber);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -48,6 +53,18 @@ public partial class Shop : Node2D
 			GD.Load<Texture2D>("res://assets/perks/bullet.png"),
 			GD.Load<Texture2D>("res://assets/perks/double money.png"),
 			GD.Load<Texture2D>("res://assets/perks/time slow.png")
+
+		};
+
+		// medium size textures for the perks
+			_PerksTextureMedium = new Texture2D[]
+			{
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/shield medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/extra life medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/double points medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/bullet medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/double money medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/time slow medium.png")
 
 		};
 
@@ -92,32 +109,52 @@ public partial class Shop : Node2D
 	{
 		// logic for when the shop is left
 		GD.Print("leaving shop!");
+		_ClickButtonSound.Play();
 	}
 
 	public void OnBuyPerk1Button()
 	{
 		GD.Print("buying perk1");
+		_ClickButtonSound.Play();
 
-		_PlayerInventory[0] = _PerksChosen[0];
+		// this condition checks if there's enough space so the player can buy the perk. should add something like this for the money too, saying "not enough money".
+		if (_PlayerInventory[0] != -1) _NotEnoughAnimations.Play("not enough space");
+		else
+		{
+			_PlayerInventory[0] = _PerksChosen[0];
+			_InventoryPerk1.Texture = _PerksTextureMedium[_PerksChosen[0]];
 
-		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[0]], " perk id: ", _PerksChosen[0], " in inventory id: ", _PlayerInventory[0]);
+			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[0]], " perk id: ", _PerksChosen[0], " in inventory id: ", _PlayerInventory[0]);
+		}
 	}
 
 	public void OnBuyPerk2Button()
 	{
 		GD.Print("buying perk2");
+		_ClickButtonSound.Play();
 
-		_PlayerInventory[1] = _PerksChosen[1];
+		if (_PlayerInventory[1] != -1) _NotEnoughAnimations.Play("not enough space");
+		else
+		{
+			_PlayerInventory[1] = _PerksChosen[1];
+			_InventoryPerk2.Texture = _PerksTextureMedium[_PerksChosen[1]];
 
-		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[1]], " perk id: ", _PerksChosen[1], " in inventory id: ", _PlayerInventory[1]);
+			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[1]], " perk id: ", _PerksChosen[1], " in inventory id: ", _PlayerInventory[1]);
+		}
 	}
 
 	public void OnBuyPerk3Button()
 	{
 		GD.Print("buying perk3");
+		_ClickButtonSound.Play();
 
-		_PlayerInventory[2] = _PerksChosen[2];
+		if (_PlayerInventory[2] != -1) _NotEnoughAnimations.Play("not enough space");
+		else
+		{
+			_PlayerInventory[2] = _PerksChosen[2];
+			_InventoryPerk3.Texture = _PerksTextureMedium[_PerksChosen[2]];
 
-		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[2]], " perk id: ", _PerksChosen[2], " in inventory id: ", _PlayerInventory[2]);
+			GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[2]], " perk id: ", _PerksChosen[2], " in inventory id: ", _PlayerInventory[2]);
+		}
 	}
 }

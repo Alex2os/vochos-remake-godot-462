@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://bki1v5suxdqjl"]
+[gd_scene load_steps=25 format=3 uid="uid://bki1v5suxdqjl"]
 
 [ext_resource type="Script" uid="uid://ljvpot13u3np" path="res://Scenes/Shop/Shop.cs" id="1_78vcx"]
 [ext_resource type="Texture2D" uid="uid://h7067pg1nb5m" path="res://assets/perks/perks frame.png" id="2_8dak6"]
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="2_dqdqq"]
 [ext_resource type="AudioStream" uid="uid://bg2y40h5rtnj7" path="res://assets/sound effects/shop music.mp3" id="4_w8bjl"]
 [ext_resource type="AudioStream" uid="uid://6t3egedt0tek" path="res://assets/sound effects/reroll shop sound.mp3" id="5_274ew"]
+[ext_resource type="AudioStream" uid="uid://h1psw0va0rur" path="res://assets/sound effects/click button sound.wav" id="6_fobo1"]
+[ext_resource type="Texture2D" uid="uid://505sf575kk5v" path="res://assets/perks/medium sizes/perks frame medium.png" id="6_rjc2l"]
 
 [sub_resource type="Animation" id="Animation_8dak6"]
 resource_name = "perks anim"
@@ -20,7 +22,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(500, 495), Vector2(500, 505), Vector2(500, 495)]
+"values": [Vector2(389, 495), Vector2(389, 505), Vector2(389, 495)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -32,7 +34,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(250, 495), Vector2(250, 505), Vector2(250, 495)]
+"values": [Vector2(139, 495), Vector2(139, 505), Vector2(139, 495)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -44,7 +46,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 1, 2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(750, 495), Vector2(750, 505), Vector2(750, 495)]
+"values": [Vector2(639, 495), Vector2(639, 505), Vector2(639, 495)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8dak6"]
@@ -78,7 +80,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(644, 360), Vector2(644, 370)]
+"values": [Vector2(540, 360), Vector2(540, 370)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -90,7 +92,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(147, 360), Vector2(147, 370)]
+"values": [Vector2(40, 360), Vector2(40, 370)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -102,7 +104,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(398, 360), Vector2(398, 370)]
+"values": [Vector2(290, 360), Vector2(290, 370)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -114,7 +116,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(225, 590), Vector2(225, 600)]
+"values": [Vector2(115, 590), Vector2(115, 600)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -126,7 +128,7 @@ tracks/5/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(475, 590), Vector2(475, 600)]
+"values": [Vector2(365, 590), Vector2(365, 600)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -138,7 +140,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(725, 590), Vector2(725, 600)]
+"values": [Vector2(615, 590), Vector2(615, 600)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
@@ -170,6 +172,27 @@ _data = {
 &"words anim": SubResource("Animation_w8bjl")
 }
 
+[sub_resource type="Animation" id="Animation_fobo1"]
+resource_name = "not enough space"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NotEnoughSpaceLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(0.216, 1, 0.216, 1),
+"update": 0,
+"values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oqg8q"]
+_data = {
+&"not enough space": SubResource("Animation_fobo1")
+}
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dak6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bjl"]
@@ -192,11 +215,14 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oha7t"]
 
-[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_RerollShopSound")]
+[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
 _Perk3 = NodePath("Perk3")
+_InventoryPerk1 = NodePath("InventoryPerk1")
+_InventoryPerk2 = NodePath("InventoryPerk2")
+_InventoryPerk3 = NodePath("InventoryPerk3")
 _Perk1Label = NodePath("PerkLabel1")
 _Perk2Label = NodePath("PerkLabel2")
 _Perk3Label = NodePath("PerkLabel3")
@@ -205,40 +231,42 @@ _LeaveShopButton = NodePath("LeaveShop")
 _BuyPerk1Button = NodePath("PerkButton1")
 _BuyPerk2Button = NodePath("PerkButton2")
 _BuyPerk3Button = NodePath("PerkButton3")
+_NotEnoughAnimations = NodePath("NotEnoughAnimations")
 _RerollShopSound = NodePath("ShopRerollSound")
+_ClickButtonSound = NodePath("ClickButtonSound")
 metadata/_edit_lock_ = true
 
 [node name="PerksFrame1" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(250, 500)
+position = Vector2(139, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
 [node name="PerksFrame2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(500, 500)
+position = Vector2(389, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
 [node name="PerksFrame3" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(750, 500)
+position = Vector2(639, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
 [node name="Perk1" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(250, 495)
+position = Vector2(139, 495)
 scale = Vector2(4, 4)
 
 [node name="Perk2" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(500, 495)
+position = Vector2(389, 495)
 scale = Vector2(4, 4)
 
 [node name="Perk3" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(750, 495)
+position = Vector2(639, 495)
 scale = Vector2(4, 4)
 
 [node name="ShopTitle" type="Label" parent="."]
@@ -296,9 +324,9 @@ Ready!"
 metadata/_edit_lock_ = true
 
 [node name="PerkLabel1" type="Label" parent="."]
-offset_left = 147.0
+offset_left = 40.0
 offset_top = 360.0
-offset_right = 352.0
+offset_right = 245.0
 offset_bottom = 396.0
 pivot_offset = Vector2(100, 15)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -309,11 +337,12 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "example text"
 horizontal_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="PerkLabel2" type="Label" parent="."]
-offset_left = 398.0
+offset_left = 290.0
 offset_top = 360.0
-offset_right = 603.0
+offset_right = 495.0
 offset_bottom = 396.0
 pivot_offset = Vector2(100, 15)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -324,11 +353,12 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "example text"
 horizontal_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="PerkLabel3" type="Label" parent="."]
-offset_left = 644.0
+offset_left = 540.0
 offset_top = 360.0
-offset_right = 849.0
+offset_right = 745.0
 offset_bottom = 396.0
 pivot_offset = Vector2(100, 15)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -339,6 +369,7 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "example text"
 horizontal_alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="AnimationPlayerPerks" type="AnimationPlayer" parent="."]
 libraries = {
@@ -352,10 +383,29 @@ libraries = {
 }
 autoplay = "words anim"
 
+[node name="NotEnoughAnimations" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_oqg8q")
+}
+
+[node name="NotEnoughSpaceLabel" type="Label" parent="."]
+offset_left = 315.0
+offset_top = -99.9995
+offset_right = 662.0
+offset_bottom = -54.9995
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 50
+text = "Not enough space!"
+metadata/_edit_lock_ = true
+
 [node name="PerkButton1" type="Button" parent="."]
-offset_left = 225.0
+offset_left = 115.0
 offset_top = 590.0
-offset_right = 278.0
+offset_right = 168.0
 offset_bottom = 626.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
@@ -371,6 +421,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Buy"
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="PerkButton1"]
 layout_mode = 0
@@ -385,9 +436,9 @@ theme_override_font_sizes/font_size = 40
 text = "Buy"
 
 [node name="PerkButton2" type="Button" parent="."]
-offset_left = 475.0
+offset_left = 365.0
 offset_top = 590.0
-offset_right = 528.0
+offset_right = 418.0
 offset_bottom = 626.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
@@ -403,6 +454,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Buy"
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="PerkButton2"]
 layout_mode = 0
@@ -417,9 +469,9 @@ theme_override_font_sizes/font_size = 40
 text = "Buy"
 
 [node name="PerkButton3" type="Button" parent="."]
-offset_left = 725.0
+offset_left = 615.0
 offset_top = 590.0
-offset_right = 778.0
+offset_right = 668.0
 offset_bottom = 626.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
@@ -435,6 +487,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Buy"
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="PerkButton3"]
 layout_mode = 0
@@ -450,9 +503,9 @@ text = "Buy"
 
 [node name="RerollButton" type="Button" parent="."]
 offset_left = 773.0
-offset_top = 216.0
+offset_top = 190.0
 offset_right = 941.0
-offset_bottom = 252.0
+offset_bottom = 226.0
 rotation = -0.174533
 pivot_offset = Vector2(80, 15)
 theme_override_fonts/font = ExtResource("2_dqdqq")
@@ -469,6 +522,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Reroll Shop"
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="RerollButton"]
 layout_mode = 0
@@ -485,9 +539,9 @@ text = "Reroll Shop"
 
 [node name="LeaveShop" type="Button" parent="."]
 offset_left = 773.0
-offset_top = 140.0
+offset_top = 110.0
 offset_right = 944.0
-offset_bottom = 176.0
+offset_bottom = 146.0
 rotation = -0.174533
 pivot_offset = Vector2(80, 15)
 theme_override_fonts/font = ExtResource("2_dqdqq")
@@ -504,6 +558,7 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Leave Shop"
+metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="LeaveShop"]
 layout_mode = 0
@@ -526,3 +581,54 @@ autoplay = true
 [node name="ShopRerollSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_274ew")
 volume_db = -5.0
+
+[node name="ClickButtonSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_fobo1")
+volume_db = -1.0
+
+[node name="InventoryLabel" type="Label" parent="."]
+offset_left = 780.0
+offset_top = 279.0
+offset_right = 948.0
+offset_bottom = 315.0
+pivot_offset = Vector2(80, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+text = "Inventory"
+
+[node name="InventoryFrame1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 380)
+scale = Vector2(4, 4)
+texture = ExtResource("6_rjc2l")
+
+[node name="InventoryFrame2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 510)
+scale = Vector2(4, 4)
+texture = ExtResource("6_rjc2l")
+
+[node name="InventoryFrame3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 640)
+scale = Vector2(4, 4)
+texture = ExtResource("6_rjc2l")
+
+[node name="InventoryPerk1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 380)
+scale = Vector2(4, 4)
+
+[node name="InventoryPerk2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 510)
+scale = Vector2(4, 4)
+
+[node name="InventoryPerk3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(860, 640)
+scale = Vector2(4, 4)

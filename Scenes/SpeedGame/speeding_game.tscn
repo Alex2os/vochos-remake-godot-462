@@ -3,25 +3,25 @@
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_d0ldw"]
 [ext_resource type="Script" uid="uid://ddlmqkbicswyv" path="res://Scenes/SpeedGame/SpeedingGame.cs" id="1_sc3or"]
 
-[sub_resource type="Animation" id="Animation_d0ldw"]
-resource_name = "speeding game"
+[sub_resource type="Animation" id="Animation_7os6h"]
+resource_name = "speedinggameanim"
 length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SpeedingGameLabel:position")
+tracks/0/path = NodePath("SpeedingGameLabel2:position")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
-"transitions": PackedFloat32Array(0.217, 1, 0.216, 1),
+"transitions": PackedFloat32Array(0.216, 1, 0.216, 1),
 "update": 0,
 "values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_82goy"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_na3xd"]
 _data = {
-&"speeding game": SubResource("Animation_d0ldw")
+&"speedinggameanim": SubResource("Animation_7os6h")
 }
 
 [node name="SpeedingGame" type="Node2D" node_paths=PackedStringArray("_SpeedingGameTimer", "_AnimationPlayer")]
@@ -30,7 +30,7 @@ script = ExtResource("1_sc3or")
 _SpeedingGameTimer = NodePath("SpeedingGameTimer")
 _AnimationPlayer = NodePath("AnimationPlayer")
 
-[node name="SpeedingGameLabel" type="Label" parent="."]
+[node name="SpeedingGameLabel2" type="Label" parent="."]
 z_index = 3
 texture_filter = 1
 offset_left = 315.0
@@ -46,11 +46,10 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_d0ldw")
 theme_override_font_sizes/font_size = 50
 text = "Let's speed it up!"
-metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_82goy")
+&"": SubResource("AnimationLibrary_na3xd")
 }
 
 [node name="SpeedingGameTimer" type="Timer" parent="."]
