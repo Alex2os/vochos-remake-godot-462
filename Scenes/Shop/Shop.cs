@@ -13,12 +13,15 @@ public partial class Shop : Node2D
 	private int[] _PerksChosen = new int[3];
 
 	// array of strings that are the perk's names
-	string[] _PerksNames = new string[6] { "Shield",
+	private string[] _PerksNames = new string[6] { "Shield",
 		"Extra Life",
 		"Double Points",
 		"Bullet",
 		"Double Money",
 		"Slow Time" };
+
+	// player inventory for the perks
+	private int[] _PlayerInventory = new int[3] {-1, -1, -1}; // if any index = -1, then it means there's perk in that slot.
 
 	[Export] private Sprite2D _Perk1;
 	[Export] private Sprite2D _Perk2;
@@ -33,8 +36,6 @@ public partial class Shop : Node2D
 	[Export] private Button _BuyPerk3Button;
 	[Export] private AudioStreamPlayer _RerollShopSound;
 	[Signal] public delegate void Perk1BoughtEventHandler(string _PerkName, int _PerkNumber);
-	[Signal] public delegate void Perk2BoughtEventHandler(string _PerkName, int _PerkNumber);
-	[Signal] public delegate void Perk3BoughtEventHandler(string _PerkName, int _PerkNumber);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -96,27 +97,27 @@ public partial class Shop : Node2D
 	public void OnBuyPerk1Button()
 	{
 		GD.Print("buying perk1");
-		
-		// here, and in every perkbought signal we are sending the string or name of the perk, and ad the same time the number of the perk. those are contained within _perksNames and _perkschosen
-		// be really careful with the slots [0],[1] and [2] since depending the perk, it will be the slot. for example, the perk 1 has the slot [0], and so on.
-		EmitSignal(SignalName.Perk1Bought, _PerksNames[_PerksChosen[0]], _PerksChosen[0]);
 
-		GD.Print("perk 1 parameters: ", _PerksNames[_PerksChosen[0]], " ", _PerksChosen[0]);
+		_PlayerInventory[0] = _PerksChosen[0];
+
+		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[0]], " perk id: ", _PerksChosen[0], " in inventory id: ", _PlayerInventory[0]);
 	}
 
 	public void OnBuyPerk2Button()
 	{
 		GD.Print("buying perk2");
-		EmitSignal(SignalName.Perk2Bought, _PerksNames[_PerksChosen[1]], _PerksChosen[1]);
 
-		GD.Print("perk 2 parameters: ", _PerksNames[_PerksChosen[1]], " ", _PerksChosen[1]);
+		_PlayerInventory[1] = _PerksChosen[1];
+
+		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[1]], " perk id: ", _PerksChosen[1], " in inventory id: ", _PlayerInventory[1]);
 	}
 
 	public void OnBuyPerk3Button()
 	{
 		GD.Print("buying perk3");
-		EmitSignal(SignalName.Perk3Bought, _PerksNames[_PerksChosen[2]], _PerksChosen[2]);
 
-		GD.Print("perk 3 parameters: ", _PerksNames[_PerksChosen[2]], " ", _PerksChosen[2]);
+		_PlayerInventory[2] = _PerksChosen[2];
+
+		GD.Print("perk 2 parameters: perk_name: ", _PerksNames[_PerksChosen[2]], " perk id: ", _PerksChosen[2], " in inventory id: ", _PlayerInventory[2]);
 	}
 }
