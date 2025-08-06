@@ -8,7 +8,7 @@ public partial class Shop : Node2D
 	// this is the perk's frame
 	private static Texture2D _PerksFrameTexture = GD.Load<Texture2D>("res://assets/perks/perks frame.png");
 	// number of perks in the game
-	 private const int _NumberOfPerks = 6;
+	private const int _NumberOfPerks = 6;
 	// array to choose the perks
 	private int[] _PerksChosen = new int[3];
 
@@ -26,6 +26,9 @@ public partial class Shop : Node2D
 	[Export] private Label _Perk1Label;
 	[Export] private Label _Perk2Label;
 	[Export] private Label _Perk3Label;
+	[Export] private Button _RerollShopButton;
+	[Export] private Button _LeaveShopButton;
+	[Export] private AudioStreamPlayer _RerollShopSound;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -41,6 +44,9 @@ public partial class Shop : Node2D
 			GD.Load<Texture2D>("res://assets/perks/time slow.png")
 
 		};
+
+		_RerollShopButton.Pressed += OnRerollShopButtonPressed;
+		_LeaveShopButton.Pressed += OnLeaveShopButtonPressed;
 
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
 	}
@@ -58,8 +64,22 @@ public partial class Shop : Node2D
 		_Perk1.Texture = _PerksTexture[_PerksChosen[0]];
 		_Perk2.Texture = _PerksTexture[_PerksChosen[1]];
 		_Perk3.Texture = _PerksTexture[_PerksChosen[2]];
-		_Perk1Label.Text =  _PerksNames[_PerksChosen[0]];
+		_Perk1Label.Text = _PerksNames[_PerksChosen[0]];
 		_Perk2Label.Text = _PerksNames[_PerksChosen[1]];
-		_Perk3Label.Text =  _PerksNames[_PerksChosen[2]];
+		_Perk3Label.Text = _PerksNames[_PerksChosen[2]];
+	}
+
+	public void OnRerollShopButtonPressed()
+	{
+		// here should be the logic to substract certain amount of money to the user for each reroll.
+		GD.Print("rerolling shop");
+		ChoosePerks();
+		_RerollShopSound.Play();
+	}
+
+	private void OnLeaveShopButtonPressed()
+	{
+		// logic for when the shop is left
+		GD.Print("leaving shop!");
 	}
 }

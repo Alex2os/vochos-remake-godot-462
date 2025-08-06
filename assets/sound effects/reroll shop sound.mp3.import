@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://6t3egedt0tek"
+path="res://.godot/imported/reroll shop sound.mp3-c06b55abca46727aa319b4ec3f8bc1b6.mp3str"
+
+[deps]
+
+source_file="res://assets/sound effects/reroll shop sound.mp3"
+dest_files=["res://.godot/imported/reroll shop sound.mp3-c06b55abca46727aa319b4ec3f8bc1b6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
