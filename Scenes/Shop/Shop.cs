@@ -8,12 +8,12 @@ public partial class Shop : Node2D
 	// this is the perk's frame
 	private static Texture2D _PerksFrameTexture = GD.Load<Texture2D>("res://assets/perks/perks frame.png");
 	// number of perks in the game
-	 private const int _NumberOfPerks = 2;
+	 private const int _NumberOfPerks = 6;
 	// array to choose the perks
 	private int[] _PerksChosen = new int[3];
 
 	// array of strings that are the perk's names
-	string[] _PerksNames = new string[] { "Shield",
+	string[] _PerksNames = new string[6] { "Shield",
 		"Extra Life",
 		"Double Points",
 		"Bullet",
@@ -34,7 +34,12 @@ public partial class Shop : Node2D
 		_PerksTexture = new Texture2D[]
 			{
 			GD.Load<Texture2D>("res://assets/perks/shield.png"),
-			GD.Load<Texture2D>("res://assets/perks/shield.png")
+			GD.Load<Texture2D>("res://assets/perks/extra life.png"),
+			GD.Load<Texture2D>("res://assets/perks/double points.png"),
+			GD.Load<Texture2D>("res://assets/perks/bullet.png"),
+			GD.Load<Texture2D>("res://assets/perks/double money.png"),
+			GD.Load<Texture2D>("res://assets/perks/time slow.png")
+
 		};
 
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
@@ -47,13 +52,14 @@ public partial class Shop : Node2D
 
 	private void ChoosePerks()
 	{
-		for (int i = 0; i < _NumberOfPerks; i++) _PerksChosen[i] = (int)GD.RandRange(0, _NumberOfPerks - 1); // this will choose between 1 of the six perks that are in the game.
+		// the amount of perks per shop will be 3.
+		for (int i = 0; i < 3; i++) _PerksChosen[i] = (int)GD.RandRange(0, _NumberOfPerks - 1); // this will choose between 1 of the six perks that are in the game.
 
 		_Perk1.Texture = _PerksTexture[_PerksChosen[0]];
 		_Perk2.Texture = _PerksTexture[_PerksChosen[1]];
 		_Perk3.Texture = _PerksTexture[_PerksChosen[2]];
-		_Perk1Label.Text = "     " + _PerksNames[_PerksChosen[0]];
-		_Perk2Label.Text = "     " + _PerksNames[_PerksChosen[1]];
-		_Perk3Label.Text = "     " + _PerksNames[_PerksChosen[2]];
+		_Perk1Label.Text =  _PerksNames[_PerksChosen[0]];
+		_Perk2Label.Text = _PerksNames[_PerksChosen[1]];
+		_Perk3Label.Text =  _PerksNames[_PerksChosen[2]];
 	}
 }
