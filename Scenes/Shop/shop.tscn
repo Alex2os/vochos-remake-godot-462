@@ -192,7 +192,7 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oha7t"]
 
-[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_RerollShopSound")]
+[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_RerollShopSound")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
@@ -202,6 +202,9 @@ _Perk2Label = NodePath("PerkLabel2")
 _Perk3Label = NodePath("PerkLabel3")
 _RerollShopButton = NodePath("RerollButton")
 _LeaveShopButton = NodePath("LeaveShop")
+_BuyPerk1Button = NodePath("PerkButton1")
+_BuyPerk2Button = NodePath("PerkButton2")
+_BuyPerk3Button = NodePath("PerkButton3")
 _RerollShopSound = NodePath("ShopRerollSound")
 metadata/_edit_lock_ = true
 
@@ -411,6 +414,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Buy"
 
 [node name="Label" type="Label" parent="PerkButton2"]
+layout_mode = 0
 offset_right = 53.0
 offset_bottom = 36.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -442,6 +446,7 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
 text = "Buy"
 
 [node name="Label" type="Label" parent="PerkButton3"]
+layout_mode = 0
 offset_right = 53.0
 offset_bottom = 36.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
