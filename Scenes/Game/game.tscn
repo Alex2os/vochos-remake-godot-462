@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qdh73vj2guf7"]
+[gd_scene load_steps=15 format=3 uid="uid://qdh73vj2guf7"]
 
 [ext_resource type="PackedScene" uid="uid://tpxiid8lmksk" path="res://Scenes/Player/player.tscn" id="1_mv0hc"]
 [ext_resource type="Script" uid="uid://npn0ytnyrjeb" path="res://Scenes/Game/Game.cs" id="1_qikps"]
@@ -12,23 +12,10 @@
 [ext_resource type="AudioStream" uid="uid://l87uikl7x3v3" path="res://assets/sound effects/coin sound.mp3" id="10_7jvlm"]
 [ext_resource type="PackedScene" uid="uid://1i8dwqg2na1t" path="res://Scenes/SpeedGame/speeding_game.tscn" id="11_qtymf"]
 [ext_resource type="PackedScene" uid="uid://c3okbqeatfm5k" path="res://Scenes/GameOver/game_over.tscn" id="12_ypmwd"]
-[ext_resource type="PackedScene" uid="uid://bki1v5suxdqjl" path="res://Scenes/Shop/shop.tscn" id="13_oejk7"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
 length = 1.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Shop:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.833333, 1.43333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(-1000, 0), Vector2(200, 0), Vector2(0, 0)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_upfqs"]
 _data = {
@@ -148,10 +135,7 @@ volume_db = -8.0
 
 [node name="Player" parent="." instance=ExtResource("1_mv0hc")]
 position = Vector2(500, 530)
-_ShopScenePath = NodePath("../Shop")
 metadata/_edit_lock_ = true
-
-[node name="Shop" parent="." instance=ExtResource("13_oejk7")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

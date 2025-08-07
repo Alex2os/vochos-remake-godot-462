@@ -6,18 +6,17 @@ public partial class player : Area2D
 	[Export] private int _MovingXAxis = 300;
 	[Export] private int _MovingYAxis = 300;
 	// this nodepath is referenced in the game scene. in the car scene itself is not referenced, as it's better to have the node in the gamescene rather than in the playerscene
-	[Export] private NodePath _ShopScenePath;
+	// [Export] private NodePath _ShopScenePath;
 	[Signal] public delegate void PlayerHitEnemyEventHandler();
-	private Shop _ShopScene;
+	// private Shop _ShopScene;
 	// inventory for the car scene. this inventory will be updated when the shop is used or the user uses a perk in-game
 	public int[] _PlayerInventoryCarScene = new int[3] { -1, -1, -1 };
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_ShopScene = GetNode<Shop>(_ShopScenePath);
-
-		_ShopScene.InventoryUpdated += OnInventoryUpdated;
+		// _ShopScene = GetNode<Shop>(_ShopScenePath);
+		// 	_ShopScene.InventoryUpdated += OnInventoryUpdated;
 		AreaEntered += OnAreaEntered;
 
 	}
