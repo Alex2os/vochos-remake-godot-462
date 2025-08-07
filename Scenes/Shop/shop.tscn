@@ -202,6 +202,42 @@ tracks/8/keys = {
 "update": 0,
 "values": [-0.174533, 0.174533]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("SellInventoryPerk1:rotation")
+tracks/9/interp = 2
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("SellInventoryPerk2:rotation")
+tracks/10/interp = 2
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("SellInventoryPerk3:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.174533, 0.174533]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_274ew"]
 _data = {
@@ -251,7 +287,7 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oha7t"]
 
-[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
+[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
@@ -267,6 +303,9 @@ _LeaveShopButton = NodePath("LeaveShop")
 _BuyPerk1Button = NodePath("PerkButton1")
 _BuyPerk2Button = NodePath("PerkButton2")
 _BuyPerk3Button = NodePath("PerkButton3")
+_SellPerk1Button = NodePath("SellInventoryPerk1")
+_SellPerk2Button = NodePath("SellInventoryPerk2")
+_SellPerk3Button = NodePath("SellInventoryPerk3")
 _NotEnoughAnimations = NodePath("NotEnoughAnimations")
 _RerollShopSound = NodePath("ShopRerollSound")
 _ClickButtonSound = NodePath("ClickButtonSound")
@@ -641,30 +680,156 @@ texture_filter = 1
 position = Vector2(860, 380)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryFrame2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(860, 510)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryFrame3" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(860, 640)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk1" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(860, 375)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(860, 505)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk3" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(860, 635)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="SellInventoryPerk1" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 870.0
+offset_top = 360.0
+offset_right = 1041.0
+offset_bottom = 396.0
+rotation = -0.174533
+pivot_offset = Vector2(85, 15)
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_274ew")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kcc5r")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
+disabled = true
+text = "Sell"
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="SellInventoryPerk1"]
+layout_mode = 0
+offset_left = 60.0
+offset_right = 231.0
+offset_bottom = 75.0
+pivot_offset = Vector2(80, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+text = "Sell
+"
+
+[node name="SellInventoryPerk2" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 870.0
+offset_top = 490.0
+offset_right = 1041.0
+offset_bottom = 526.0
+rotation = -0.174533
+pivot_offset = Vector2(85, 15)
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_274ew")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kcc5r")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
+disabled = true
+text = "Sell"
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="SellInventoryPerk2"]
+layout_mode = 0
+offset_left = 60.0
+offset_right = 231.0
+offset_bottom = 75.0
+pivot_offset = Vector2(80, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+text = "Sell
+"
+
+[node name="SellInventoryPerk3" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 870.0
+offset_top = 620.0
+offset_right = 1041.0
+offset_bottom = 656.0
+rotation = -0.174533
+pivot_offset = Vector2(85, 15)
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_274ew")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_kcc5r")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cjwgl")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_oha7t")
+disabled = true
+text = "Sell"
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="SellInventoryPerk3"]
+layout_mode = 0
+offset_left = 60.0
+offset_right = 231.0
+offset_bottom = 75.0
+pivot_offset = Vector2(80, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 40
+text = "Sell
+"

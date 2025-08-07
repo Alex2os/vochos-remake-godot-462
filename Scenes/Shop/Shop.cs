@@ -21,7 +21,7 @@ public partial class Shop : Node2D
 		"Slow Time" };
 
 	// player inventory for the perks
-	private int[] _PlayerInventory = new int[3] {-1, -1, -1}; // if any index = -1, then it means there's perk in that slot.
+	private int[] _PlayerInventory = new int[3] { -1, -1, -1 }; // if any index = -1, then it means there's perk in that slot.
 
 	[Export] private Sprite2D _Perk1;
 	[Export] private Sprite2D _Perk2;
@@ -37,6 +37,9 @@ public partial class Shop : Node2D
 	[Export] private Button _BuyPerk1Button;
 	[Export] private Button _BuyPerk2Button;
 	[Export] private Button _BuyPerk3Button;
+	[Export] private Button _SellPerk1Button;
+	[Export] private Button _SellPerk2Button;
+	[Export] private Button _SellPerk3Button;
 	[Export] private AnimationPlayer _NotEnoughAnimations;
 	[Export] private AudioStreamPlayer _RerollShopSound;
 	[Export] private AudioStreamPlayer _ClickButtonSound;
@@ -57,8 +60,8 @@ public partial class Shop : Node2D
 		};
 
 		// medium size textures for the perks
-			_PerksTextureMedium = new Texture2D[]
-			{
+		_PerksTextureMedium = new Texture2D[]
+		{
 			GD.Load<Texture2D>("res://assets/perks/medium sizes/shield medium.png"),
 			GD.Load<Texture2D>("res://assets/perks/medium sizes/extra life medium.png"),
 			GD.Load<Texture2D>("res://assets/perks/medium sizes/double points medium.png"),
@@ -66,7 +69,7 @@ public partial class Shop : Node2D
 			GD.Load<Texture2D>("res://assets/perks/medium sizes/double money medium.png"),
 			GD.Load<Texture2D>("res://assets/perks/medium sizes/time slow medium.png")
 
-		};
+	};
 
 		_RerollShopButton.Pressed += OnRerollShopButtonPressed;
 		_LeaveShopButton.Pressed += OnLeaveShopButtonPressed;
@@ -76,12 +79,17 @@ public partial class Shop : Node2D
 		_BuyPerk2Button.Pressed += OnBuyPerk2Button;
 		_BuyPerk3Button.Pressed += OnBuyPerk3Button;
 
+		_SellPerk1Button.Pressed += OnSellPerk1Button;
+		_SellPerk2Button.Pressed += OnSellPerk2Button;
+		_SellPerk3Button.Pressed += OnSellPerk3Button;
+
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+
 	}
 
 	private void ChoosePerks()
@@ -102,6 +110,12 @@ public partial class Shop : Node2D
 		// here should be the logic to substract certain amount of money to the user for each reroll.
 		GD.Print("rerolling shop");
 		ChoosePerks();
+
+		// re-enable the buttons so they can be pressed again (in case they were pressed and bought some perks)
+		_BuyPerk1Button.Disabled = false;
+		_BuyPerk2Button.Disabled = false;
+		_BuyPerk3Button.Disabled = false;
+
 		_RerollShopSound.Play();
 	}
 
@@ -118,14 +132,12 @@ public partial class Shop : Node2D
 		GD.Print("buying perk1");
 		_ClickButtonSound.Play();
 
-		// this condition checks if there's enough space so the player can buy the perk. should add something like this for the money too, saying "not enough money".
-		if (_PlayerInventory[0] != -1) _NotEnoughAnimations.Play("not enough space");
-		else
+		if (CheckInventorySpace(_PerksChosen[0]) == 1) // if the perk is bought, change the text, id and texture.
 		{
-			// we update the player inventory in case there's space and money, and also we update the texture in the inventory too.
-			_PlayerInventory[0] = _PerksChosen[0];
-			_InventoryPerk1.Texture = _PerksTextureMedium[_PerksChosen[0]];
-
+			_Perk1.Texture = null;
+			_Perk1Label.Text = "Sold!";
+			_PerksChosen[0] = -1;
+			_BuyPerk1Button.Disabled = true; // this disables the button to be pressed.
 		}
 	}
 
@@ -134,13 +146,14 @@ public partial class Shop : Node2D
 		GD.Print("buying perk2");
 		_ClickButtonSound.Play();
 
-		if (_PlayerInventory[1] != -1) _NotEnoughAnimations.Play("not enough space");
-		else
+		if (CheckInventorySpace(_PerksChosen[1]) == 1)
 		{
-			_PlayerInventory[1] = _PerksChosen[1];
-			_InventoryPerk2.Texture = _PerksTextureMedium[_PerksChosen[1]];
-
+			_Perk2.Texture = null;
+			_Perk2Label.Text = "Sold!";
+			_PerksChosen[1] = -1;
+			_BuyPerk2Button.Disabled = true;
 		}
+
 	}
 
 	public void OnBuyPerk3Button()
@@ -148,12 +161,110 @@ public partial class Shop : Node2D
 		GD.Print("buying perk3");
 		_ClickButtonSound.Play();
 
-		if (_PlayerInventory[2] != -1) _NotEnoughAnimations.Play("not enough space");
-		else
+		if (CheckInventorySpace(_PerksChosen[2]) == 1)
 		{
-			_PlayerInventory[2] = _PerksChosen[2];
-			_InventoryPerk3.Texture = _PerksTextureMedium[_PerksChosen[2]];
+			_Perk3.Texture = null;
+			_Perk3Label.Text = "Sold!";
+			_PerksChosen[2] = -1;
+			_BuyPerk3Button.Disabled = true;
+		}
+	}
 
+	public int CheckInventorySpace(int _PerkChosenInShop)
+	{
+		bool _SpaceNotAvailable = true;
+
+		for (int i = 0; i < 3; i++)
+		{
+			if (_PlayerInventory[i] == -1) // if the player inventory has a free slot
+			{
+				_SpaceNotAvailable = false; // this is not to trigger the notenoughspace animation
+				AssignInventoryPerk(_PerkChosenInShop, i); // here we assign the inventory perk id and texture
+				break;
+			}
+		}
+
+		if (_SpaceNotAvailable)
+		{
+			_NotEnoughAnimations.Play("not enough space"); // if there's no space, then the animation will be played
+			return 0; // if the perk can't be bought, this will return 0.
+		}
+		else return 1; // in case the user can buy it, returns 1.
+	}
+
+	private void AssignInventoryPerk(int _PerkChosenInShop, int _InventorySlot)
+	{
+		_PlayerInventory[_InventorySlot] = _PerkChosenInShop; // this assigns the id of the perk chosen in the shop. we need this here as playerinv[i] will not be the same as perkschosen[i]
+		switch (_InventorySlot) // this is to assign the texture of the perk
+		{
+			case 0:
+				_InventoryPerk1.Texture = _PerksTextureMedium[_PerkChosenInShop];
+				_SellPerk1Button.Modulate = new Color(1, 1, 1, 1); // we show the buttons when a perk can be sold.
+				_SellPerk1Button.Disabled = false;
+				break;
+			case 1:
+				_InventoryPerk2.Texture = _PerksTextureMedium[_PerkChosenInShop];
+				_SellPerk2Button.Modulate = new Color(1, 1, 1, 1);
+				_SellPerk2Button.Disabled = false;
+				break;
+			case 2:
+				_InventoryPerk3.Texture = _PerksTextureMedium[_PerkChosenInShop];
+				_SellPerk3Button.Modulate = new Color(1, 1, 1, 1);
+				_SellPerk3Button.Disabled = false;
+				break;
+		}
+	}
+
+	public void OnSellPerk1Button()
+	{
+
+		GD.Print("selling perk1");
+
+		SellPerk(0); // here we send the perk slot.
+
+		_ClickButtonSound.Play();
+	}
+
+	public void OnSellPerk2Button()
+	{
+
+		GD.Print("selling perk2");
+
+		SellPerk(1);
+
+		_ClickButtonSound.Play();
+	}
+
+	public void OnSellPerk3Button()
+	{
+
+		GD.Print("selling perk3");
+
+		SellPerk(2);
+
+		_ClickButtonSound.Play();
+	}
+
+	private void SellPerk(int _PerkSlot)
+	{
+		_PlayerInventory[_PerkSlot] = -1; // assign the id to the player inventory, because it was sold. 
+
+		switch (_PerkSlot) {
+			case 0:
+				_InventoryPerk1.Texture = null; // this puts no texture in the sprite. so when a perk is sold, there's no texture to show as there's no perk.
+				_SellPerk1Button.Modulate = new Color(0, 0, 0, 0);
+				_SellPerk1Button.Disabled = true;
+				break;
+			case 1:
+			    _InventoryPerk2.Texture = null;
+				_SellPerk2Button.Modulate = new Color(0, 0, 0, 0);
+				_SellPerk2Button.Disabled = true;
+				break;
+			case 2:
+				_InventoryPerk3.Texture = null;
+				_SellPerk3Button.Modulate = new Color(0, 0, 0, 0);
+				_SellPerk3Button.Disabled = true;
+				break;
 		}
 	}
 }
