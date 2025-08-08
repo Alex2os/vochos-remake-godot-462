@@ -1,6 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://c3okbqeatfm5k"]
+[gd_scene load_steps=19 format=3 uid="uid://c3okbqeatfm5k"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_ei7ey"]
+[ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="2_78750"]
+[ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="2_apf3g"]
+[ext_resource type="Texture2D" uid="uid://hj22l7smgkba" path="res://assets/buttons/red button.png" id="2_dncx1"]
 
 [sub_resource type="Animation" id="Animation_vifcx"]
 length = 0.001
@@ -15,18 +18,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(315, 600)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainMenuButton:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-0.174533]
 }
 
 [sub_resource type="Animation" id="Animation_flgk0"]
@@ -44,18 +35,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(315, 450), Vector2(315, 400), Vector2(315, 450)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MainMenuButton:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.174533, 0.174533]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vifcx"]
@@ -76,15 +55,18 @@ _data = {
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owf3c"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d5p7f"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_als7q"]
+texture = ExtResource("2_apf3g")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b7xe"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hv0cw"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_apf3g"]
+texture = ExtResource("2_78750")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t4ynl"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qixd8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_78750"]
+texture = ExtResource("2_dncx1")
 
 [node name="GameOver" type="Node2D"]
 
@@ -158,11 +140,10 @@ libraries = {
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
-offset_left = 390.0
+offset_left = 360.0
 offset_top = 537.0
-offset_right = 619.0
-offset_bottom = 625.0
-rotation = -0.174533
+offset_right = 660.0
+offset_bottom = 627.0
 pivot_offset = Vector2(115, 40)
 theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
@@ -176,18 +157,25 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_apf3g")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_als7q")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fdts5")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_owf3c")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_d5p7f")
+theme_override_styles/hover = SubResource("StyleBoxTexture_als7q")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7b7xe")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_hv0cw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_apf3g")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_t4ynl")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_qixd8")
-text = "Main Menu"
+theme_override_styles/normal = SubResource("StyleBoxTexture_78750")
 
 [node name="MainMenuButtonOutline" type="Label" parent="MainMenuButton"]
-layout_mode = 0
-offset_top = 20.0
-offset_right = 229.0
-offset_bottom = 113.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = -27.0
+offset_right = 114.5
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0

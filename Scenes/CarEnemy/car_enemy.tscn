@@ -1,7 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6ohjdcr3ic4v"]
+[gd_scene load_steps=13 format=3 uid="uid://c6ohjdcr3ic4v"]
 
 [ext_resource type="Script" uid="uid://dchpr1jibmskf" path="res://Scenes/CarEnemy/CarEnemy.cs" id="1_06auc"]
 [ext_resource type="Texture2D" uid="uid://fpy3xahy5dma" path="res://assets/cars/enemy1.png" id="1_yrjx6"]
+[ext_resource type="Texture2D" uid="uid://c2t55a8iuxiuk" path="res://assets/cars/enemy2.png" id="3_kh1i7"]
+[ext_resource type="Texture2D" uid="uid://c5tjiusap1sxr" path="res://assets/cars/enemy3.png" id="4_25wwx"]
+[ext_resource type="Texture2D" uid="uid://dbilccuis1lrt" path="res://assets/cars/enemy4.png" id="5_c1ugx"]
+[ext_resource type="Texture2D" uid="uid://bp4q1f0w5vd60" path="res://assets/cars/enemy5.png" id="6_ewa7u"]
+[ext_resource type="Texture2D" uid="uid://b2vdn7u6ca6yc" path="res://assets/cars/enemy6.png" id="7_ab1wx"]
+[ext_resource type="Texture2D" uid="uid://blu5jj6hc5is0" path="res://assets/cars/enemy7.png" id="8_7a7db"]
+[ext_resource type="Texture2D" uid="uid://cra20buv0efhh" path="res://assets/cars/enemy8.png" id="9_tgcqn"]
+[ext_resource type="Texture2D" uid="uid://cflbjkayu3uu0" path="res://assets/cars/enemy9.png" id="10_v8wup"]
+[ext_resource type="Texture2D" uid="uid://creg14frirmkd" path="res://assets/cars/enemy10.png" id="11_g4r7w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_06auc"]
 size = Vector2(18, 23)
@@ -10,6 +19,7 @@ size = Vector2(18, 23)
 z_index = 1
 script = ExtResource("1_06auc")
 _Sprite2D = NodePath("Sprite2D")
+_EnemySkins = Array[Texture2D]([ExtResource("1_yrjx6"), ExtResource("3_kh1i7"), ExtResource("4_25wwx"), ExtResource("5_c1ugx"), ExtResource("6_ewa7u"), ExtResource("7_ab1wx"), ExtResource("8_7a7db"), ExtResource("9_tgcqn"), ExtResource("10_v8wup"), ExtResource("11_g4r7w")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

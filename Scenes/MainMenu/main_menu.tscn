@@ -1,15 +1,24 @@
-[gd_scene load_steps=20 format=3 uid="uid://m3wero5w5cah"]
+[gd_scene load_steps=31 format=3 uid="uid://m3wero5w5cah"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_uqdog"]
 [ext_resource type="Script" uid="uid://dke6r5m5fn25j" path="res://Scenes/MainMenu/MainMenu.cs" id="1_v763k"]
 [ext_resource type="PackedScene" uid="uid://qdh73vj2guf7" path="res://Scenes/Game/game.tscn" id="2_0qgbs"]
+[ext_resource type="Texture2D" uid="uid://ccr3bovew3ys1" path="res://assets/wallpapers/main menu wallpaper.png" id="3_mdp32"]
+[ext_resource type="Texture2D" uid="uid://cd6cujv87bvkg" path="res://assets/buttons/green button pressed.png" id="4_0l8wx"]
 [ext_resource type="AudioStream" uid="uid://de4jmeyn52rs1" path="res://assets/sound effects/main menu music.mp3" id="4_0qgbs"]
+[ext_resource type="Texture2D" uid="uid://cq5r5ona180xk" path="res://assets/buttons/green button.png" id="4_adu2g"]
+[ext_resource type="Texture2D" uid="uid://crrfh4c5m6sg8" path="res://assets/buttons/green button hover.png" id="5_n5jej"]
+[ext_resource type="Texture2D" uid="uid://hj22l7smgkba" path="res://assets/buttons/red button.png" id="7_2r307"]
+[ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="7_agesy"]
+[ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="7_omq0y"]
+[ext_resource type="PackedScene" uid="uid://cbk7c6y5t6qgi" path="res://Scenes/MiniCar/mini_car.tscn" id="12_rlg4b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adu2g"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l8wx"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n5jej"]
+texture = ExtResource("4_0l8wx")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0qgbs"]
 
@@ -17,70 +26,82 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r307"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qgdf6"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2r307"]
+texture = ExtResource("5_n5jej")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omq0y"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agesy"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_omq0y"]
+texture = ExtResource("4_0l8wx")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mdp32"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v763k"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0l8wx"]
+texture = ExtResource("4_adu2g")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5buf"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6c6cs"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l8wx"]
 
-[sub_resource type="Animation" id="Animation_qgdf6"]
-resource_name = "play button anim"
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rlg4b"]
+texture = ExtResource("7_agesy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdp32"]
+texture = ExtResource("7_omq0y")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_agesy"]
+texture = ExtResource("7_2r307")
+
+[sub_resource type="Animation" id="Animation_agesy"]
+resource_name = "words anim"
 length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayButton:rotation")
+tracks/0/path = NodePath("GameTitle:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [-0.174533, 0.174533]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ExitButton:rotation")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.174533, 0.174533]
+"values": [-0.0523599, 0.0523599, -0.0523599]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_0qgbs"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mdp32"]
 _data = {
-&"play button anim": SubResource("Animation_qgdf6")
+&"words anim": SubResource("Animation_agesy")
 }
 
-[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_PlayButton", "_ExitButton")]
+[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_MiniCarContainer")]
 script = ExtResource("1_v763k")
+_Marker1 = NodePath("Marker2D")
+_Marker2 = NodePath("Marker2D2")
+_Marker3 = NodePath("Marker2D3")
+_Marker4 = NodePath("Marker2D4")
+_Marker5 = NodePath("Marker2D5")
 _PlayButton = NodePath("PlayButton")
 _ExitButton = NodePath("ExitButton")
 _GameScene = ExtResource("2_0qgbs")
+_MiniCarScene = ExtResource("12_rlg4b")
+_SpawnMiniCarTimer = NodePath("Timer")
+_MiniCarContainer = NodePath("MiniCarContainer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(500, 350)
+scale = Vector2(4, 4)
+texture = ExtResource("3_mdp32")
+metadata/_edit_lock_ = true
 
 [node name="PlayButton" type="Button" parent="."]
 z_index = 3
 texture_filter = 1
-offset_left = 425.0
+offset_left = 340.0
 offset_top = 250.0
-offset_right = 575.0
-offset_bottom = 338.0
-rotation = -0.174533
+offset_right = 690.0
+offset_bottom = 355.0
 pivot_offset = Vector2(75, 40)
 theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
@@ -90,21 +111,30 @@ theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
 theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
 theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_n5jej")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_qgdf6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2r307")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_agesy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_omq0y")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_v763k")
-text = "Play"
+theme_override_styles/normal = SubResource("StyleBoxTexture_0l8wx")
+metadata/_edit_lock_ = true
 
-[node name="PlayButtonOutline" type="Label" parent="PlayButton"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="PlayButtonLabel" type="Label" parent="PlayButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -44.0
+offset_right = 75.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -112,14 +142,15 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
 text = "Play"
+metadata/_edit_lock_ = true
 
 [node name="ExitButton" type="Button" parent="."]
+z_index = 3
 texture_filter = 1
-offset_left = 425.0
+offset_left = 340.0
 offset_top = 450.0
-offset_right = 581.0
-offset_bottom = 538.0
-rotation = -0.174533
+offset_right = 690.0
+offset_bottom = 555.0
 pivot_offset = Vector2(75, 40)
 theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
@@ -133,17 +164,26 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
 theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
 theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
 theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6c6cs")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rlg4b")
 theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_agesy")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdp32")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_v763k")
-text = "Exit"
+theme_override_styles/normal = SubResource("StyleBoxTexture_agesy")
+metadata/_edit_lock_ = true
 
-[node name="ExitButtonOutline" type="Label" parent="ExitButton"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="ExitButtonLabel" type="Label" parent="ExitButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -44.0
+offset_right = 78.0
+offset_bottom = 44.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -151,6 +191,7 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
 text = "Exit"
+metadata/_edit_lock_ = true
 
 [node name="GameTitle" type="Label" parent="."]
 z_index = 3
@@ -159,7 +200,9 @@ offset_left = 125.0
 offset_top = 50.0
 offset_right = 881.0
 offset_bottom = 239.0
+rotation = -0.0523599
 scale = Vector2(1, 0.992188)
+pivot_offset = Vector2(375, 85)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -168,14 +211,40 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
 text = "Welcome to Vocho's!"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_0qgbs")
-}
-autoplay = "play button anim"
+metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_0qgbs")
 volume_db = -8.0
 autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mdp32")
+}
+autoplay = "words anim"
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-24, 518)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D2" type="Marker2D" parent="."]
+position = Vector2(-24, 554)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D3" type="Marker2D" parent="."]
+position = Vector2(1020, 591)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D4" type="Marker2D" parent="."]
+position = Vector2(-24, 627)
+metadata/_edit_lock_ = true
+
+[node name="Marker2D5" type="Marker2D" parent="."]
+position = Vector2(1020, 663)
+metadata/_edit_lock_ = true
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="MiniCarContainer" type="Node2D" parent="."]

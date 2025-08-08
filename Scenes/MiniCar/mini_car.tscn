@@ -1,0 +1,24 @@
+[gd_scene load_steps=12 format=3 uid="uid://cbk7c6y5t6qgi"]
+
+[ext_resource type="Script" uid="uid://btywdf5axhkhx" path="res://Scenes/MiniCar/MiniCar.cs" id="1_ivldq"]
+[ext_resource type="Texture2D" uid="uid://cudrrr1ogqkl2" path="res://assets/cars/mini cars/mini car.png" id="1_myu4o"]
+[ext_resource type="Texture2D" uid="uid://cv4id87gri6ug" path="res://assets/cars/mini cars/mini car black.png" id="2_rtcth"]
+[ext_resource type="Texture2D" uid="uid://kxcw66kiofhq" path="res://assets/cars/mini cars/mini car blue.png" id="3_cqq1x"]
+[ext_resource type="Texture2D" uid="uid://dfmsfj8ijmktw" path="res://assets/cars/mini cars/mini car grey.png" id="4_cvi4f"]
+[ext_resource type="Texture2D" uid="uid://dhacc8d3ckep8" path="res://assets/cars/mini cars/mini car orange.png" id="5_4fmsg"]
+[ext_resource type="Texture2D" uid="uid://dju4nelbulto4" path="res://assets/cars/mini cars/mini car pink.png" id="6_inrp1"]
+[ext_resource type="Texture2D" uid="uid://d4lw5xp8fes0b" path="res://assets/cars/mini cars/mini car purple.png" id="7_0xpjc"]
+[ext_resource type="Texture2D" uid="uid://dsqvdxycoxcya" path="res://assets/cars/mini cars/mini car red.png" id="8_g34v3"]
+[ext_resource type="Texture2D" uid="uid://cys04ho0pdbrw" path="res://assets/cars/mini cars/mini car sky blue.png" id="9_oyctn"]
+[ext_resource type="Texture2D" uid="uid://bnl3pwoqytueg" path="res://assets/cars/mini cars/mini car yellow.png" id="10_lptnf"]
+
+[node name="MiniCar" type="Node2D" node_paths=PackedStringArray("_MiniCarSprite")]
+script = ExtResource("1_ivldq")
+_MiniCarSprite = NodePath("Sprite2D")
+_MiniCarSkins = Array[Texture2D]([ExtResource("2_rtcth"), ExtResource("3_cqq1x"), ExtResource("4_cvi4f"), ExtResource("5_4fmsg"), ExtResource("6_inrp1"), ExtResource("7_0xpjc"), ExtResource("8_g34v3"), ExtResource("9_oyctn"), ExtResource("10_lptnf"), ExtResource("1_myu4o")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_myu4o")
+flip_h = true
