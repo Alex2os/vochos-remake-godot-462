@@ -8,18 +8,26 @@ public partial class MainMenu : Node2D
 	[Export] private Marker2D _Marker3;
 	[Export] private Marker2D _Marker4;
 	[Export] private Marker2D _Marker5;
+	[Export] private Marker2D _CloudMarker1;
+	[Export] private Marker2D _CloudMarker2;
 	[Export] private Button _PlayButton;
 	[Export] private Button _ExitButton;
 	[Export] private PackedScene _GameScene;
 	[Export] private PackedScene _MiniCarScene;
+	[Export] private PackedScene _CloudScene;
 	[Export] private Timer _SpawnMiniCarTimer;
+	[Export] private Timer _SpawnCloudTimer;
 	[Export] private Node2D _MiniCarContainer;
+	[Export] private Node2D _CloudContainer;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_PlayButton.Pressed += OnPlayButtonPressed;
 		_ExitButton.Pressed += OnExitButtonPressed;
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
+		_SpawnCloudTimer.Timeout += SpawnCloud;
+
+		SpawmStartingCloudDecoration();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -62,5 +70,18 @@ public partial class MainMenu : Node2D
 				mini_car.ChangeSpeedDirection();
 				break;
 		}
+	}
+
+	private void SpawnCloud()
+	{
+		Cloud cloud = (Cloud)_CloudScene.Instantiate();
+		_CloudContainer.AddChild(cloud);
+		float cloud_y = (float)GD.RandRange(_CloudMarker1.Position.Y, _CloudMarker2.Position.Y); // this will be a random position between the two markers in the y axis.
+		cloud.Position = new Vector2(_CloudMarker1.Position.X, cloud_y); // the x of the cloud object will be the same as the markers for the clouds.
+	}
+
+	private void SpawmStartingCloudDecoration()
+	{
+		// to-do
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://m3wero5w5cah"]
+[gd_scene load_steps=32 format=3 uid="uid://m3wero5w5cah"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_uqdog"]
 [ext_resource type="Script" uid="uid://dke6r5m5fn25j" path="res://Scenes/MainMenu/MainMenu.cs" id="1_v763k"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="7_agesy"]
 [ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="7_omq0y"]
 [ext_resource type="PackedScene" uid="uid://cbk7c6y5t6qgi" path="res://Scenes/MiniCar/mini_car.tscn" id="12_rlg4b"]
+[ext_resource type="PackedScene" uid="uid://crnl78esrhtgu" path="res://Scenes/Cloud/cloud.tscn" id="13_w5buf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
 
@@ -74,19 +75,24 @@ _data = {
 &"words anim": SubResource("Animation_agesy")
 }
 
-[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_MiniCarContainer")]
+[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer")]
 script = ExtResource("1_v763k")
-_Marker1 = NodePath("Marker2D")
-_Marker2 = NodePath("Marker2D2")
-_Marker3 = NodePath("Marker2D3")
-_Marker4 = NodePath("Marker2D4")
-_Marker5 = NodePath("Marker2D5")
+_Marker1 = NodePath("MiniCarMarker")
+_Marker2 = NodePath("MiniCarMarker2")
+_Marker3 = NodePath("MiniCarMarker3")
+_Marker4 = NodePath("MiniCarMarker4")
+_Marker5 = NodePath("MiniCarMarker5")
+_CloudMarker1 = NodePath("CloudMarker1")
+_CloudMarker2 = NodePath("CloudMarker2")
 _PlayButton = NodePath("PlayButton")
 _ExitButton = NodePath("ExitButton")
 _GameScene = ExtResource("2_0qgbs")
 _MiniCarScene = ExtResource("12_rlg4b")
-_SpawnMiniCarTimer = NodePath("Timer")
+_CloudScene = ExtResource("13_w5buf")
+_SpawnMiniCarTimer = NodePath("SpawnMiniCarTimer")
+_SpawnCloudTimer = NodePath("SpawnCloudTimer")
 _MiniCarContainer = NodePath("MiniCarContainer")
+_CloudContainer = NodePath("CloudContainer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -224,27 +230,43 @@ libraries = {
 }
 autoplay = "words anim"
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="MiniCarMarker" type="Marker2D" parent="."]
 position = Vector2(-24, 518)
 metadata/_edit_lock_ = true
 
-[node name="Marker2D2" type="Marker2D" parent="."]
+[node name="MiniCarMarker2" type="Marker2D" parent="."]
 position = Vector2(-24, 554)
 metadata/_edit_lock_ = true
 
-[node name="Marker2D3" type="Marker2D" parent="."]
+[node name="MiniCarMarker3" type="Marker2D" parent="."]
 position = Vector2(1020, 591)
 metadata/_edit_lock_ = true
 
-[node name="Marker2D4" type="Marker2D" parent="."]
+[node name="MiniCarMarker4" type="Marker2D" parent="."]
 position = Vector2(-24, 627)
 metadata/_edit_lock_ = true
 
-[node name="Marker2D5" type="Marker2D" parent="."]
+[node name="MiniCarMarker5" type="Marker2D" parent="."]
 position = Vector2(1020, 663)
 metadata/_edit_lock_ = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="SpawnMiniCarTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="SpawnCloudTimer" type="Timer" parent="."]
+wait_time = 8.0
 autostart = true
 
 [node name="MiniCarContainer" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CloudContainer" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CloudMarker1" type="Marker2D" parent="."]
+position = Vector2(-150, 20)
+metadata/_edit_lock_ = true
+
+[node name="CloudMarker2" type="Marker2D" parent="."]
+position = Vector2(-150, 230)
+metadata/_edit_lock_ = true
