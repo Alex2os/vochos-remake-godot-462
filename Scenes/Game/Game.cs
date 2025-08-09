@@ -6,7 +6,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
-	[Export] private NodePath _ShopScenePath;
+	[Export] private PackedScene _ShopScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -29,10 +29,12 @@ public partial class Game : Node2D
 	[Export] private NodePath _CarStartingPath;
 	[Export] private NodePath _CoinSoundPath;
 	[Export] private NodePath _GameMusicPath;
+	[Export] private NodePath _ShopAvailableTimerPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
 	private Timer _CoinTimer;
+	private Timer _ShopAvailableTimer;
 	private Node2D _EnemyContainer;
 	private Node2D _RoadContainer;
 	private Node2D _CoinContainer;
@@ -51,13 +53,12 @@ public partial class Game : Node2D
 	private AudioStreamPlayer _GameMusic;
 	private Button _MainMenuButton;
 	private SpeedingGame _SpeedingGame;
-	private Shop _ShopScene;
 	private player _Player;
 	private int _EnemySpeed = 200; // default enemy speed
 	private int _TotalScore = 0; // score for the game
 	private int _TotalCoins = 0;// total coins that the player has collected throughout the game
 	private int _LeftCoins = 0; // coins that the user actually has. this value can be modified if the user buys things in the (future) shop
-	private bool _ShopActive;
+	private bool _ShopAvailable = false;
 	private bool _GameOver = false;
 	private string _MainMenuScene = "res://Scenes/MainMenu/main_menu.tscn"; // should fix this later --> changing this to an export of type packedscene will cause trouble. so better to use this string as path to the scene.
 
@@ -87,6 +88,7 @@ public partial class Game : Node2D
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
 		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
 		_MainMenuButton = GetNode<Button>(_MainMenuButtonPath);
+		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -94,6 +96,7 @@ public partial class Game : Node2D
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
+		_ShopAvailableTimer.Timeout += OnShopAvailable;
 
 		GameStarted();
 
@@ -106,7 +109,7 @@ public partial class Game : Node2D
 		if (_GameOver && Input.IsActionJustPressed("restart")) RestartGame();
 
 		// going to shop if available
-		if (_ShopActive && Input.IsActionJustPressed("use shop")) ;
+		if (_ShopAvailable && Input.IsActionJustPressed("use shop")) ;
 
 	}
 
@@ -267,5 +270,12 @@ public partial class Game : Node2D
 	private void OnMainMenuButtonPressed()
 	{
 		GetTree().ChangeSceneToFile(_MainMenuScene);
+	}
+
+	private void OnShopAvailable()
+	{
+		GD.Print("shop available!");
+		_ShopAvailableTimer.Stop();
+		_ShopAvailable = true;
 	}
 }

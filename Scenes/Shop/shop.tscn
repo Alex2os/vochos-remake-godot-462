@@ -715,36 +715,41 @@ texture_filter = 1
 position = Vector2(846, 380)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryFrame2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(846, 510)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryFrame3" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(846, 640)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk1" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(846, 375)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(846, 505)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="InventoryPerk3" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(846, 635)
 scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
 
 [node name="SellInventoryPerk1" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 offset_left = 901.0
 offset_top = 359.0
@@ -789,7 +794,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SellInventoryPerk2" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 offset_left = 901.0
 offset_top = 490.0
@@ -834,7 +838,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SellInventoryPerk3" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
 texture_filter = 1
 offset_left = 901.0
 offset_top = 620.0

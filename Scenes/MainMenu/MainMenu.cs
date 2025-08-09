@@ -27,7 +27,7 @@ public partial class MainMenu : Node2D
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
 		_SpawnCloudTimer.Timeout += SpawnCloud;
 
-		SpawmStartingCloudDecoration();
+		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -78,10 +78,5 @@ public partial class MainMenu : Node2D
 		_CloudContainer.AddChild(cloud);
 		float cloud_y = (float)GD.RandRange(_CloudMarker1.Position.Y, _CloudMarker2.Position.Y); // this will be a random position between the two markers in the y axis.
 		cloud.Position = new Vector2(_CloudMarker1.Position.X, cloud_y); // the x of the cloud object will be the same as the markers for the clouds.
-	}
-
-	private void SpawmStartingCloudDecoration()
-	{
-		// to-do
 	}
 }

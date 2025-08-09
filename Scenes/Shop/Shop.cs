@@ -199,17 +199,14 @@ public partial class Shop : Node2D
 		{
 			case 0:
 				_InventoryPerk1.Texture = _PerksTextureMedium[_PerkChosenInShop];
-				_SellPerk1Button.Modulate = new Color(1, 1, 1, 1); // we show the buttons when a perk can be sold.
 				_SellPerk1Button.Disabled = false;
 				break;
 			case 1:
 				_InventoryPerk2.Texture = _PerksTextureMedium[_PerkChosenInShop];
-				_SellPerk2Button.Modulate = new Color(1, 1, 1, 1);
 				_SellPerk2Button.Disabled = false;
 				break;
 			case 2:
 				_InventoryPerk3.Texture = _PerksTextureMedium[_PerkChosenInShop];
-				_SellPerk3Button.Modulate = new Color(1, 1, 1, 1);
 				_SellPerk3Button.Disabled = false;
 				break;
 		}
@@ -252,17 +249,14 @@ public partial class Shop : Node2D
 		switch (_PerkSlot) {
 			case 0:
 				_InventoryPerk1.Texture = null; // this puts no texture in the sprite. so when a perk is sold, there's no texture to show as there's no perk.
-				_SellPerk1Button.Modulate = new Color(0, 0, 0, 0);
 				_SellPerk1Button.Disabled = true;
 				break;
 			case 1:
 			    _InventoryPerk2.Texture = null;
-				_SellPerk2Button.Modulate = new Color(0, 0, 0, 0);
 				_SellPerk2Button.Disabled = true;
 				break;
 			case 2:
 				_InventoryPerk3.Texture = null;
-				_SellPerk3Button.Modulate = new Color(0, 0, 0, 0);
 				_SellPerk3Button.Disabled = true;
 				break;
 		}
