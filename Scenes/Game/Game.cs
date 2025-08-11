@@ -313,13 +313,11 @@ public partial class Game : Node2D
 
 		if (_ComingFromShop)
 		{
-			GD.Print("true!");
 			GameManager.Instance.ComingFromShop = false; // we reassign the variable so there's no trouble if the game is restarted again.
 			_ComingFromShop = GameManager.Instance.ComingFromShop; 
 			return true; // if the player is coming from shop, returns true
 		}
-
-		GD.Print("false");
+		
 		return false; // if the player doesn't come from shop, returns false.
 	}
 

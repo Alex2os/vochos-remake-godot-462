@@ -83,6 +83,9 @@ public partial class Shop : Node2D
 		_SellPerk3Button.Pressed += OnSellPerk3Button;
 
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
+
+		GetGlobalPerks(); // in this function we get the perks from the playervariables autoload so we have them here in the shop.
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -122,10 +125,12 @@ public partial class Shop : Node2D
 	{
 		// logic for when the shop is left
 		GD.Print("leaving shop!");
-		_ClickButtonSound.Play();
 
 		GameManager.Instance.ComingFromShop = true; // we are leaving the shop, so comingfromshop has to be true.
+		UpdateGlobalPerks(); // now, with this function we update the global perks from what we got from the shop.
 
+		_ClickButtonSound.Play();
+		
 		GameManager.Instance.ChangeSceneToGame();
 	}
 
@@ -196,6 +201,7 @@ public partial class Shop : Node2D
 
 	private void AssignInventoryPerk(int _PerkChosenInShop, int _InventorySlot)
 	{
+		// the assignment of the id of the perk will be redundant if called when entered the shop. (should fix this later)
 		_PlayerInventory[_InventorySlot] = _PerkChosenInShop; // this assigns the id of the perk chosen in the shop. we need this here as playerinv[i] will not be the same as perkschosen[i]
 		switch (_InventorySlot) // this is to assign the texture of the perk
 		{
@@ -248,13 +254,14 @@ public partial class Shop : Node2D
 	{
 		_PlayerInventory[_PerkSlot] = -1; // assign the id to the player inventory, because it was sold. 
 
-		switch (_PerkSlot) {
+		switch (_PerkSlot)
+		{
 			case 0:
 				_InventoryPerk1.Texture = null; // this puts no texture in the sprite. so when a perk is sold, there's no texture to show as there's no perk.
 				_SellPerk1Button.Disabled = true;
 				break;
 			case 1:
-			    _InventoryPerk2.Texture = null;
+				_InventoryPerk2.Texture = null;
 				_SellPerk2Button.Disabled = true;
 				break;
 			case 2:
@@ -262,5 +269,24 @@ public partial class Shop : Node2D
 				_SellPerk3Button.Disabled = true;
 				break;
 		}
+	}
+
+	private void GetGlobalPerks()
+	{
+		for (int i = 0; i < _PlayerInventory.Length; i++)
+		{
+			_PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
+			// as we need to assign the texture of the perk too, we send it to this function:
+
+			if (_PlayerInventory[i] == -1) ; // we do this to prevent errors in the assigninventoryperk function, as it can be that the inventory contains -1, and that's out of the index bound of any array.
+			else AssignInventoryPerk(_PlayerInventory[i], i);
+		}
+
+
+	}
+
+	private void UpdateGlobalPerks()
+	{
+		for (int i = 0; i < _PlayerInventory.Length; i++) PlayerVariables.Instance.PlayerInventory[i] = _PlayerInventory[i];
 	}
 }
