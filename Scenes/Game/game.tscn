@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qdh73vj2guf7"]
+[gd_scene load_steps=15 format=3 uid="uid://qdh73vj2guf7"]
 
 [ext_resource type="PackedScene" uid="uid://tpxiid8lmksk" path="res://Scenes/Player/player.tscn" id="1_mv0hc"]
 [ext_resource type="Script" uid="uid://npn0ytnyrjeb" path="res://Scenes/Game/Game.cs" id="1_qikps"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://5a60j6m0dic3" path="res://Scenes/Coin/coin.tscn" id="4_flgk0"]
 [ext_resource type="PackedScene" uid="uid://c6ohjdcr3ic4v" path="res://Scenes/CarEnemy/car_enemy.tscn" id="4_i1e5p"]
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="5_ciybh"]
-[ext_resource type="PackedScene" uid="uid://bki1v5suxdqjl" path="res://Scenes/Shop/shop.tscn" id="5_oejk7"]
 [ext_resource type="AudioStream" uid="uid://7d7g8a002n0x" path="res://assets/sound effects/car crash.mp3" id="7_vifcx"]
 [ext_resource type="AudioStream" uid="uid://b1jo4bs2srhcu" path="res://assets/sound effects/car starting.mp3" id="8_xfil1"]
 [ext_resource type="AudioStream" uid="uid://c7cedjeffbdse" path="res://assets/sound effects/game music.mp3" id="9_huoen"]
@@ -28,7 +27,6 @@ script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
 _CarEnemyScene = ExtResource("4_i1e5p")
 _CoinScene = ExtResource("4_flgk0")
-_ShopScene = ExtResource("5_oejk7")
 _SpeedingGamePath = NodePath("SpeedingGame")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")

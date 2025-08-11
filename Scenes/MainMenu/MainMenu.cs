@@ -12,7 +12,6 @@ public partial class MainMenu : Node2D
 	[Export] private Marker2D _CloudMarker2;
 	[Export] private Button _PlayButton;
 	[Export] private Button _ExitButton;
-	[Export] private PackedScene _GameScene;
 	[Export] private PackedScene _MiniCarScene;
 	[Export] private PackedScene _CloudScene;
 	[Export] private Timer _SpawnMiniCarTimer;
@@ -37,7 +36,7 @@ public partial class MainMenu : Node2D
 
 	private void OnPlayButtonPressed()
 	{
-		GetTree().ChangeSceneToPacked(_GameScene); // change the scene to the game scene
+		GameManager.Instance.ChangeSceneToGame(); // change the scene to the game scene
 	}
 
 	private void OnExitButtonPressed()

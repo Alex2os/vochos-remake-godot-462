@@ -6,7 +6,6 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
-	[Export] private PackedScene _ShopScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -54,13 +53,16 @@ public partial class Game : Node2D
 	private Button _MainMenuButton;
 	private SpeedingGame _SpeedingGame;
 	private player _Player;
-	private int _EnemySpeed = 200; // default enemy speed
-	private int _TotalScore = 0; // score for the game
-	private int _TotalCoins = 0;// total coins that the player has collected throughout the game
-	private int _LeftCoins = 0; // coins that the user actually has. this value can be modified if the user buys things in the (future) shop
+
+	// initialize all the variables.
+	private int _TotalScore;
+	private int _EnemySpeed;
+	private int _LeftCoins;
+	private int _TotalCoins;
+	private bool _ComingFromShop;
+	private int[] _PlayerInventory = new int[] { -1, -1, -1 };
 	private bool _ShopAvailable = false;
 	private bool _GameOver = false;
-	private string _MainMenuScene = "res://Scenes/MainMenu/main_menu.tscn"; // should fix this later --> changing this to an export of type packedscene will cause trouble. so better to use this string as path to the scene.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -109,7 +111,7 @@ public partial class Game : Node2D
 		if (_GameOver && Input.IsActionJustPressed("restart")) RestartGame();
 
 		// going to shop if available
-		if (_ShopAvailable && Input.IsActionJustPressed("use shop")) ;
+		if (_ShopAvailable && Input.IsActionJustPressed("use shop")) GameManager.Instance.ChangeSceneToShop();
 
 	}
 
@@ -183,16 +185,21 @@ public partial class Game : Node2D
 
 	private void OnEnemyDestroyed()
 	{
+		PlayerVariables.Instance.PlayerScore++;
+		_TotalScore = PlayerVariables.Instance.PlayerScore; // every time a enemy dies/gets destroyed, a point gets added to the total score
 
-		_TotalScore++; // every time a enemy dies/gets destroyed, a point gets added to the total score
 		_ScoreLabel.Text = _TotalScore.ToString();
 
 	}
 
 	private void OnCoinHitsPlayer()
 	{
-		_TotalCoins++; // total coins are the coins obtained in general in all of the game
-		_LeftCoins++; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
+		PlayerVariables.Instance.PlayerCoins++; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
+		_LeftCoins = PlayerVariables.Instance.PlayerCoins;
+
+		PlayerVariables.Instance.PlayerTotalCoins++; // total coins are the coins obtained in general in all of the game
+		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins++;
+
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
 		_CoinSound.Play();
 	}
@@ -211,7 +218,6 @@ public partial class Game : Node2D
 	{
 
 		_GameOver = false;
-		_EnemySpeed = 200; // reset enemy speed
 
 		// cleaning the labels so they don't show the prior score
 		_CoinLabel.Text = "$0";
@@ -247,9 +253,7 @@ public partial class Game : Node2D
 
 	void GameStarted()
 	{
-		_TotalCoins = 0;
-		_LeftCoins = 0;
-		_TotalScore = 0;
+		AssignGameVariables();
 
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 		_CarStarting.Play();
@@ -262,14 +266,16 @@ public partial class Game : Node2D
 		GD.Print("speeding the game!");
 
 		// increase the speeds for enemies.
-		_EnemySpeed += 30;
+		EnemyManager.Instance.EnemySpeed += 30;
+		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+
 		// adjust the new speed for all the existing enemy objects
 		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
 	}
 
 	private void OnMainMenuButtonPressed()
 	{
-		GetTree().ChangeSceneToFile(_MainMenuScene);
+		GameManager.Instance.ChangeSceneToMainMenu();
 	}
 
 	private void OnShopAvailable()
@@ -277,5 +283,50 @@ public partial class Game : Node2D
 		GD.Print("shop available!");
 		_ShopAvailableTimer.Stop();
 		_ShopAvailable = true;
+	}
+
+	// in the function below we initialize all the variables from the singleton/autoload
+	private void AssignGameVariables()
+	{
+		if (CheckComingFromShop()) ; // if the function returns true (which is the case when the player is coming from the shop) the game doesn't initialize the variables again.
+		else InitializeGameVariables(); // otherwise, the program will initialize (start from the predetermined start values) all the variables. and then, the predetermined values wiil be assigned again in this function.
+		// at the same time, we update the inventory and the leftcoins if coming from the shop in this same function, without having to do another one.
+
+		// player
+		_TotalScore = PlayerVariables.Instance.PlayerScore;
+		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+		_LeftCoins = PlayerVariables.Instance.PlayerCoins;
+		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins;
+
+		// game manager variables
+		_ComingFromShop = GameManager.Instance.ComingFromShop;
+
+		// player inventory
+		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
+		// enemy
+		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+	}
+
+	private bool CheckComingFromShop()
+	{
+		_ComingFromShop = GameManager.Instance.ComingFromShop; // this is a variable to check whether the player is coming from the shop or not.
+
+		if (_ComingFromShop)
+		{
+			GD.Print("true!");
+			GameManager.Instance.ComingFromShop = false; // we reassign the variable so there's no trouble if the game is restarted again.
+			_ComingFromShop = GameManager.Instance.ComingFromShop; 
+			return true; // if the player is coming from shop, returns true
+		}
+
+		GD.Print("false");
+		return false; // if the player doesn't come from shop, returns false.
+	}
+
+	private void InitializeGameVariables()
+	{
+		PlayerVariables.Instance.InitializePlayerVariables();
+		EnemyManager.Instance.InitializeEnemyVariables();
+		GameManager.Instance.InitializeGameManagerVariables();
 	}
 }

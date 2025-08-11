@@ -43,7 +43,6 @@ public partial class Shop : Node2D
 	[Export] private AnimationPlayer _NotEnoughAnimations;
 	[Export] private AudioStreamPlayer _RerollShopSound;
 	[Export] private AudioStreamPlayer _ClickButtonSound;
-	[Signal] public delegate void InventoryUpdatedEventHandler(int perk1, int perk2, int perk3);
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -123,8 +122,11 @@ public partial class Shop : Node2D
 	{
 		// logic for when the shop is left
 		GD.Print("leaving shop!");
-		EmitSignal(SignalName.InventoryUpdated, _PlayerInventory[0], _PlayerInventory[1], _PlayerInventory[2]);
 		_ClickButtonSound.Play();
+
+		GameManager.Instance.ComingFromShop = true; // we are leaving the shop, so comingfromshop has to be true.
+
+		GameManager.Instance.ChangeSceneToGame();
 	}
 
 	public void OnBuyPerk1Button()

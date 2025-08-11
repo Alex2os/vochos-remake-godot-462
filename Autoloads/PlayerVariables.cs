@@ -1,0 +1,35 @@
+using Godot;
+using System;
+
+public partial class PlayerVariables : Node
+{
+	public static PlayerVariables Instance { get; private set; }
+
+	public int PlayerCoins = 0; // 0 by default
+	public int PlayerTotalCoins = 0;
+	public int PlayerScore = 0; // 0 by default
+	public int[] PlayerInventory = new int[] { -1, -1, -1 }; // main player inventory.
+
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+		Instance = this; // remember to initialize the instance, otherwise it will not work as an object/instance itself.
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+
+
+
+	public void InitializePlayerVariables()
+	{
+		PlayerCoins = 0;
+		PlayerTotalCoins = 0;
+		PlayerScore = 0;
+
+		// we empty the player inventory
+		for (int i =0; i<PlayerInventory.Length; i++) PlayerInventory[i] = -1;
+	}
+}
