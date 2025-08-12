@@ -29,6 +29,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinSoundPath;
 	[Export] private NodePath _GameMusicPath;
 	[Export] private NodePath _ShopAvailableTimerPath;
+	[Export] private NodePath _InventoryInGamePath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -37,6 +38,7 @@ public partial class Game : Node2D
 	private Node2D _EnemyContainer;
 	private Node2D _RoadContainer;
 	private Node2D _CoinContainer;
+	private InventoryInGame _InventoryInGame;
 	private Marker2D _EnemyMarkerRight;
 	private Marker2D _EnemyMarkerLeft;
 	private Marker2D _SpawningRoadMarker;
@@ -91,6 +93,7 @@ public partial class Game : Node2D
 		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
 		_MainMenuButton = GetNode<Button>(_MainMenuButtonPath);
 		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
+		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -254,6 +257,7 @@ public partial class Game : Node2D
 	void GameStarted()
 	{
 		AssignGameVariables();
+		UpdateLabels(); // this function is used for when the user comes from the shop, to re-update the labels that contain the user's score and money.
 
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 		_CarStarting.Play();
@@ -290,7 +294,7 @@ public partial class Game : Node2D
 	{
 		if (CheckComingFromShop()) ; // if the function returns true (which is the case when the player is coming from the shop) the game doesn't initialize the variables again.
 		else InitializeGameVariables(); // otherwise, the program will initialize (start from the predetermined start values) all the variables. and then, the predetermined values wiil be assigned again in this function.
-		// at the same time, we update the inventory and the leftcoins if coming from the shop in this same function, without having to do another one.
+										// at the same time, we update the inventory, the inventory's perks textures and the leftcoins if coming from the shop in this same function, without having to do another one.
 
 		// player
 		_TotalScore = PlayerVariables.Instance.PlayerScore;
@@ -303,6 +307,8 @@ public partial class Game : Node2D
 
 		// player inventory
 		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
+
+		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
 		// enemy
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 	}
@@ -314,10 +320,11 @@ public partial class Game : Node2D
 		if (_ComingFromShop)
 		{
 			GameManager.Instance.ComingFromShop = false; // we reassign the variable so there's no trouble if the game is restarted again.
-			_ComingFromShop = GameManager.Instance.ComingFromShop; 
+			_ComingFromShop = GameManager.Instance.ComingFromShop;
+
 			return true; // if the player is coming from shop, returns true
 		}
-		
+
 		return false; // if the player doesn't come from shop, returns false.
 	}
 
@@ -326,5 +333,12 @@ public partial class Game : Node2D
 		PlayerVariables.Instance.InitializePlayerVariables();
 		EnemyManager.Instance.InitializeEnemyVariables();
 		GameManager.Instance.InitializeGameManagerVariables();
+	}
+
+	// this function is used for when the user comes from the shop. 
+	private void UpdateLabels()
+	{
+		_ScoreLabel.Text = _TotalScore.ToString();
+		_CoinLabel.Text = "$" + _LeftCoins.ToString();
 	}
 }

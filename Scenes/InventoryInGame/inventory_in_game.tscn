@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtmrlqgb3yi51"]
+
+[ext_resource type="Texture2D" uid="uid://b118pxp7fdpt4" path="res://assets/perks/small sizes/perks frame small.png" id="1_hd1na"]
+[ext_resource type="Script" uid="uid://ca5rmfamc5u7j" path="res://Scenes/InventoryInGame/InventoryInGame.cs" id="1_xnsrq"]
+
+[node name="InventoryInGame" type="Node2D" node_paths=PackedStringArray("Perk1", "Perk2", "Perk3")]
+script = ExtResource("1_xnsrq")
+Perk1 = NodePath("Perk1")
+Perk2 = NodePath("Perk2")
+Perk3 = NodePath("Perk3")
+
+[node name="Perk1Frame" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 200)
+scale = Vector2(4, 4)
+texture = ExtResource("1_hd1na")
+metadata/_edit_lock_ = true
+
+[node name="Perk2Frame" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 300)
+scale = Vector2(4, 4)
+texture = ExtResource("1_hd1na")
+metadata/_edit_lock_ = true
+
+[node name="Perk3Frame" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 400)
+scale = Vector2(4, 4)
+texture = ExtResource("1_hd1na")
+metadata/_edit_lock_ = true
+
+[node name="Perk1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 200)
+scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="Perk2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 300)
+scale = Vector2(4, 4)
+metadata/_edit_lock_ = true
+
+[node name="Perk3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(42, 400)
+scale = Vector2(4, 4)
+metadata/_edit_lock_ = true

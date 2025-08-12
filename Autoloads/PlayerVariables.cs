@@ -8,6 +8,7 @@ public partial class PlayerVariables : Node
 	public int PlayerCoins = 0; // 0 by default
 	public int PlayerTotalCoins = 0;
 	public int PlayerScore = 0; // 0 by default
+	public static int PlayerInventorySize = 3;
 	public int[] PlayerInventory = new int[] { -1, -1, -1 }; // main player inventory.
 
 	// Called when the node enters the scene tree for the first time.
