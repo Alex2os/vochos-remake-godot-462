@@ -10,6 +10,31 @@ public partial class GameManager : Node
 	private PackedScene _ShopScene = GD.Load<PackedScene>("res://Scenes/Shop/shop.tscn");
 
 	public bool ComingFromShop = false;
+	// number of perks in the game
+	public const int NumberOfPerks = 6;
+
+	// names of the perks
+	public static readonly string[] PerksNames = new string[6] { "Shield",
+		"Extra Life",
+		"Double Points",
+		"Bullet",
+		"Double Money",
+		"Slow Time" };
+
+
+	// the prices of the perks
+	public static readonly int[] PerksPrices = new int[] {
+		7,
+		8,
+		6,
+		6,
+		10,
+		7
+	};
+
+	public int RerollShopCost = 1;
+
+
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()

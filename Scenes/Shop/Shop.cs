@@ -8,17 +8,9 @@ public partial class Shop : Node2D
 	// array for all the perks medium-size textures
 	private static Texture2D[] _PerksTextureMedium;
 
-	// number of perks in the game
-	private const int _NumberOfPerks = 6;
 	// array to choose the perks
 	private int[] _PerksChosen = new int[3];
 	// array of strings that are the perk's names
-	private string[] _PerksNames = new string[6] { "Shield",
-		"Extra Life",
-		"Double Points",
-		"Bullet",
-		"Double Money",
-		"Slow Time" };
 
 	// player inventory for the perks
 	private int[] _PlayerInventory = new int[3] { -1, -1, -1 }; // if any index = -1, then it means there's perk in that slot.
@@ -32,6 +24,11 @@ public partial class Shop : Node2D
 	[Export] private Label _Perk1Label;
 	[Export] private Label _Perk2Label;
 	[Export] private Label _Perk3Label;
+	[Export] private Label _Perk1CostLabel;
+	[Export] private Label _Perk2CostLabel;
+	[Export] private Label _Perk3CostLabel;
+	[Export] private Label _ActualMoneyLabel;
+	[Export] private Label _RerollShopCostLabel;
 	[Export] private Button _RerollShopButton;
 	[Export] private Button _LeaveShopButton;
 	[Export] private Button _BuyPerk1Button;
@@ -82,6 +79,11 @@ public partial class Shop : Node2D
 		_SellPerk2Button.Pressed += OnSellPerk2Button;
 		_SellPerk3Button.Pressed += OnSellPerk3Button;
 
+		_ActualMoneyLabel.Text = "Money: " + PlayerVariables.Instance.PlayerCoins.ToString(); // we assign the actual coins the player has in this label
+
+		GameManager.Instance.RerollShopCost = 1;
+		_RerollShopCostLabel.Text = "$" + GameManager.Instance.RerollShopCost; // we assign the cost of the reroll to the label. this cost will always be reinitialized when entering the shop.
+
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
 
 		GetGlobalPerks(); // in this function we get the perks from the playervariables autoload so we have them here in the shop.
@@ -97,26 +99,39 @@ public partial class Shop : Node2D
 	private void ChoosePerks()
 	{
 		// the amount of perks per shop will be 3.
-		for (int i = 0; i < 3; i++) _PerksChosen[i] = (int)GD.RandRange(0, _NumberOfPerks - 1); // this will choose between 1 of the six perks that are in the game.
+		for (int i = 0; i < 3; i++) _PerksChosen[i] = (int)GD.RandRange(0, GameManager.NumberOfPerks - 1); // this will choose between 1 of the six perks that are in the game.
 
 		_Perk1.Texture = _PerksTexture[_PerksChosen[0]];
 		_Perk2.Texture = _PerksTexture[_PerksChosen[1]];
 		_Perk3.Texture = _PerksTexture[_PerksChosen[2]];
-		_Perk1Label.Text = _PerksNames[_PerksChosen[0]];
-		_Perk2Label.Text = _PerksNames[_PerksChosen[1]];
-		_Perk3Label.Text = _PerksNames[_PerksChosen[2]];
+		_Perk1Label.Text = GameManager.PerksNames[_PerksChosen[0]];
+		_Perk2Label.Text = GameManager.PerksNames[_PerksChosen[1]];
+		_Perk3Label.Text = GameManager.PerksNames[_PerksChosen[2]];
+		_Perk1CostLabel.Text = "$" + GameManager.PerksPrices[_PerksChosen[0]].ToString();
+		_Perk2CostLabel.Text = "$" + GameManager.PerksPrices[_PerksChosen[1]].ToString();
+		_Perk3CostLabel.Text = "$" + GameManager.PerksPrices[_PerksChosen[2]].ToString();
 	}
 
 	public void OnRerollShopButtonPressed()
 	{
 		// here should be the logic to substract certain amount of money to the user for each reroll.
 		GD.Print("rerolling shop");
-		ChoosePerks();
+		if (CheckPlayerMoneyReroll())
+		{
+			ChoosePerks();
 
-		// re-enable the buttons so they can be pressed again (in case they were pressed and bought some perks)
-		_BuyPerk1Button.Disabled = false;
-		_BuyPerk2Button.Disabled = false;
-		_BuyPerk3Button.Disabled = false;
+			// re-enable the buttons so they can be pressed again (in case they were pressed and bought some perks)
+			_BuyPerk1Button.Disabled = false;
+			_BuyPerk2Button.Disabled = false;
+			_BuyPerk3Button.Disabled = false;
+
+			PlayerVariables.Instance.PlayerCoins -= GameManager.Instance.RerollShopCost++; // we substract the reroll cost to the player coins.
+			_ActualMoneyLabel.Text = "Money: " + PlayerVariables.Instance.PlayerCoins.ToString(); // we update the money label here too.
+
+			GameManager.Instance.RerollShopCost++; // every reroll we increment the value of the rerolling cost.
+			_RerollShopCostLabel.Text = "$" + GameManager.Instance.RerollShopCost; // we update the reroll cost label with the new cost
+		}
+		else _NotEnoughAnimations.Play("not enough money");
 
 		_RerollShopSound.Play();
 	}
@@ -130,7 +145,7 @@ public partial class Shop : Node2D
 		UpdateGlobalPerks(); // now, with this function we update the global perks from what we got from the shop.
 
 		_ClickButtonSound.Play();
-		
+
 		GameManager.Instance.ChangeSceneToGame();
 	}
 
@@ -139,12 +154,13 @@ public partial class Shop : Node2D
 		GD.Print("buying perk1");
 		_ClickButtonSound.Play();
 
-		if (CheckInventorySpace(_PerksChosen[0]) == 1) // if the perk is bought, change the text, id and texture.
+		if (CheckInventorySpace(_PerksChosen[0])) // if the perk is bought, change the text, id and texture.
 		{
 			_Perk1.Texture = null;
 			_Perk1Label.Text = "Sold!";
 			_PerksChosen[0] = -1;
 			_BuyPerk1Button.Disabled = true; // this disables the button to be pressed.
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[0]]; // here we substract the price from the player coins if the perk can be bought
 		}
 	}
 
@@ -153,12 +169,13 @@ public partial class Shop : Node2D
 		GD.Print("buying perk2");
 		_ClickButtonSound.Play();
 
-		if (CheckInventorySpace(_PerksChosen[1]) == 1)
+		if (CheckInventorySpace(_PerksChosen[1]))
 		{
 			_Perk2.Texture = null;
 			_Perk2Label.Text = "Sold!";
 			_PerksChosen[1] = -1;
 			_BuyPerk2Button.Disabled = true;
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[1]];
 		}
 
 	}
@@ -168,35 +185,50 @@ public partial class Shop : Node2D
 		GD.Print("buying perk3");
 		_ClickButtonSound.Play();
 
-		if (CheckInventorySpace(_PerksChosen[2]) == 1)
+		if (CheckInventorySpace(_PerksChosen[2]))
 		{
 			_Perk3.Texture = null;
 			_Perk3Label.Text = "Sold!";
 			_PerksChosen[2] = -1;
 			_BuyPerk3Button.Disabled = true;
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[2]];
 		}
 	}
 
-	public int CheckInventorySpace(int _PerkChosenInShop)
+	public bool CheckInventorySpace(int _PerkChosenInShop)
 	{
 		bool _SpaceNotAvailable = true;
+		bool _NotEnoughMoney = true;
 
 		for (int i = 0; i < 3; i++)
 		{
 			if (_PlayerInventory[i] == -1) // if the player inventory has a free slot
 			{
 				_SpaceNotAvailable = false; // this is not to trigger the notenoughspace animation
-				AssignInventoryPerk(_PerkChosenInShop, i); // here we assign the inventory perk id and texture
-				break;
+				if (CheckPlayerMoneyPerks(_PerkChosenInShop))
+				{
+					_NotEnoughMoney = false; // this is not to trigger the notenoughmoney animation.
+					AssignInventoryPerk(_PerkChosenInShop, i); // here we assign the inventory perk id and texture
+					break;
+				}
+
+
 			}
 		}
 
-		if (_SpaceNotAvailable)
+		if (_SpaceNotAvailable) // not  enough space animation
 		{
 			_NotEnoughAnimations.Play("not enough space"); // if there's no space, then the animation will be played
-			return 0; // if the perk can't be bought, this will return 0.
+			return false; // if the perk can't be bought, this will return 0.
 		}
-		else return 1; // in case the user can buy it, returns 1.
+
+		if (_NotEnoughMoney) // not enough money animation
+		{
+			_NotEnoughAnimations.Play("not enough money");
+			return false;
+		}
+
+		else return true; // in case the user can buy it, returns 1.
 	}
 
 	private void AssignInventoryPerk(int _PerkChosenInShop, int _InventorySlot)
@@ -288,5 +320,19 @@ public partial class Shop : Node2D
 	private void UpdateGlobalPerks()
 	{
 		for (int i = 0; i < _PlayerInventory.Length; i++) PlayerVariables.Instance.PlayerInventory[i] = _PlayerInventory[i];
+	}
+
+	private bool CheckPlayerMoneyPerks(int perk_chosen) // in this function we check if the money the player has is greater or equal to the price of the perk chosen.
+	{
+		if (PlayerVariables.Instance.PlayerCoins >= GameManager.PerksPrices[perk_chosen]) return true;
+
+		return false;
+	}
+
+	private bool CheckPlayerMoneyReroll() // we check if the money is equal or greater than the reroll cost.
+	{
+		if (PlayerVariables.Instance.PlayerCoins >= GameManager.Instance.RerollShopCost) return true;
+
+		return false;
 	}
 }

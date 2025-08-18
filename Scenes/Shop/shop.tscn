@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://bki1v5suxdqjl"]
+[gd_scene load_steps=57 format=3 uid="uid://bki1v5suxdqjl"]
 
 [ext_resource type="Script" uid="uid://ljvpot13u3np" path="res://Scenes/Shop/Shop.cs" id="1_78vcx"]
 [ext_resource type="Texture2D" uid="uid://h7067pg1nb5m" path="res://assets/perks/perks frame.png" id="2_8dak6"]
@@ -165,8 +165,25 @@ tracks/0/keys = {
 "values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
 }
 
+[sub_resource type="Animation" id="Animation_t1yip"]
+resource_name = "not enough money"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NotEnoughMoneyLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(0.216, 1, 0.216, 1),
+"update": 0,
+"values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oqg8q"]
 _data = {
+&"not enough money": SubResource("Animation_t1yip"),
 &"not enough space": SubResource("Animation_fobo1")
 }
 
@@ -251,7 +268,7 @@ texture = ExtResource("17_2t1f2")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvgt3"]
 texture = ExtResource("17_e32fq")
 
-[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
+[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
@@ -262,6 +279,11 @@ _InventoryPerk3 = NodePath("InventoryPerk3")
 _Perk1Label = NodePath("PerkLabel1")
 _Perk2Label = NodePath("PerkLabel2")
 _Perk3Label = NodePath("PerkLabel3")
+_Perk1CostLabel = NodePath("PerkCostLabel1")
+_Perk2CostLabel = NodePath("PerkCostLabel2")
+_Perk3CostLabel = NodePath("PerkCostLabel3")
+_ActualMoneyLabel = NodePath("ActualMoneyLabel")
+_RerollShopCostLabel = NodePath("RerollShopCostLabel")
 _RerollShopButton = NodePath("RerollButton")
 _LeaveShopButton = NodePath("LeaveShopButton")
 _BuyPerk1Button = NodePath("PerkButton1")
@@ -887,4 +909,102 @@ texture_filter = 1
 position = Vector2(500, 350)
 scale = Vector2(4, 4)
 texture = ExtResource("20_t1yip")
+metadata/_edit_lock_ = true
+
+[node name="PerkCostLabel1" type="Label" parent="."]
+texture_filter = 1
+offset_left = 109.0
+offset_top = 601.0
+offset_right = 314.0
+offset_bottom = 637.0
+pivot_offset = Vector2(100, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 30
+text = "$"
+horizontal_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="PerkCostLabel2" type="Label" parent="."]
+texture_filter = 1
+offset_left = 357.0
+offset_top = 601.0
+offset_right = 562.0
+offset_bottom = 637.0
+pivot_offset = Vector2(100, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 30
+text = "$"
+horizontal_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="PerkCostLabel3" type="Label" parent="."]
+texture_filter = 1
+offset_left = 607.0
+offset_top = 601.0
+offset_right = 812.0
+offset_bottom = 637.0
+pivot_offset = Vector2(100, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 30
+text = "$"
+horizontal_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ActualMoneyLabel" type="Label" parent="."]
+texture_filter = 1
+offset_left = 371.0
+offset_top = 41.0
+offset_right = 576.0
+offset_bottom = 77.0
+pivot_offset = Vector2(100, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 30
+text = "Money: "
+horizontal_alignment = 1
+
+[node name="NotEnoughMoneyLabel" type="Label" parent="."]
+offset_left = 315.0
+offset_top = -100.0
+offset_right = 669.0
+offset_bottom = -55.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 50
+text = "Not enough money!"
+metadata/_edit_lock_ = true
+
+[node name="RerollShopCostLabel" type="Label" parent="."]
+texture_filter = 1
+offset_left = 785.0
+offset_top = 195.0
+offset_right = 986.0
+offset_bottom = 231.0
+pivot_offset = Vector2(100, 15)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 30
+text = "$"
+horizontal_alignment = 1
 metadata/_edit_lock_ = true
