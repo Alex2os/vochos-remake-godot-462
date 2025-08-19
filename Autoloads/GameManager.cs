@@ -32,6 +32,15 @@ public partial class GameManager : Node
 		7
 	};
 
+	public static readonly int[] PerksPricesSelling = new int[] {
+		3,
+		4,
+		3,
+		3,
+		5,
+		3
+	};
+
 	public int RerollShopCost = 1;
 
 

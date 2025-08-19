@@ -65,6 +65,8 @@ public partial class Game : Node2D
 	private int[] _PlayerInventory = new int[] { -1, -1, -1 };
 	private bool _ShopAvailable = false;
 	private bool _GameOver = false;
+	private bool _IsGamePaused = false;
+	// variables for the timers. this is to keep track of the timers whenever we pause the game, so when we resume the game, we already have the time the timers were left im.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -116,6 +118,9 @@ public partial class Game : Node2D
 		// going to shop if available
 		if (_ShopAvailable && Input.IsActionJustPressed("use shop")) GameManager.Instance.ChangeSceneToShop();
 
+		// pausing the game if _gameover is false
+		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
+
 	}
 
 	private void SpawnRoad()
@@ -139,17 +144,8 @@ public partial class Game : Node2D
 
 	private void GameOver()
 	{
-		// this function stops all the processes to show the game over screen
-
 		GD.Print("game over!");
 		_GameOver = true;
-
-		// stop timers
-		_SpawningRoadTimer.Stop();
-		_SpawningCarEnemyTimer.Stop();
-		_CoinTimer.Stop();
-
-		_GameMusic.Stop();
 
 		// final stats message: 
 		_GameOverStatsLabel.Text = "Total Score: " + _TotalScore.ToString() + "\n" + "Money Left: " + _LeftCoins + "\n" + "Total Money Earned: " + _TotalCoins;
@@ -162,12 +158,6 @@ public partial class Game : Node2D
 		// modulate for the main menu button
 		_MainMenuButton.Modulate = new Color(1, 1, 1, 1);
 
-		// stop each process for all the movable objects
-		foreach (Node road in _RoadContainer.GetChildren()) road.SetProcess(false);
-
-		foreach (Node coin in _CoinContainer.GetChildren()) coin.SetProcess(false);
-
-		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.SetProcess(false);
 		// change the timer for the speeding game scene and stopping it in case it's active when the game over screen is presented
 		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
@@ -180,9 +170,61 @@ public partial class Game : Node2D
 			if (speed is AnimationPlayer anim) anim.Stop();
 		}
 
-		// stop process for player
-		_Player.SetProcess(false);
+		_IsGamePaused = false; // this is just to prevent game over and paused game at the same time.
+		PauseGame();
+
+		_GameMusic.Stop();
+
 		_CarCrash.Play(); // car crashing sound
+	}
+
+	// this function stops all the processes to show the game over screen. it's arranged to work too with the GameOver() function, so we use less lines of code.
+	private void PauseGame()
+	{
+		bool set_process_bool; // this helps us to control the process of the nodes, which depends on the variable _isgamepaused
+
+		if (_IsGamePaused)
+		{
+			set_process_bool = true;
+			_IsGamePaused = false;
+		}
+		else // if it's game over, then this will pop up, pausing the game.
+		{
+			set_process_bool = false;
+			_IsGamePaused = true;	
+		}
+
+		// set the paused state of the timers to false, so they can follow in the time whey were left in or get paused.
+		SetPausedStateTimers(_IsGamePaused);
+
+		ShowPausedLabel(_IsGamePaused); // we send the paused state to this function to check wheter to show the paused label or not
+
+		// stop each process for all the movable objects
+		foreach (Node road in _RoadContainer.GetChildren()) road.SetProcess(set_process_bool);
+
+		foreach (Node coin in _CoinContainer.GetChildren()) coin.SetProcess(set_process_bool);
+
+		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.SetProcess(set_process_bool);
+
+		// stop/start the timer for speeding game and the animation.
+		foreach (Node speed in _SpeedingGame.GetChildren())
+		{
+			if (speed is Timer timer)
+			{
+				if (set_process_bool) timer.SetPaused(false); // if the process are turning back to true, then put the paused state to false, and viceversa. for the else below
+				else timer.SetPaused(true);
+
+			}
+
+			if (speed is AnimationPlayer anim)
+			{
+				if (_GameOver) anim.Stop();
+			}
+		}
+
+		// stop process for player
+		_Player.SetProcess(set_process_bool);
+
 
 	}
 
@@ -235,9 +277,12 @@ public partial class Game : Node2D
 		// modulate for the mainmenu button
 		_MainMenuButton.Modulate = new Color(0, 0, 0, 0);
 
+		SetPausedStateTimers(false); // put the state of pause of the timers in false when we start again
+
 		_SpawningRoadTimer.Start();
 		_SpawningCarEnemyTimer.Start();
 		_CoinTimer.Start();
+		_ShopAvailableTimer.Start();
 
 
 		foreach (Node road in _RoadContainer.GetChildren()) road.QueueFree();
@@ -302,6 +347,9 @@ public partial class Game : Node2D
 		_LeftCoins = PlayerVariables.Instance.PlayerCoins;
 		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins;
 
+		// shop variables
+		GameManager.Instance.RerollShopCost = 1;
+
 		// game manager variables
 		_ComingFromShop = GameManager.Instance.ComingFromShop;
 
@@ -309,7 +357,7 @@ public partial class Game : Node2D
 		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
 
 		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
-		// enemy
+														 // enemy
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 	}
 
@@ -340,5 +388,19 @@ public partial class Game : Node2D
 	{
 		_ScoreLabel.Text = _TotalScore.ToString();
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
+	}
+
+	private void ShowPausedLabel(bool paused_state)
+	{
+		if (paused_state) ;
+		else;
+	}
+
+	private void SetPausedStateTimers(bool paused_state)
+	{
+		_SpawningRoadTimer.SetPaused(paused_state);
+		_SpawningCarEnemyTimer.SetPaused(paused_state);
+		_CoinTimer.SetPaused(paused_state);
+		_ShopAvailableTimer.SetPaused(paused_state);
 	}
 }

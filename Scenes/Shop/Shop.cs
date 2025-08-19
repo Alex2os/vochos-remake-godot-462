@@ -79,11 +79,6 @@ public partial class Shop : Node2D
 		_SellPerk2Button.Pressed += OnSellPerk2Button;
 		_SellPerk3Button.Pressed += OnSellPerk3Button;
 
-		_ActualMoneyLabel.Text = "Money: " + PlayerVariables.Instance.PlayerCoins.ToString(); // we assign the actual coins the player has in this label
-
-		GameManager.Instance.RerollShopCost = 1;
-		_RerollShopCostLabel.Text = "$" + GameManager.Instance.RerollShopCost; // we assign the cost of the reroll to the label. this cost will always be reinitialized when entering the shop.
-
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
 
 		GetGlobalPerks(); // in this function we get the perks from the playervariables autoload so we have them here in the shop.
@@ -93,6 +88,8 @@ public partial class Shop : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		_ActualMoneyLabel.Text = "Money: " + PlayerVariables.Instance.PlayerCoins.ToString(); // we assign the actual coins the player has in this label. putting this in process so it gets reassigned automatically, same as the reroll label below.
+		_RerollShopCostLabel.Text = "$" + GameManager.Instance.RerollShopCost; // we update the reroll cost label with the new cost.
 
 	}
 
@@ -125,11 +122,9 @@ public partial class Shop : Node2D
 			_BuyPerk2Button.Disabled = false;
 			_BuyPerk3Button.Disabled = false;
 
-			PlayerVariables.Instance.PlayerCoins -= GameManager.Instance.RerollShopCost++; // we substract the reroll cost to the player coins.
-			_ActualMoneyLabel.Text = "Money: " + PlayerVariables.Instance.PlayerCoins.ToString(); // we update the money label here too.
+			PlayerVariables.Instance.PlayerCoins -= GameManager.Instance.RerollShopCost; // we substract the reroll cost to the player coins.
 
 			GameManager.Instance.RerollShopCost++; // every reroll we increment the value of the rerolling cost.
-			_RerollShopCostLabel.Text = "$" + GameManager.Instance.RerollShopCost; // we update the reroll cost label with the new cost
 		}
 		else _NotEnoughAnimations.Play("not enough money");
 
@@ -158,9 +153,10 @@ public partial class Shop : Node2D
 		{
 			_Perk1.Texture = null;
 			_Perk1Label.Text = "Sold!";
+			// the substraction of the price should be before the reassignment of the _perkschosen variable.
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[0]]; // here we substract the price from the player coins if the perk can be bought
 			_PerksChosen[0] = -1;
 			_BuyPerk1Button.Disabled = true; // this disables the button to be pressed.
-			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[0]]; // here we substract the price from the player coins if the perk can be bought
 		}
 	}
 
@@ -173,9 +169,10 @@ public partial class Shop : Node2D
 		{
 			_Perk2.Texture = null;
 			_Perk2Label.Text = "Sold!";
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[1]];
 			_PerksChosen[1] = -1;
 			_BuyPerk2Button.Disabled = true;
-			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[1]];
+			
 		}
 
 	}
@@ -189,9 +186,10 @@ public partial class Shop : Node2D
 		{
 			_Perk3.Texture = null;
 			_Perk3Label.Text = "Sold!";
+			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[2]];
 			_PerksChosen[2] = -1;
 			_BuyPerk3Button.Disabled = true;
-			PlayerVariables.Instance.PlayerCoins -= GameManager.PerksPrices[_PerksChosen[2]];
+			
 		}
 	}
 
@@ -257,8 +255,11 @@ public partial class Shop : Node2D
 
 		GD.Print("selling perk1");
 
-		SellPerk(0); // here we send the perk slot.
+		// in this part we sell the perk and add the money to the player coins. the adding of the money must be before the SellPerk function, as in the SellPerk function we get rid of the id of the _PlayerInventory, making unable to sell it or get the id after that.
+		PlayerVariables.Instance.PlayerCoins += GameManager.PerksPricesSelling[_PlayerInventory[0]];
 
+		SellPerk(0); // here we send the perk slot.
+		
 		_ClickButtonSound.Play();
 	}
 
@@ -267,6 +268,7 @@ public partial class Shop : Node2D
 
 		GD.Print("selling perk2");
 
+		PlayerVariables.Instance.PlayerCoins += GameManager.PerksPricesSelling[_PlayerInventory[1]];
 		SellPerk(1);
 
 		_ClickButtonSound.Play();
@@ -277,6 +279,7 @@ public partial class Shop : Node2D
 
 		GD.Print("selling perk3");
 
+		PlayerVariables.Instance.PlayerCoins += GameManager.PerksPricesSelling[_PlayerInventory[2]];
 		SellPerk(2);
 
 		_ClickButtonSound.Play();
