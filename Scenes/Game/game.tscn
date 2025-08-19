@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://qdh73vj2guf7"]
+[gd_scene load_steps=17 format=3 uid="uid://qdh73vj2guf7"]
 
 [ext_resource type="PackedScene" uid="uid://tpxiid8lmksk" path="res://Scenes/Player/player.tscn" id="1_mv0hc"]
 [ext_resource type="Script" uid="uid://npn0ytnyrjeb" path="res://Scenes/Game/Game.cs" id="1_qikps"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://1i8dwqg2na1t" path="res://Scenes/SpeedGame/speeding_game.tscn" id="11_qtymf"]
 [ext_resource type="PackedScene" uid="uid://c3okbqeatfm5k" path="res://Scenes/GameOver/game_over.tscn" id="12_ypmwd"]
 [ext_resource type="PackedScene" uid="uid://dtmrlqgb3yi51" path="res://Scenes/InventoryInGame/inventory_in_game.tscn" id="13_oejk7"]
+[ext_resource type="Script" uid="uid://dejlfh5nwbuvn" path="res://Scenes/Game/RichTextLabel.cs" id="14_upfqs"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -52,6 +53,7 @@ _CoinSoundPath = NodePath("CoinSound")
 _GameMusicPath = NodePath("GameMusic")
 _ShopAvailableTimerPath = NodePath("ShopAvailableTimer")
 _InventoryInGamePath = NodePath("InventoryInGame")
+_GamePausedLabelPath = NodePath("GamePausedLabel")
 
 [node name="EnemyMarkerLeft" type="Marker2D" parent="."]
 position = Vector2(150, -100)
@@ -151,21 +153,23 @@ libraries = {
 
 [node name="InventoryInGame" parent="." instance=ExtResource("13_oejk7")]
 
-[node name="PausedLabel" type="Label" parent="."]
+[node name="GamePausedLabel" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
-offset_left = 370.0
-offset_top = 350.0
-offset_right = 783.0
-offset_bottom = 539.0
-scale = Vector2(1, 0.992188)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+offset_left = 235.0
+offset_top = 258.0
+offset_right = 764.0
+offset_bottom = 392.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_outline_size = 15
-theme_override_fonts/font = ExtResource("5_ciybh")
-theme_override_font_sizes/font_size = 50
-text = "Game paused..."
+theme_override_fonts/normal_font = ExtResource("5_ciybh")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "
+    Game paused..."
+script = ExtResource("14_upfqs")
 
 [editable path="GameOver"]

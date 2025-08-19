@@ -30,6 +30,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _GameMusicPath;
 	[Export] private NodePath _ShopAvailableTimerPath;
 	[Export] private NodePath _InventoryInGamePath;
+	[Export] private NodePath _GamePausedLabelPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -52,11 +53,12 @@ public partial class Game : Node2D
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _GameMusic;
+	private RichTextLabel _GamePausedLabel;
 	private Button _MainMenuButton;
 	private SpeedingGame _SpeedingGame;
 	private player _Player;
-
-	// initialize all the variables.
+	
+	// initialize all the variables used in the game
 	private int _TotalScore;
 	private int _EnemySpeed;
 	private int _LeftCoins;
@@ -96,6 +98,7 @@ public partial class Game : Node2D
 		_MainMenuButton = GetNode<Button>(_MainMenuButtonPath);
 		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
 		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
+		_GamePausedLabel = GetNode<RichTextLabel>(_GamePausedLabelPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -187,12 +190,18 @@ public partial class Game : Node2D
 		{
 			set_process_bool = true;
 			_IsGamePaused = false;
+			_GameMusic.VolumeDb += 10; 
 		}
 		else // if it's game over, then this will pop up, pausing the game.
 		{
 			set_process_bool = false;
-			_IsGamePaused = true;	
+			_IsGamePaused = true;
+			_GameMusic.VolumeDb -= 10; // with this we can make the volume in db of and audiostream lower, so if the game is paused, the db will lower, and if it's unpaused, the db will go up again.
 		}
+
+		if(!_GameOver && !_IsGamePaused) _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if the game is not over and game is not paused, don't show the label
+		else if (!_GameOver && _IsGamePaused) _GamePausedLabel.Modulate = new Color(1, 1, 1, 1); // otherwise, show it.
+		else _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // in case it's any other case (which is every time _gameover is true) then hide the label.
 
 		// set the paused state of the timers to false, so they can follow in the time whey were left in or get paused.
 		SetPausedStateTimers(_IsGamePaused);
@@ -263,6 +272,9 @@ public partial class Game : Node2D
 	{
 
 		_GameOver = false;
+		_IsGamePaused = false;
+
+		_GameMusic.VolumeDb = -23; // reassign the volume for the game music. -23 is the base value that is used in the editor (godot)
 
 		// cleaning the labels so they don't show the prior score
 		_CoinLabel.Text = "$0";
@@ -317,6 +329,8 @@ public partial class Game : Node2D
 		// increase the speeds for enemies.
 		EnemyManager.Instance.EnemySpeed += 30;
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+
+		_SpawningCarEnemyTimer.WaitTime -= 0.2; // we keep lowing the timer
 
 		// adjust the new speed for all the existing enemy objects
 		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
