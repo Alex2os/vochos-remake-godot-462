@@ -18,13 +18,17 @@ public partial class MainMenu : Node2D
 	[Export] private Timer _SpawnCloudTimer;
 	[Export] private Node2D _MiniCarContainer;
 	[Export] private Node2D _CloudContainer;
+	[Export] private PackedScene _CreditsScene;
+	[Export] private Button _CreditsButton;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_PlayButton.Pressed += OnPlayButtonPressed;
 		_ExitButton.Pressed += OnExitButtonPressed;
+		_CreditsButton.Pressed +=OnCreditsButtonPressed;
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
 		_SpawnCloudTimer.Timeout += SpawnCloud;
+		
 
 		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
 	}
@@ -42,6 +46,15 @@ public partial class MainMenu : Node2D
 	private void OnExitButtonPressed()
 	{
 		GetTree().Quit(); // leave the game or quit the scene, so it leaves the game when pressed 
+	}
+
+	private void OnCreditsButtonPressed()
+	{
+		Credits _credits = (Credits)_CreditsScene.Instantiate();
+		AddChild(_credits);
+
+		_credits.Position = new Vector2(500, 0); // positioning the credits scene to the center.
+
 	}
 
 	private void SpawnMiniCar()

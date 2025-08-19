@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://1i8dwqg2na1t" path="res://Scenes/SpeedGame/speeding_game.tscn" id="11_qtymf"]
 [ext_resource type="PackedScene" uid="uid://c3okbqeatfm5k" path="res://Scenes/GameOver/game_over.tscn" id="12_ypmwd"]
 [ext_resource type="PackedScene" uid="uid://dtmrlqgb3yi51" path="res://Scenes/InventoryInGame/inventory_in_game.tscn" id="13_oejk7"]
-[ext_resource type="Script" uid="uid://dejlfh5nwbuvn" path="res://Scenes/Game/RichTextLabel.cs" id="14_upfqs"]
+[ext_resource type="Script" uid="uid://du6fhlfj2pcdq" path="res://Scenes/Game/GamePausedLabel.cs" id="14_upfqs"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"

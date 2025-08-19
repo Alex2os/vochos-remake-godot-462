@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://m3wero5w5cah"]
+[gd_scene load_steps=39 format=3 uid="uid://m3wero5w5cah"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_uqdog"]
 [ext_resource type="Script" uid="uid://dke6r5m5fn25j" path="res://Scenes/MainMenu/MainMenu.cs" id="1_v763k"]
@@ -6,12 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://cd6cujv87bvkg" path="res://assets/buttons/green button pressed.png" id="4_0l8wx"]
 [ext_resource type="AudioStream" uid="uid://de4jmeyn52rs1" path="res://assets/sound effects/main menu music.mp3" id="4_0qgbs"]
 [ext_resource type="Texture2D" uid="uid://cq5r5ona180xk" path="res://assets/buttons/green button.png" id="4_adu2g"]
+[ext_resource type="PackedScene" uid="uid://ch3ob7ka8qnb" path="res://Scenes/Credits/Credits.tscn" id="4_nqd6t"]
 [ext_resource type="Texture2D" uid="uid://crrfh4c5m6sg8" path="res://assets/buttons/green button hover.png" id="5_n5jej"]
 [ext_resource type="Texture2D" uid="uid://hj22l7smgkba" path="res://assets/buttons/red button.png" id="7_2r307"]
 [ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="7_agesy"]
 [ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="7_omq0y"]
 [ext_resource type="PackedScene" uid="uid://cbk7c6y5t6qgi" path="res://Scenes/MiniCar/mini_car.tscn" id="12_rlg4b"]
+[ext_resource type="Texture2D" uid="uid://c46ow2ehwcrbp" path="res://assets/buttons/tiny button blue pressed.png" id="13_nqd6t"]
 [ext_resource type="PackedScene" uid="uid://crnl78esrhtgu" path="res://Scenes/Cloud/cloud.tscn" id="13_w5buf"]
+[ext_resource type="Texture2D" uid="uid://dgc0m0v8hlaok" path="res://assets/buttons/tiny button blue highlight.png" id="14_nqd6t"]
+[ext_resource type="Texture2D" uid="uid://b6v7jup5hjtnx" path="res://assets/buttons/tiny button blue..png" id="15_fo6ee"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
 
@@ -74,7 +78,19 @@ _data = {
 &"words anim": SubResource("Animation_agesy")
 }
 
-[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fo6ee"]
+texture = ExtResource("13_nqd6t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqd6t"]
+texture = ExtResource("14_nqd6t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xt57n"]
+texture = ExtResource("13_nqd6t")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_43m2q"]
+texture = ExtResource("15_fo6ee")
+
+[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton")]
 script = ExtResource("1_v763k")
 _Marker1 = NodePath("MiniCarMarker")
 _Marker2 = NodePath("MiniCarMarker2")
@@ -91,6 +107,8 @@ _SpawnMiniCarTimer = NodePath("SpawnMiniCarTimer")
 _SpawnCloudTimer = NodePath("SpawnCloudTimer")
 _MiniCarContainer = NodePath("MiniCarContainer")
 _CloudContainer = NodePath("CloudContainer")
+_CreditsScene = ExtResource("4_nqd6t")
+_CreditsButton = NodePath("CreditsButton")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -267,4 +285,53 @@ metadata/_edit_lock_ = true
 
 [node name="CloudMarker2" type="Marker2D" parent="."]
 position = Vector2(-150, 230)
+metadata/_edit_lock_ = true
+
+[node name="CreditsButton" type="Button" parent="."]
+z_index = 3
+texture_filter = 1
+offset_left = 860.0
+offset_top = 206.0
+offset_right = 993.0
+offset_bottom = 311.0
+pivot_offset = Vector2(75, 40)
+theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fo6ee")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nqd6t")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xt57n")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/normal = SubResource("StyleBoxTexture_43m2q")
+
+[node name="PlayButtonLabel" type="Label" parent="CreditsButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = -88.0
+offset_right = 75.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("1_uqdog")
+theme_override_font_sizes/font_size = 100
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_lock_ = true

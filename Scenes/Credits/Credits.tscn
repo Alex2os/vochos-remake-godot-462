@@ -1,0 +1,260 @@
+[gd_scene load_steps=20 format=3 uid="uid://ch3ob7ka8qnb"]
+
+[ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_mrcp2"]
+[ext_resource type="Script" uid="uid://b1k5jjsy5e1fg" path="res://Scenes/Credits/Credits.cs" id="1_qqh6l"]
+[ext_resource type="Script" uid="uid://de2a2hyf3x7tx" path="res://Scenes/Credits/RichTextLabel.cs" id="2_mrcp2"]
+[ext_resource type="Script" uid="uid://meyxqr5oxht1" path="res://Scenes/Credits/RichTextLabel2.cs" id="3_jq1kv"]
+[ext_resource type="Texture2D" uid="uid://c4cyd3mx6ioc0" path="res://assets/wallpapers/black background with opacity.png" id="5_hktpy"]
+[ext_resource type="Texture2D" uid="uid://b8e6tpux8dpgo" path="res://assets/buttons/tiny button red highlight.png" id="5_jdyel"]
+[ext_resource type="Texture2D" uid="uid://qgs6l4hn7l5d" path="res://assets/buttons/tiny button red pressed.png" id="6_l755l"]
+[ext_resource type="Texture2D" uid="uid://dtlqfywoxggno" path="res://assets/buttons/tiny button red.png" id="7_thk3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l755l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jdyel"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_thk3a"]
+texture = ExtResource("6_l755l")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thk3a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hktpy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cqi0y"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hktpy"]
+texture = ExtResource("5_jdyel")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21x4v"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l755l"]
+texture = ExtResource("6_l755l")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8pv8m"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cqi0y"]
+texture = ExtResource("7_thk3a")
+
+[node name="Credits" type="Control" node_paths=PackedStringArray("_QuitCreditsButton")]
+z_index = 4
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+script = ExtResource("1_qqh6l")
+_QuitCreditsButton = NodePath("Button")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 350)
+texture = ExtResource("5_hktpy")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -500.0
+offset_right = 500.0
+offset_bottom = 400.0
+grow_horizontal = 2
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -264.5
+offset_right = 264.5
+offset_bottom = 134.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/normal_font = ExtResource("1_mrcp2")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_mrcp2")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Control"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -287.0
+offset_top = -43.5
+offset_right = 287.0
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_mrcp2")
+theme_override_font_sizes/font_size = 40
+text = "Thanks to @Daniel Linssen for the amazing font! 
+You can check his work on itch.io: 
+https://managore.itch.io/"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_lock_ = true
+
+[node name="Label2" type="Label" parent="Control/Control"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -427.0
+offset_right = 427.0
+offset_bottom = 114.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_mrcp2")
+theme_override_font_sizes/font_size = 40
+text = "Game developed by"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.5
+offset_top = -67.0
+offset_right = 264.5
+offset_bottom = 67.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/normal_font = ExtResource("1_mrcp2")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "AlexCats1"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_jq1kv")
+metadata/_edit_lock_ = true
+
+[node name="Label3" type="Label" parent="Control/Control"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -427.0
+offset_top = -114.0
+offset_right = 427.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_mrcp2")
+theme_override_font_sizes/font_size = 40
+text = "This is a remake of a previous game done in console.
+Thanks for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="Control2" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = 500.0
+offset_right = 500.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Button" type="Button" parent="."]
+z_index = 4
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.5
+offset_top = 560.0
+offset_right = 66.5
+offset_bottom = 665.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("1_mrcp2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l755l")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jdyel")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_thk3a")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_thk3a")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hktpy")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cqi0y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hktpy")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_21x4v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_l755l")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8pv8m")
+theme_override_styles/normal = SubResource("StyleBoxTexture_cqi0y")
+
+[node name="Label" type="Label" parent="Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -30.5
+offset_right = 22.5
+offset_bottom = 48.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_mrcp2")
+theme_override_font_sizes/font_size = 90
+text = "X"
+metadata/_edit_lock_ = true
