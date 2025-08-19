@@ -173,7 +173,6 @@ public partial class Game : Node2D
 			if (speed is AnimationPlayer anim) anim.Stop();
 		}
 
-		_IsGamePaused = false; // this is just to prevent game over and paused game at the same time.
 		PauseGame();
 
 		_GameMusic.Stop();
@@ -201,7 +200,7 @@ public partial class Game : Node2D
 
 		if(!_GameOver && !_IsGamePaused) _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if the game is not over and game is not paused, don't show the label
 		else if (!_GameOver && _IsGamePaused) _GamePausedLabel.Modulate = new Color(1, 1, 1, 1); // otherwise, show it.
-		else _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // in case it's any other case (which is every time _gameover is true) then hide the label.
+		else _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if it's any other case (which is every time _gameover is true) then hide the label.
 
 		// set the paused state of the timers to false, so they can follow in the time whey were left in or get paused.
 		SetPausedStateTimers(_IsGamePaused);
@@ -222,7 +221,6 @@ public partial class Game : Node2D
 			{
 				if (set_process_bool) timer.SetPaused(false); // if the process are turning back to true, then put the paused state to false, and viceversa. for the else below
 				else timer.SetPaused(true);
-
 			}
 
 			if (speed is AnimationPlayer anim)
@@ -303,7 +301,13 @@ public partial class Game : Node2D
 
 		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.QueueFree();
 
-		foreach (Node speed in _SpeedingGame.GetChildren()) if (speed is Timer timer) timer.Start();
+		foreach (Node speed in _SpeedingGame.GetChildren()) if (speed is Timer timer)
+			{
+				// set the timer again for the next game. waittime is resetted and setpaused state is set to false to keep the timer going.
+				timer.SetPaused(false);
+				timer.WaitTime = 10;
+				timer.Start();
+			}
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);

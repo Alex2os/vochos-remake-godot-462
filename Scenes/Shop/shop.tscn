@@ -149,13 +149,13 @@ _data = {
 &"words anim": SubResource("Animation_w8bjl")
 }
 
-[sub_resource type="Animation" id="Animation_fobo1"]
-resource_name = "not enough space"
+[sub_resource type="Animation" id="Animation_t1yip"]
+resource_name = "not enough money"
 length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NotEnoughSpaceLabel:position")
+tracks/0/path = NodePath("NotEnoughMoneyLabel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -165,13 +165,13 @@ tracks/0/keys = {
 "values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
 }
 
-[sub_resource type="Animation" id="Animation_t1yip"]
-resource_name = "not enough money"
+[sub_resource type="Animation" id="Animation_fobo1"]
+resource_name = "not enough space"
 length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("NotEnoughMoneyLabel:position")
+tracks/0/path = NodePath("NotEnoughSpaceLabel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -365,23 +365,6 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 50
 text = "Buy your goodies!"
-metadata/_edit_lock_ = true
-
-[node name="ShopReadyLabel" type="Label" parent="."]
-visible = false
-texture_filter = 1
-offset_left = 10.0
-offset_top = 130.0
-offset_right = 85.0
-offset_bottom = 193.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 10
-theme_override_fonts/font = ExtResource("2_dqdqq")
-theme_override_font_sizes/font_size = 30
-text = "Shop
-Ready!"
 metadata/_edit_lock_ = true
 
 [node name="PerkLabel1" type="Label" parent="."]

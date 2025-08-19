@@ -312,6 +312,7 @@ theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_xt57n")
 theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
 theme_override_styles/normal = SubResource("StyleBoxTexture_43m2q")
+metadata/_edit_lock_ = true
 
 [node name="PlayButtonLabel" type="Label" parent="CreditsButton"]
 layout_mode = 1
