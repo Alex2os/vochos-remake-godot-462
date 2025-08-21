@@ -11,7 +11,7 @@ public partial class CarEnemy : Area2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-
+		AreaEntered += OnAreaEntered;
 		ChooseSkin();
 	}
 
@@ -36,5 +36,11 @@ public partial class CarEnemy : Area2D
 	{
 		int skin = GD.RandRange(0, 9); // choose a skin for the enemy. in total, there are 10 textures in the arra _EnemySkins, so we choose a number from 0 to 9.
 		_Sprite2D.Texture = _EnemySkins[skin];
+	}
+
+	private void OnAreaEntered(Area2D node)
+	{
+		if (node is player) QueueFree();
+		
 	}
 }

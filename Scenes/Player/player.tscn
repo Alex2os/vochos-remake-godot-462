@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://tpxiid8lmksk"]
+[gd_scene load_steps=5 format=3 uid="uid://tpxiid8lmksk"]
 
 [ext_resource type="Script" uid="uid://dskuj2a7i618a" path="res://Scenes/Player/player.cs" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cw7maxxjm2hn6" path="res://assets/cars/car.png" id="2_xpcdj"]
+[ext_resource type="AudioStream" uid="uid://cx43ii0g5b0te" path="res://assets/sound effects/crashing enemy.mp3" id="3_xpcdj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfr5m"]
 size = Vector2(18, 23)
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="Area2D" node_paths=PackedStringArray("_CarCrash")]
 z_index = 1
 script = ExtResource("1_a3d8c")
+_CarCrash = NodePath("CarCrash")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -19,3 +21,7 @@ texture = ExtResource("2_xpcdj")
 position = Vector2(0, 0.5)
 scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_kfr5m")
+
+[node name="CarCrash" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xpcdj")
+volume_db = -10.0

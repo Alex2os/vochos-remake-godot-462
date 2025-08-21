@@ -15,7 +15,7 @@ public partial class GameManager : Node
 
 	// names of the perks
 	public static readonly string[] PerksNames = new string[6] { "Shield",
-		"Extra Life",
+		"Health",
 		"Double Points",
 		"Bullet",
 		"Double Money",

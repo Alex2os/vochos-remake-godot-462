@@ -24,7 +24,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _GameOverStatsLabelPath;
 	[Export] private NodePath _AnimationPlayerPath;
 	[Export] private NodePath _GameOverRestartLabelPath;
-	[Export] private NodePath _CarCrashPath;
+	[Export] private NodePath _GameOverCrashPath;
 	[Export] private NodePath _CarStartingPath;
 	[Export] private NodePath _CoinSoundPath;
 	[Export] private NodePath _GameMusicPath;
@@ -49,7 +49,7 @@ public partial class Game : Node2D
 	private Label _GameOverStatsLabel;
 	private Label _GameOverRestartLabel;
 	private AnimationPlayer _AnimationPlayer;
-	private AudioStreamPlayer _CarCrash;
+	private AudioStreamPlayer _GameOverCrash;
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _GameMusic;
@@ -90,7 +90,7 @@ public partial class Game : Node2D
 		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
 		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
 		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
-		_CarCrash = GetNode<AudioStreamPlayer>(_CarCrashPath);
+		_GameOverCrash = GetNode<AudioStreamPlayer>(_GameOverCrashPath);
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
 		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
@@ -102,7 +102,7 @@ public partial class Game : Node2D
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
-		_Player.PlayerHitEnemy += GameOver;
+		_Player.PlayerHealthDepleted += GameOver;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
@@ -177,7 +177,7 @@ public partial class Game : Node2D
 
 		_GameMusic.Stop();
 
-		_CarCrash.Play(); // car crashing sound
+		_GameOverCrash.Play(); // car crashing sound
 	}
 
 	// this function stops all the processes to show the game over screen. it's arranged to work too with the GameOver() function, so we use less lines of code.

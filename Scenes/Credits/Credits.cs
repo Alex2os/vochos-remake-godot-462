@@ -13,6 +13,7 @@ public partial class Credits : Control
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		if (Input.IsActionJustPressed("pause")) QueueFree(); // if escape key is pressed, then the scene will disappear, so we can leave the credits with escape.
 	}
 
 	private void OnQuitCreditsButtonPressed()
