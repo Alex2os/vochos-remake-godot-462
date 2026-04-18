@@ -6,6 +6,12 @@ public partial class player : Area2D
 	[Export] private int _MovingXAxis = 300;
 	[Export] private int _MovingYAxis = 300;
 	[Export] private AudioStreamPlayer _CarCrash;
+	[Export] private Texture2D _HealthBar_NoHit;
+	[Export] private Texture2D _HealthBar_1Hit;
+	[Export] private Texture2D _HealthBar_2Hit;
+	[Export] private Texture2D _HealthBar_NoHealth;
+	[Export] private Sprite2D _HealthBar;
+
 	private int inventory_index = 0; // initialize the inventory index
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 
@@ -103,10 +109,33 @@ public partial class player : Area2D
 		PlayerVariables.Instance.PlayerInventory[inventory_index] = -1; // this is to reassign the inventory perk id when a perk is used. if there's no perk, this will axtivate too, so everytime we check this function the perk id of the inventory slot will be assigned to -1 at the ond of the function.
 	}
 
+	// this function is used when the game restarts. by default the car has the nohit health bar texture.
+	public void SetDefaultHealthBar()
+	{
+		_HealthBar.Texture = _HealthBar_NoHit;
+	}
+	
 	private void LowerPlayerHealth() // we lower the health of the player, and check if the health is equal or less than zero to send the game over signal.
 	{
 		PlayerVariables.Instance.PlayerHealth -= 40; // 40 is the health the player loses everytime it crashes with an enemy car
-		if (PlayerVariables.Instance.PlayerHealth <= 0) EmitSignal(SignalName.PlayerHealthDepleted); 
+
+		// we update the health bar sprite depending on the value of the health
+
+		switch (PlayerVariables.Instance.PlayerHealth)
+		{
+			case 60:
+				_HealthBar.Texture = _HealthBar_1Hit;
+				break;
+			case 20:
+				_HealthBar.Texture = _HealthBar_2Hit;
+				break;
+			case -20:
+				_HealthBar.Texture = _HealthBar_NoHealth;
+				break;
+		}
+
+
+		if (PlayerVariables.Instance.PlayerHealth <= 0) EmitSignal(SignalName.PlayerHealthDepleted);
 		else _CarCrash.Play(); // if it's not game over yet, play de carcrash sound. otherwise the game over sound will be played
 	}
 
@@ -135,9 +164,9 @@ public partial class player : Area2D
 	{
 
 	}
-	
+
 	private void UseSlowTimePerk()
 	{
-		
+
 	}
 }

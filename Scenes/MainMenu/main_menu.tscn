@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://m3wero5w5cah"]
+[gd_scene format=3 uid="uid://m3wero5w5cah"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_uqdog"]
 [ext_resource type="Script" uid="uid://dke6r5m5fn25j" path="res://Scenes/MainMenu/MainMenu.cs" id="1_v763k"]
@@ -17,44 +17,44 @@
 [ext_resource type="Texture2D" uid="uid://dgc0m0v8hlaok" path="res://assets/buttons/tiny button blue highlight.png" id="14_nqd6t"]
 [ext_resource type="Texture2D" uid="uid://b6v7jup5hjtnx" path="res://assets/buttons/tiny button blue..png" id="15_fo6ee"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0l8wx"]
+texture = ExtResource("4_adu2g")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adu2g"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n5jej"]
-texture = ExtResource("4_0l8wx")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0qgbs"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5jej"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r307"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2r307"]
-texture = ExtResource("5_n5jej")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omq0y"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mdp32"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_omq0y"]
 texture = ExtResource("4_0l8wx")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mdp32"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omq0y"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0l8wx"]
-texture = ExtResource("4_adu2g")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2r307"]
+texture = ExtResource("5_n5jej")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5buf"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r307"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l8wx"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5jej"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rlg4b"]
-texture = ExtResource("7_agesy")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0qgbs"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n5jej"]
+texture = ExtResource("4_0l8wx")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_adu2g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rlg4b"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_agesy"]
+texture = ExtResource("7_2r307")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdp32"]
 texture = ExtResource("7_omq0y")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_agesy"]
-texture = ExtResource("7_2r307")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rlg4b"]
+texture = ExtResource("7_agesy")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l8wx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5buf"]
 
 [sub_resource type="Animation" id="Animation_agesy"]
 resource_name = "words anim"
@@ -78,19 +78,19 @@ _data = {
 &"words anim": SubResource("Animation_agesy")
 }
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fo6ee"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_43m2q"]
+texture = ExtResource("15_fo6ee")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xt57n"]
 texture = ExtResource("13_nqd6t")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nqd6t"]
 texture = ExtResource("14_nqd6t")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xt57n"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fo6ee"]
 texture = ExtResource("13_nqd6t")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_43m2q"]
-texture = ExtResource("15_fo6ee")
-
-[node name="MainMenu" type="Node2D" node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton")]
+[node name="MainMenu" type="Node2D" unique_id=177978764 node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton")]
 script = ExtResource("1_v763k")
 _Marker1 = NodePath("MiniCarMarker")
 _Marker2 = NodePath("MiniCarMarker2")
@@ -110,14 +110,14 @@ _CloudContainer = NodePath("CloudContainer")
 _CreditsScene = ExtResource("4_nqd6t")
 _CreditsButton = NodePath("CreditsButton")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1152737903]
 texture_filter = 1
 position = Vector2(500, 350)
 scale = Vector2(4, 4)
 texture = ExtResource("3_mdp32")
 metadata/_edit_lock_ = true
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="." unique_id=2092960136]
 z_index = 3
 texture_filter = 1
 offset_left = 340.0
@@ -125,26 +125,26 @@ offset_top = 250.0
 offset_right = 690.0
 offset_bottom = 355.0
 pivot_offset = Vector2(75, 40)
-theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
-theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_n5jej")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
-theme_override_styles/hover = SubResource("StyleBoxTexture_2r307")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_omq0y")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0l8wx")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_omq0y")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_2r307")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_n5jej")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
 metadata/_edit_lock_ = true
 
-[node name="PlayButtonLabel" type="Label" parent="PlayButton"]
+[node name="PlayButtonLabel" type="Label" parent="PlayButton" unique_id=1316163944]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -166,7 +166,7 @@ theme_override_font_sizes/font_size = 100
 text = "Play"
 metadata/_edit_lock_ = true
 
-[node name="ExitButton" type="Button" parent="."]
+[node name="ExitButton" type="Button" parent="." unique_id=1225259941]
 z_index = 3
 texture_filter = 1
 offset_left = 340.0
@@ -174,26 +174,26 @@ offset_top = 450.0
 offset_right = 690.0
 offset_bottom = 555.0
 pivot_offset = Vector2(75, 40)
-theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
-theme_override_styles/focus = SubResource("StyleBoxEmpty_w5buf")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
-theme_override_styles/hover = SubResource("StyleBoxTexture_rlg4b")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_mdp32")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
 theme_override_styles/normal = SubResource("StyleBoxTexture_agesy")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_mdp32")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rlg4b")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_0l8wx")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w5buf")
 metadata/_edit_lock_ = true
 
-[node name="ExitButtonLabel" type="Label" parent="ExitButton"]
+[node name="ExitButtonLabel" type="Label" parent="ExitButton" unique_id=103799284]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -215,7 +215,7 @@ theme_override_font_sizes/font_size = 100
 text = "Exit"
 metadata/_edit_lock_ = true
 
-[node name="GameTitle" type="Label" parent="."]
+[node name="GameTitle" type="Label" parent="." unique_id=820001182]
 z_index = 3
 texture_filter = 1
 offset_left = 125.0
@@ -235,59 +235,57 @@ theme_override_font_sizes/font_size = 100
 text = "Welcome to Vocho's!"
 metadata/_edit_lock_ = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=823731961]
 stream = ExtResource("4_0qgbs")
 volume_db = -8.0
 autoplay = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_mdp32")
-}
-autoplay = "words anim"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1956868814]
+libraries/ = SubResource("AnimationLibrary_mdp32")
+autoplay = &"words anim"
 
-[node name="MiniCarMarker" type="Marker2D" parent="."]
+[node name="MiniCarMarker" type="Marker2D" parent="." unique_id=1370469108]
 position = Vector2(-24, 518)
 metadata/_edit_lock_ = true
 
-[node name="MiniCarMarker2" type="Marker2D" parent="."]
+[node name="MiniCarMarker2" type="Marker2D" parent="." unique_id=327491591]
 position = Vector2(-24, 554)
 metadata/_edit_lock_ = true
 
-[node name="MiniCarMarker3" type="Marker2D" parent="."]
+[node name="MiniCarMarker3" type="Marker2D" parent="." unique_id=1056418994]
 position = Vector2(1020, 591)
 metadata/_edit_lock_ = true
 
-[node name="MiniCarMarker4" type="Marker2D" parent="."]
+[node name="MiniCarMarker4" type="Marker2D" parent="." unique_id=1204011144]
 position = Vector2(-24, 627)
 metadata/_edit_lock_ = true
 
-[node name="MiniCarMarker5" type="Marker2D" parent="."]
+[node name="MiniCarMarker5" type="Marker2D" parent="." unique_id=1169049572]
 position = Vector2(1020, 663)
 metadata/_edit_lock_ = true
 
-[node name="SpawnMiniCarTimer" type="Timer" parent="."]
+[node name="SpawnMiniCarTimer" type="Timer" parent="." unique_id=745589157]
 autostart = true
 
-[node name="SpawnCloudTimer" type="Timer" parent="."]
+[node name="SpawnCloudTimer" type="Timer" parent="." unique_id=834376651]
 wait_time = 8.0
 autostart = true
 
-[node name="MiniCarContainer" type="Node2D" parent="."]
+[node name="MiniCarContainer" type="Node2D" parent="." unique_id=716174586]
 metadata/_edit_lock_ = true
 
-[node name="CloudContainer" type="Node2D" parent="."]
+[node name="CloudContainer" type="Node2D" parent="." unique_id=217439804]
 metadata/_edit_lock_ = true
 
-[node name="CloudMarker1" type="Marker2D" parent="."]
+[node name="CloudMarker1" type="Marker2D" parent="." unique_id=2022966731]
 position = Vector2(-150, 20)
 metadata/_edit_lock_ = true
 
-[node name="CloudMarker2" type="Marker2D" parent="."]
+[node name="CloudMarker2" type="Marker2D" parent="." unique_id=607646571]
 position = Vector2(-150, 230)
 metadata/_edit_lock_ = true
 
-[node name="CreditsButton" type="Button" parent="."]
+[node name="CreditsButton" type="Button" parent="." unique_id=1211922385]
 z_index = 3
 texture_filter = 1
 offset_left = 860.0
@@ -295,26 +293,26 @@ offset_top = 206.0
 offset_right = 993.0
 offset_bottom = 311.0
 pivot_offset = Vector2(75, 40)
-theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.792157, 0.792157, 0.792157, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = ExtResource("1_uqdog")
 theme_override_font_sizes/font_size = 100
-theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_fo6ee")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
-theme_override_styles/hover = SubResource("StyleBoxTexture_nqd6t")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_xt57n")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
 theme_override_styles/normal = SubResource("StyleBoxTexture_43m2q")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_mdp32")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_xt57n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_omq0y")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nqd6t")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_2r307")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_n5jej")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_0qgbs")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fo6ee")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_adu2g")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rlg4b")
 metadata/_edit_lock_ = true
 
-[node name="PlayButtonLabel" type="Label" parent="CreditsButton"]
+[node name="PlayButtonLabel" type="Label" parent="CreditsButton" unique_id=1080450708]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

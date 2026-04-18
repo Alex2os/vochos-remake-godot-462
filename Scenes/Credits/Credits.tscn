@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ch3ob7ka8qnb"]
+[gd_scene format=3 uid="uid://ch3ob7ka8qnb"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_mrcp2"]
 [ext_resource type="Script" uid="uid://b1k5jjsy5e1fg" path="res://Scenes/Credits/Credits.cs" id="1_qqh6l"]
@@ -9,33 +9,33 @@
 [ext_resource type="Texture2D" uid="uid://qgs6l4hn7l5d" path="res://assets/buttons/tiny button red pressed.png" id="6_l755l"]
 [ext_resource type="Texture2D" uid="uid://dtlqfywoxggno" path="res://assets/buttons/tiny button red.png" id="7_thk3a"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l755l"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cqi0y"]
+texture = ExtResource("7_thk3a")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jdyel"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_thk3a"]
-texture = ExtResource("6_l755l")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thk3a"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hktpy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cqi0y"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hktpy"]
-texture = ExtResource("5_jdyel")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21x4v"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8pv8m"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l755l"]
 texture = ExtResource("6_l755l")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8pv8m"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21x4v"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cqi0y"]
-texture = ExtResource("7_thk3a")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hktpy"]
+texture = ExtResource("5_jdyel")
 
-[node name="Credits" type="Control" node_paths=PackedStringArray("_QuitCreditsButton")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cqi0y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hktpy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thk3a"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_thk3a"]
+texture = ExtResource("6_l755l")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jdyel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l755l"]
+
+[node name="Credits" type="Control" unique_id=97293747 node_paths=PackedStringArray("_QuitCreditsButton")]
 z_index = 4
 layout_mode = 3
 anchors_preset = 5
@@ -46,11 +46,11 @@ script = ExtResource("1_qqh6l")
 _QuitCreditsButton = NodePath("Button")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=335493379]
 position = Vector2(0, 350)
 texture = ExtResource("5_hktpy")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=661034398]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -61,7 +61,7 @@ offset_bottom = 400.0
 grow_horizontal = 2
 metadata/_edit_lock_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Control" unique_id=291294264]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -71,9 +71,9 @@ offset_right = 264.5
 offset_bottom = 134.0
 grow_horizontal = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_outline_size = 15
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_fonts/normal_font = ExtResource("1_mrcp2")
 theme_override_font_sizes/normal_font_size = 70
 bbcode_enabled = true
@@ -83,7 +83,7 @@ vertical_alignment = 1
 script = ExtResource("2_mrcp2")
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Control" unique_id=1266978904]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -110,7 +110,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Control" type="Control" parent="Control"]
+[node name="Control" type="Control" parent="Control" unique_id=1562848222]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -122,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 0
 metadata/_edit_lock_ = true
 
-[node name="Label2" type="Label" parent="Control/Control"]
+[node name="Label2" type="Label" parent="Control/Control" unique_id=1731050848]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 5
@@ -143,7 +143,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="Control/Control"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="Control/Control" unique_id=854034464]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -157,19 +157,19 @@ offset_bottom = 67.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_outline_size = 15
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_fonts/normal_font = ExtResource("1_mrcp2")
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
-text = "AlexCats1"
+text = "zJaviOne"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("3_jq1kv")
 metadata/_edit_lock_ = true
 
-[node name="Label3" type="Label" parent="Control/Control"]
+[node name="Label3" type="Label" parent="Control/Control" unique_id=984580233]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 7
@@ -194,7 +194,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Control2" type="Control" parent="."]
+[node name="Control2" type="Control" parent="." unique_id=1610568287]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -208,7 +208,7 @@ offset_bottom = 700.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Button" type="Button" parent="."]
+[node name="Button" type="Button" parent="." unique_id=1309649198]
 z_index = 4
 texture_filter = 1
 layout_mode = 1
@@ -226,19 +226,19 @@ grow_vertical = 0
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 theme_override_fonts/font = ExtResource("1_mrcp2")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l755l")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jdyel")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_thk3a")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_thk3a")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hktpy")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cqi0y")
-theme_override_styles/hover = SubResource("StyleBoxTexture_hktpy")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_21x4v")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_l755l")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8pv8m")
 theme_override_styles/normal = SubResource("StyleBoxTexture_cqi0y")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_8pv8m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_l755l")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_21x4v")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hktpy")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_cqi0y")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_hktpy")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_thk3a")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_thk3a")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_jdyel")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l755l")
 
-[node name="Label" type="Label" parent="Button"]
+[node name="Label" type="Label" parent="Button" unique_id=724191163]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

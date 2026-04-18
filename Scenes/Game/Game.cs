@@ -311,6 +311,8 @@ public partial class Game : Node2D
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
+		_Player.SetDefaultHealthBar();
+		
 		GameStarted();
 
 	}

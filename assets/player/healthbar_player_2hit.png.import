@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da4v1oy12wnnk"
-path="res://.godot/imported/scrolling decoration 1.png-33a2b60edfc088b9225d5410260d91fc.ctex"
+uid="uid://cbrtge1obr1bl"
+path="res://.godot/imported/healthbar_player_2hit.png-44542c9bf8b04f08f788a330bdfb8547.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/road/scrolling decoration 1.png"
-dest_files=["res://.godot/imported/scrolling decoration 1.png-33a2b60edfc088b9225d5410260d91fc.ctex"]
+source_file="res://assets/player/healthbar_player_2hit.png"
+dest_files=["res://.godot/imported/healthbar_player_2hit.png-44542c9bf8b04f08f788a330bdfb8547.ctex"]
 
 [params]
 

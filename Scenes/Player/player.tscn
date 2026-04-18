@@ -1,27 +1,46 @@
-[gd_scene load_steps=5 format=3 uid="uid://tpxiid8lmksk"]
+[gd_scene format=3 uid="uid://tpxiid8lmksk"]
 
 [ext_resource type="Script" uid="uid://dskuj2a7i618a" path="res://Scenes/Player/player.cs" id="1_a3d8c"]
 [ext_resource type="Texture2D" uid="uid://cw7maxxjm2hn6" path="res://assets/cars/car.png" id="2_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://8228ll0as06" path="res://assets/player/healthbar_player_1hit.png" id="3_0u5uq"]
 [ext_resource type="AudioStream" uid="uid://cx43ii0g5b0te" path="res://assets/sound effects/crashing enemy.mp3" id="3_xpcdj"]
+[ext_resource type="Texture2D" uid="uid://cbrtge1obr1bl" path="res://assets/player/healthbar_player_2hit.png" id="4_jlvik"]
+[ext_resource type="Texture2D" uid="uid://q2e3q83w5lot" path="res://assets/player/healthbar_player_nohit.png" id="4_mtuoh"]
+[ext_resource type="Texture2D" uid="uid://cxvbq3an3ekap" path="res://assets/player/healthbar_player_nohealth.png" id="5_gk6dx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfr5m"]
 size = Vector2(18, 23)
 
-[node name="Player" type="Area2D" node_paths=PackedStringArray("_CarCrash")]
+[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar")]
 z_index = 1
 script = ExtResource("1_a3d8c")
 _CarCrash = NodePath("CarCrash")
+_HealthBar_NoHit = ExtResource("4_mtuoh")
+_HealthBar_1Hit = ExtResource("3_0u5uq")
+_HealthBar_2Hit = ExtResource("4_jlvik")
+_HealthBar_NoHealth = ExtResource("5_gk6dx")
+_HealthBar = NodePath("HealthBar")
+metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=521307505]
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("2_xpcdj")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=746450255]
 position = Vector2(0, 0.5)
 scale = Vector2(4, 4)
 shape = SubResource("RectangleShape2D_kfr5m")
+metadata/_edit_lock_ = true
 
-[node name="CarCrash" type="AudioStreamPlayer" parent="."]
+[node name="CarCrash" type="AudioStreamPlayer" parent="." unique_id=91097321]
 stream = ExtResource("3_xpcdj")
 volume_db = -10.0
+
+[node name="HealthBar" type="Sprite2D" parent="." unique_id=594900130]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(0, 65)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("4_mtuoh")

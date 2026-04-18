@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="VOCHO'S remaster"
 run/main_scene="uid://m3wero5w5cah"
-config/features=PackedStringArray("4.4", "C#", "Mobile")
+config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -25,6 +29,7 @@ EnemyManager="*res://Autoloads/EnemyManager.cs"
 
 window/size/viewport_width=1000
 window/size/viewport_height=700
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [dotnet]
