@@ -31,6 +31,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _ShopAvailableTimerPath;
 	[Export] private NodePath _InventoryInGamePath;
 	[Export] private NodePath _GamePausedLabelPath;
+	[Export] private NodePath _ShopReadyLabelPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -48,6 +49,7 @@ public partial class Game : Node2D
 	private Label _GameOverLabel;
 	private Label _GameOverStatsLabel;
 	private Label _GameOverRestartLabel;
+	private RichTextLabel _ShopReadyLabel;
 	private AnimationPlayer _AnimationPlayer;
 	private AudioStreamPlayer _GameOverCrash;
 	private AudioStreamPlayer _CarStarting;
@@ -89,6 +91,7 @@ public partial class Game : Node2D
 		_GameOverLabel = GetNode<Label>(_GameOverLabelPath);
 		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
 		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
+		_ShopReadyLabel = GetNode<RichTextLabel>(_ShopReadyLabelPath);
 		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
 		_GameOverCrash = GetNode<AudioStreamPlayer>(_GameOverCrashPath);
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
@@ -312,7 +315,10 @@ public partial class Game : Node2D
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
 		_Player.SetDefaultHealthBar();
-		
+
+		// we assign the shopreadylabel opacity to zero.
+		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
+
 		GameStarted();
 
 	}
@@ -350,6 +356,7 @@ public partial class Game : Node2D
 	private void OnShopAvailable()
 	{
 		GD.Print("shop available!");
+		_ShopReadyLabel.Modulate = new Color(1, 1, 1, 1);
 		_ShopAvailableTimer.Stop();
 		_ShopAvailable = true;
 	}
@@ -389,6 +396,9 @@ public partial class Game : Node2D
 		{
 			GameManager.Instance.ComingFromShop = false; // we reassign the variable so there's no trouble if the game is restarted again.
 			_ComingFromShop = GameManager.Instance.ComingFromShop;
+
+			// we assign the opacity of the shopreadylabel to 0, so it doesnt show when returning.
+			_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
 
 			return true; // if the player is coming from shop, returns true
 		}

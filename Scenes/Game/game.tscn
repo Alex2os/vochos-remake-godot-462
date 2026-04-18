@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://qdh73vj2guf7"]
+[gd_scene format=3 uid="uid://qdh73vj2guf7"]
 
 [ext_resource type="PackedScene" uid="uid://tpxiid8lmksk" path="res://Scenes/Player/player.tscn" id="1_mv0hc"]
 [ext_resource type="Script" uid="uid://npn0ytnyrjeb" path="res://Scenes/Game/Game.cs" id="1_qikps"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://c3okbqeatfm5k" path="res://Scenes/GameOver/game_over.tscn" id="12_ypmwd"]
 [ext_resource type="PackedScene" uid="uid://dtmrlqgb3yi51" path="res://Scenes/InventoryInGame/inventory_in_game.tscn" id="13_oejk7"]
 [ext_resource type="Script" uid="uid://du6fhlfj2pcdq" path="res://Scenes/Game/GamePausedLabel.cs" id="14_upfqs"]
+[ext_resource type="Script" uid="uid://uxb5fjcy464x" path="res://Scenes/Game/ShopReadyLabel.cs" id="15_8e3kh"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -24,7 +25,7 @@ _data = {
 &"shop anim": SubResource("Animation_oejk7")
 }
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" unique_id=285963340]
 script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
 _CarEnemyScene = ExtResource("4_i1e5p")
@@ -54,49 +55,51 @@ _GameMusicPath = NodePath("GameMusic")
 _ShopAvailableTimerPath = NodePath("ShopAvailableTimer")
 _InventoryInGamePath = NodePath("InventoryInGame")
 _GamePausedLabelPath = NodePath("GamePausedLabel")
+_ShopReadyLabelPath = NodePath("ShopReadyLabel")
 
-[node name="EnemyMarkerLeft" type="Marker2D" parent="."]
+[node name="EnemyMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
 metadata/_edit_lock_ = true
 
-[node name="EnemyMarkerRight" type="Marker2D" parent="."]
+[node name="EnemyMarkerRight" type="Marker2D" parent="." unique_id=1341597037]
 position = Vector2(850, -100)
 metadata/_edit_lock_ = true
 
-[node name="RoadMarker" type="Marker2D" parent="."]
+[node name="RoadMarker" type="Marker2D" parent="." unique_id=226523869]
 position = Vector2(500, -700)
 metadata/_edit_lock_ = true
 
-[node name="RoadContainer" type="Node2D" parent="."]
+[node name="RoadContainer" type="Node2D" parent="." unique_id=65675021]
 metadata/_edit_lock_ = true
 
-[node name="EnemyContainer" type="Node2D" parent="."]
+[node name="EnemyContainer" type="Node2D" parent="." unique_id=2011967705]
 metadata/_edit_lock_ = true
 
-[node name="CoinContainer" type="Node2D" parent="."]
+[node name="CoinContainer" type="Node2D" parent="." unique_id=798676082]
 metadata/_edit_lock_ = true
 
-[node name="SpeedingGame" parent="." instance=ExtResource("11_qtymf")]
+[node name="SpeedingGame" parent="." unique_id=2097598008 instance=ExtResource("11_qtymf")]
+metadata/_edit_lock_ = true
 
-[node name="GameOver" parent="." instance=ExtResource("12_ypmwd")]
+[node name="GameOver" parent="." unique_id=406446912 instance=ExtResource("12_ypmwd")]
 
-[node name="EnemyTimer" type="Timer" parent="."]
+[node name="EnemyTimer" type="Timer" parent="." unique_id=1881880263]
 wait_time = 2.0
 autostart = true
 
-[node name="RoadTimer" type="Timer" parent="."]
+[node name="RoadTimer" type="Timer" parent="." unique_id=1777081553]
 wait_time = 7.2
 autostart = true
 
-[node name="CoinTimer" type="Timer" parent="."]
+[node name="CoinTimer" type="Timer" parent="." unique_id=1628264790]
 wait_time = 3.5
 autostart = true
 
-[node name="ShopAvailableTimer" type="Timer" parent="."]
+[node name="ShopAvailableTimer" type="Timer" parent="." unique_id=251858297]
 wait_time = 20.0
 autostart = true
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="." unique_id=185217818]
 texture_filter = 1
 offset_left = 10.0
 offset_top = 10.0
@@ -111,7 +114,7 @@ theme_override_font_sizes/font_size = 55
 text = "0"
 metadata/_edit_lock_ = true
 
-[node name="CoinLabel" type="Label" parent="."]
+[node name="CoinLabel" type="Label" parent="." unique_id=1262879402]
 texture_filter = 1
 offset_left = 10.0
 offset_top = 70.0
@@ -126,34 +129,32 @@ theme_override_font_sizes/font_size = 40
 text = "$0"
 metadata/_edit_lock_ = true
 
-[node name="GameOverCrash" type="AudioStreamPlayer" parent="."]
+[node name="GameOverCrash" type="AudioStreamPlayer" parent="." unique_id=700111892]
 stream = ExtResource("7_vifcx")
 volume_db = -10.0
 
-[node name="CarStarting" type="AudioStreamPlayer" parent="."]
+[node name="CarStarting" type="AudioStreamPlayer" parent="." unique_id=1272099654]
 stream = ExtResource("8_xfil1")
 volume_db = -8.0
 
-[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+[node name="GameMusic" type="AudioStreamPlayer" parent="." unique_id=1221728903]
 stream = ExtResource("9_huoen")
 volume_db = -23.0
 
-[node name="CoinSound" type="AudioStreamPlayer" parent="."]
+[node name="CoinSound" type="AudioStreamPlayer" parent="." unique_id=1528837429]
 stream = ExtResource("10_7jvlm")
 volume_db = -8.0
 
-[node name="Player" parent="." instance=ExtResource("1_mv0hc")]
+[node name="Player" parent="." unique_id=793893814 instance=ExtResource("1_mv0hc")]
 position = Vector2(500, 530)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1006050183]
+libraries/ = SubResource("AnimationLibrary_upfqs")
+
+[node name="InventoryInGame" parent="." unique_id=1026223403 instance=ExtResource("13_oejk7")]
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_upfqs")
-}
-
-[node name="InventoryInGame" parent="." instance=ExtResource("13_oejk7")]
-
-[node name="GamePausedLabel" type="RichTextLabel" parent="."]
+[node name="GamePausedLabel" type="RichTextLabel" parent="." unique_id=921962921]
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
@@ -162,14 +163,41 @@ offset_top = 258.0
 offset_right = 764.0
 offset_bottom = 392.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_outline_size = 15
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
 theme_override_fonts/normal_font = ExtResource("5_ciybh")
 theme_override_font_sizes/normal_font_size = 70
 bbcode_enabled = true
 text = "
     Game paused..."
 script = ExtResource("14_upfqs")
+metadata/_edit_lock_ = true
+
+[node name="ShopReadyLabel" type="RichTextLabel" parent="." unique_id=1384954700]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 217.0
+offset_top = -37.0
+offset_right = 746.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 15
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_fonts/normal_font = ExtResource("5_ciybh")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "shop is ready"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("15_8e3kh")
+metadata/_edit_lock_ = true
 
 [editable path="GameOver"]
