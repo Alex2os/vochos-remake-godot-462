@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://by1fvr4bfpnw6"
+path="res://.godot/imported/extra-life-perk.mp3-740a04fd9d3c926a36aec60ac7267b02.mp3str"
+
+[deps]
+
+source_file="res://assets/sound effects/extra-life-perk.mp3"
+dest_files=["res://.godot/imported/extra-life-perk.mp3-740a04fd9d3c926a36aec60ac7267b02.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

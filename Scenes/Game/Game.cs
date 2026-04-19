@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Game : Node2D
 {
@@ -106,6 +105,7 @@ public partial class Game : Node2D
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
 		_Player.PlayerHealthDepleted += GameOver;
+		_Player.UpdateInventoryPerkTexture += OnUpdateInventoryPerkTexture;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
@@ -220,21 +220,17 @@ public partial class Game : Node2D
 		// stop/start the timer for speeding game and the animation.
 		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
-			if (speed is Timer timer)
-			{
-				if (set_process_bool) timer.SetPaused(false); // if the process are turning back to true, then put the paused state to false, and viceversa. for the else below
-				else timer.SetPaused(true);
-			}
-
+			if (speed is Timer timer) timer.SetPaused(!set_process_bool); // if the process are turning back to true, then put the paused state to false, and viceversa.
+			
 			if (speed is AnimationPlayer anim)
 			{
 				if (_GameOver) anim.Stop();
 			}
 		}
 
-		// stop process for player
+		// stop process and timers for player
 		_Player.SetProcess(set_process_bool);
-
+		_Player.SetPlayerTimers(set_process_bool);
 
 	}
 
@@ -384,8 +380,8 @@ public partial class Game : Node2D
 		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
 
 		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
-														 // enemy
-		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+														 
+		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
 	}
 
 	private bool CheckComingFromShop()
@@ -432,5 +428,10 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer.SetPaused(paused_state);
 		_CoinTimer.SetPaused(paused_state);
 		_ShopAvailableTimer.SetPaused(paused_state);
+	}
+
+	private void OnUpdateInventoryPerkTexture()
+	{
+		_InventoryInGame.UpdateInventoryPerksTextures();
 	}
 }

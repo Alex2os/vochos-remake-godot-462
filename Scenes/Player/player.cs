@@ -11,16 +11,28 @@ public partial class player : Area2D
 	[Export] private Texture2D _HealthBar_2Hit;
 	[Export] private Texture2D _HealthBar_NoHealth;
 	[Export] private Sprite2D _HealthBar;
-
-	private int inventory_index = 0; // initialize the inventory index
+	[Export] private Sprite2D _ShieldPerkInUse;
+	[Export] private AudioStreamPlayer _ExtraLifePerkSound;
+	[Export] private AudioStreamPlayer _ShieldPerkSound;
+	[Export] private AudioStreamPlayer _ShieldPerkHitSound;
+	[Export] private Timer _ShieldPerkActiveTimer;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
+	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 
+	// variables
+	private bool ShieldPerkActive = false;
+
+	// -------------------------------
+	// ShieldPerkActive, _ShieldPerkActiveTimer, _ShieldPerkInUse --> THIS VARIABLES HAVE TO BE RESETTED WHEN THE GAME RESTARTS OR STARTS.
+	// -------------------------------
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 
 		AreaEntered += OnAreaEntered;
+		_ShieldPerkActiveTimer.Timeout += OnShieldPerkTimerTimeout;
+		UpdateHealthBarTexture(); // this is used here so when coming from shop the health bar is updated here, when the car or player object is ready again.
 
 	}
 
@@ -55,18 +67,15 @@ public partial class player : Area2D
 		// perks input management.
 		if (Input.IsActionJustPressed("perk1"))
 		{
-			inventory_index = 0;
-			UsePerk(inventory_index); // here we send the inventory index that we want to use/check so the user can use the perk.
+			UsePerk(0); // here we send the inventory index that we want to use/check so the user can use the perk.
 		}
 		if (Input.IsActionJustPressed("perk2"))
 		{
-			inventory_index = 1;
-			UsePerk(inventory_index);
+			UsePerk(1);
 		}
 		if (Input.IsActionJustPressed("perk3"))
 		{
-			inventory_index = 2;
-			UsePerk(inventory_index);
+			UsePerk(2);
 		}
 
 	}
@@ -81,12 +90,17 @@ public partial class player : Area2D
 
 	private void UsePerk(int inventory_index)
 	{
+		GD.Print(PlayerVariables.Instance.PlayerInventory[inventory_index]);
 		switch (PlayerVariables.Instance.PlayerInventory[inventory_index])
 		{
 			case 0:
+				if (ShieldPerkActive) return;
 				UseShieldPerk();
 				break;
 			case 1:
+				// if health is already full, then just return.
+				if (PlayerVariables.Instance.PlayerHealth == 3) return;
+				// in any other case, use the extra life perk
 				UseExtraLifePerk();
 				break;
 			case 2:
@@ -103,10 +117,13 @@ public partial class player : Area2D
 				break;
 			case -1:
 				GD.Print("No perk to use.");
-				break;
+				return;
 		}
 
+		// if any of the perks is used then we assign the inventory index to -1. 
 		PlayerVariables.Instance.PlayerInventory[inventory_index] = -1; // this is to reassign the inventory perk id when a perk is used. if there's no perk, this will axtivate too, so everytime we check this function the perk id of the inventory slot will be assigned to -1 at the ond of the function.
+																		// we then update the texture of the perk in the game inventory, sending a signal the game scene can use and successfully update it.
+		EmitSignal(SignalName.UpdateInventoryPerkTexture);
 	}
 
 	// this function is used when the game restarts. by default the car has the nohit health bar texture.
@@ -114,25 +131,21 @@ public partial class player : Area2D
 	{
 		_HealthBar.Texture = _HealthBar_NoHit;
 	}
-	
+
 	private void LowerPlayerHealth() // we lower the health of the player, and check if the health is equal or less than zero to send the game over signal.
 	{
-		PlayerVariables.Instance.PlayerHealth -= 40; // 40 is the health the player loses everytime it crashes with an enemy car
+		// if the player currently has the shield, then we return and also play a special sound when crashing an enemy. the player does not get their health lowered
+		if (ShieldPerkActive)
+		{
+			_ShieldPerkHitSound.Play();
+			return;
+		}
+
+		PlayerVariables.Instance.PlayerHealth -= 1; // 40 is the health the player loses everytime it crashes with an enemy car
 
 		// we update the health bar sprite depending on the value of the health
 
-		switch (PlayerVariables.Instance.PlayerHealth)
-		{
-			case 60:
-				_HealthBar.Texture = _HealthBar_1Hit;
-				break;
-			case 20:
-				_HealthBar.Texture = _HealthBar_2Hit;
-				break;
-			case -20:
-				_HealthBar.Texture = _HealthBar_NoHealth;
-				break;
-		}
+		UpdateHealthBarTexture();
 
 
 		if (PlayerVariables.Instance.PlayerHealth <= 0) EmitSignal(SignalName.PlayerHealthDepleted);
@@ -142,12 +155,26 @@ public partial class player : Area2D
 	// the following functions are for the perks
 	private void UseShieldPerk()
 	{
+		ShieldPerkActive = true;
 
+		_ShieldPerkActiveTimer.Start();
+		_ShieldPerkSound.Play();
+		_ShieldPerkInUse.Modulate = new Color(1, 1, 1, 1); // we show the shield perk sprite on the player
+	}
+
+	// when the timer gets to the timeout, we stop the timer and also set the shield perk active variable to false.
+	private void OnShieldPerkTimerTimeout()
+	{
+		ShieldPerkActive = false;
+		_ShieldPerkActiveTimer.Stop();
+		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0); // we hide the shield perk sprite
 	}
 
 	private void UseExtraLifePerk()
 	{
-
+		PlayerVariables.Instance.PlayerHealth++;
+		UpdateHealthBarTexture();
+		_ExtraLifePerkSound.Play();
 	}
 
 	private void UseDoublePointsPerk()
@@ -168,5 +195,31 @@ public partial class player : Area2D
 	private void UseSlowTimePerk()
 	{
 
+	}
+
+	public void UpdateHealthBarTexture()
+	{
+		switch (PlayerVariables.Instance.PlayerHealth)
+		{
+			case 3:
+				_HealthBar.Texture = _HealthBar_NoHit;
+				break;
+			case 2:
+				_HealthBar.Texture = _HealthBar_1Hit;
+				break;
+			case 1:
+				_HealthBar.Texture = _HealthBar_2Hit;
+				break;
+			case 0:
+				_HealthBar.Texture = _HealthBar_NoHealth;
+				break;
+		}
+	}
+
+	public void SetPlayerTimers(bool state)
+	{
+		if(ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
+		
+		
 	}
 }

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dhamtmatlfcxg"
+path="res://.godot/imported/shield-perk-hit.mp3-a075ce01136e58719e8d51adecff3d45.mp3str"
+
+[deps]
+
+source_file="res://assets/sound effects/shield-perk-hit.mp3"
+dest_files=["res://.godot/imported/shield-perk-hit.mp3-a075ce01136e58719e8d51adecff3d45.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

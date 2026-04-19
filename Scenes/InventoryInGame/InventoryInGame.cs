@@ -5,7 +5,6 @@ public partial class InventoryInGame : Node2D
 {
 
 	private static Texture2D[] _PerksTexturesSmall;
-
 	[Export] private Sprite2D Perk1;
 	[Export] private Sprite2D Perk2;
 	[Export] private Sprite2D Perk3;
@@ -36,7 +35,7 @@ public partial class InventoryInGame : Node2D
 	// in this function we assign the textures of the inventory.
 	public void UpdateInventoryPerksTextures()
 	{
-		int inventory_size = PlayerVariables.PlayerInventorySize; // as it's an static variables (playerinventorysize), we have to access it from the class itself, and not the instance. that's why whe don't do playervariables.instance.playerinventorysize
+		// int inventory_size = PlayerVariables.PlayerInventorySize; // as it's an static variables (playerinventorysize), we have to access it from the class itself, and not the instance. that's why whe don't do playervariables.instance.playerinventorysize
 
 		if (PlayerVariables.Instance.PlayerInventory[0] == -1) Perk1.Texture = null;
 		else Perk1.Texture = _PerksTexturesSmall[PlayerVariables.Instance.PlayerInventory[0]];

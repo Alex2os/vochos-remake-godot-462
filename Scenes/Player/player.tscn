@@ -7,11 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://cbrtge1obr1bl" path="res://assets/player/healthbar_player_2hit.png" id="4_jlvik"]
 [ext_resource type="Texture2D" uid="uid://q2e3q83w5lot" path="res://assets/player/healthbar_player_nohit.png" id="4_mtuoh"]
 [ext_resource type="Texture2D" uid="uid://cxvbq3an3ekap" path="res://assets/player/healthbar_player_nohealth.png" id="5_gk6dx"]
+[ext_resource type="AudioStream" uid="uid://by1fvr4bfpnw6" path="res://assets/sound effects/extra-life-perk.mp3" id="8_jlvik"]
+[ext_resource type="AudioStream" uid="uid://ds31w0rxodwy5" path="res://assets/sound effects/shield-perk.mp3" id="9_jhyir"]
+[ext_resource type="AudioStream" uid="uid://dhamtmatlfcxg" path="res://assets/sound effects/shield-perk-hit.mp3" id="10_74mp2"]
+[ext_resource type="Texture2D" uid="uid://b6qodx482c1x6" path="res://assets/perks/shield-inuse.png" id="11_74mp2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfr5m"]
 size = Vector2(18, 23)
 
-[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar")]
+[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar", "_ShieldPerkInUse", "_ExtraLifePerkSound", "_ShieldPerkSound", "_ShieldPerkHitSound", "_ShieldPerkActiveTimer")]
 z_index = 1
 script = ExtResource("1_a3d8c")
 _CarCrash = NodePath("CarCrash")
@@ -20,9 +24,14 @@ _HealthBar_1Hit = ExtResource("3_0u5uq")
 _HealthBar_2Hit = ExtResource("4_jlvik")
 _HealthBar_NoHealth = ExtResource("5_gk6dx")
 _HealthBar = NodePath("HealthBar")
+_ShieldPerkInUse = NodePath("ShieldPerkTexture")
+_ExtraLifePerkSound = NodePath("ExtraLifePerk")
+_ShieldPerkSound = NodePath("ShieldPerk")
+_ShieldPerkHitSound = NodePath("ShieldPerkHit")
+_ShieldPerkActiveTimer = NodePath("ShieldPerkActiveTimer")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=521307505]
+[node name="CarSkin" type="Sprite2D" parent="." unique_id=521307505]
 texture_filter = 1
 scale = Vector2(4, 4)
 texture = ExtResource("2_xpcdj")
@@ -44,3 +53,25 @@ texture_repeat = 1
 position = Vector2(0, 65)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("4_mtuoh")
+
+[node name="ExtraLifePerk" type="AudioStreamPlayer" parent="." unique_id=889537717]
+stream = ExtResource("8_jlvik")
+volume_db = -5.725
+
+[node name="ShieldPerkActiveTimer" type="Timer" parent="." unique_id=1468499782]
+wait_time = 15.0
+
+[node name="ShieldPerk" type="AudioStreamPlayer" parent="." unique_id=1780644970]
+stream = ExtResource("9_jhyir")
+volume_db = -3.0
+
+[node name="ShieldPerkHit" type="AudioStreamPlayer" parent="." unique_id=144917082]
+stream = ExtResource("10_74mp2")
+volume_db = 3.0
+
+[node name="ShieldPerkTexture" type="Sprite2D" parent="." unique_id=1465765886]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(3, 3)
+texture = ExtResource("11_74mp2")

@@ -5,10 +5,10 @@ public partial class PlayerVariables : Node
 {
 	public static PlayerVariables Instance { get; private set; }
 
-	public int PlayerCoins = 1000; // 0 by default
+	public int PlayerCoins = 0; // 0 by default
 	public int PlayerTotalCoins = 0;
 	public int PlayerScore = 0; // 0 by default
-	public int PlayerHealth = 100;
+	public int PlayerHealth = 3;
 	public static int PlayerInventorySize = 3;
 	public int[] PlayerInventory = new int[] { -1, -1, -1 }; // main player inventory.
 
@@ -25,10 +25,10 @@ public partial class PlayerVariables : Node
 
 	public void InitializePlayerVariables()
 	{
-		PlayerCoins = 0;
+		PlayerCoins = 1000;
 		PlayerTotalCoins = 0;
 		PlayerScore = 0;
-		PlayerHealth = 100;
+		PlayerHealth = 3;
 
 		// we empty the player inventory
 		for (int i = 0; i < PlayerInventory.Length; i++) PlayerInventory[i] = -1;
