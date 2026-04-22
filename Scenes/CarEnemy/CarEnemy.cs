@@ -40,7 +40,7 @@ public partial class CarEnemy : Area2D
 
 	private void OnAreaEntered(Area2D node)
 	{
-		if (node is player) QueueFree();
-		
+		if (node is player) QueueFree(); // if it's the player that hit the enemy, destroy itself
+		else if (node is Bullet) QueueFree(); // the same happens for when it hits a bullet.
 	}
 }

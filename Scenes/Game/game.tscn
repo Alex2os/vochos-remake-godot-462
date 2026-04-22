@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://dtmrlqgb3yi51" path="res://Scenes/InventoryInGame/inventory_in_game.tscn" id="13_oejk7"]
 [ext_resource type="Script" uid="uid://du6fhlfj2pcdq" path="res://Scenes/Game/GamePausedLabel.cs" id="14_upfqs"]
 [ext_resource type="Script" uid="uid://uxb5fjcy464x" path="res://Scenes/Game/ShopReadyLabel.cs" id="15_8e3kh"]
+[ext_resource type="PackedScene" uid="uid://cbvc45yudheq4" path="res://Scenes/Bullet/bullet.tscn" id="16_56qi8"]
+[ext_resource type="AudioStream" uid="uid://cqiwxb8fw1cf7" path="res://assets/sound effects/bullet-enemyhit.wav" id="17_2vowc"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -30,12 +32,14 @@ script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
 _CarEnemyScene = ExtResource("4_i1e5p")
 _CoinScene = ExtResource("4_flgk0")
+_BulletScene = ExtResource("16_56qi8")
 _SpeedingGamePath = NodePath("SpeedingGame")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")
 _SpawningCarEnemyTimerPath = NodePath("EnemyTimer")
 _RoadContainerPath = NodePath("RoadContainer")
 _EnemyContainerPath = NodePath("EnemyContainer")
+_BulletContainerPath = NodePath("BulletContainer")
 _EnemyMarkerRightPath = NodePath("EnemyMarkerRight")
 _EnemyMarkerLeftPath = NodePath("EnemyMarkerLeft")
 _PlayerPath = NodePath("Player")
@@ -56,6 +60,7 @@ _ShopAvailableTimerPath = NodePath("ShopAvailableTimer")
 _InventoryInGamePath = NodePath("InventoryInGame")
 _GamePausedLabelPath = NodePath("GamePausedLabel")
 _ShopReadyLabelPath = NodePath("ShopReadyLabel")
+_BulletHitEnemySoundPath = NodePath("BulletHitEnemySound")
 
 [node name="EnemyMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -200,5 +205,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("15_8e3kh")
 metadata/_edit_lock_ = true
+
+[node name="BulletContainer" type="Node2D" parent="." unique_id=584847143]
+
+[node name="BulletHitEnemySound" type="AudioStreamPlayer" parent="." unique_id=212240483]
+stream = ExtResource("17_2vowc")
+volume_db = -12.0
 
 [editable path="GameOver"]

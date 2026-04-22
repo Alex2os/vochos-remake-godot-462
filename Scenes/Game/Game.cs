@@ -5,12 +5,14 @@ public partial class Game : Node2D
 	[Export] private PackedScene _RoadScene;
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
+	[Export] private PackedScene _BulletScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
 	[Export] private NodePath _SpawningCarEnemyTimerPath;
 	[Export] private NodePath _RoadContainerPath;
 	[Export] private NodePath _EnemyContainerPath;
+	[Export] private NodePath _BulletContainerPath;
 	[Export] private NodePath _EnemyMarkerRightPath;
 	[Export] private NodePath _EnemyMarkerLeftPath;
 	[Export] private NodePath _PlayerPath;
@@ -31,6 +33,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _InventoryInGamePath;
 	[Export] private NodePath _GamePausedLabelPath;
 	[Export] private NodePath _ShopReadyLabelPath;
+	[Export] private NodePath _BulletHitEnemySoundPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -39,6 +42,7 @@ public partial class Game : Node2D
 	private Node2D _EnemyContainer;
 	private Node2D _RoadContainer;
 	private Node2D _CoinContainer;
+	private Node2D _BulletContainer;
 	private InventoryInGame _InventoryInGame;
 	private Marker2D _EnemyMarkerRight;
 	private Marker2D _EnemyMarkerLeft;
@@ -53,6 +57,7 @@ public partial class Game : Node2D
 	private AudioStreamPlayer _GameOverCrash;
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
+	private AudioStreamPlayer _BulletHitEnemySound;
 	private AudioStreamPlayer _GameMusic;
 	private RichTextLabel _GamePausedLabel;
 	private Button _MainMenuButton;
@@ -80,6 +85,7 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer = GetNode<Timer>(_SpawningCarEnemyTimerPath);
 		_RoadContainer = GetNode<Node2D>(_RoadContainerPath);
 		_EnemyContainer = GetNode<Node2D>(_EnemyContainerPath);
+		_BulletContainer = GetNode<Node2D>(_BulletContainerPath);
 		_EnemyMarkerLeft = GetNode<Marker2D>(_EnemyMarkerLeftPath);
 		_EnemyMarkerRight = GetNode<Marker2D>(_EnemyMarkerRightPath);
 		_Player = GetNode<player>(_PlayerPath);
@@ -101,15 +107,18 @@ public partial class Game : Node2D
 		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
 		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
 		_GamePausedLabel = GetNode<RichTextLabel>(_GamePausedLabelPath);
+		_BulletHitEnemySound = GetNode<AudioStreamPlayer>(_BulletHitEnemySoundPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
 		_Player.PlayerHealthDepleted += GameOver;
+		_Player.BulletPerkUsed += SpawnBullet;
 		_Player.UpdateInventoryPerkTexture += OnUpdateInventoryPerkTexture;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += OnShopAvailable;
+		
 
 		GameStarted();
 
@@ -265,6 +274,25 @@ public partial class Game : Node2D
 		coin.CoinHitsPlayer += OnCoinHitsPlayer;
 	}
 
+	// function used when the player uses the bullet perk
+	private void SpawnBullet()
+	{
+		Bullet bullet = (Bullet)_BulletScene.Instantiate();
+		_BulletContainer.AddChild(bullet);
+		float bullet_x_position = _Player.Position.X;
+		float bullet_y_position = _Player.Position.Y;
+		bullet.Position = new Vector2(bullet_x_position, bullet_y_position);
+		bullet.BulletHitEnemy += OnBulletHitEnemy;
+
+	}
+
+	
+	private void OnBulletHitEnemy()
+	{
+		// we can't play the sound directly from the bullet object, because it gets destroyed when touching the enemy. so we play it from the game instead, using a signal or event handler that tells when the bullet hit an enemy.
+		_BulletHitEnemySound.Play();
+	}
+
 	private void RestartGame()
 	{
 
@@ -292,7 +320,6 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer.Start();
 		_CoinTimer.Start();
 		_ShopAvailableTimer.Start();
-
 
 		foreach (Node road in _RoadContainer.GetChildren()) road.QueueFree();
 

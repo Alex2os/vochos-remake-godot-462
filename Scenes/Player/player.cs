@@ -18,6 +18,7 @@ public partial class player : Area2D
 	[Export] private Timer _ShieldPerkActiveTimer;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
+	[Signal] public delegate void BulletPerkUsedEventHandler();
 
 	// variables
 	private bool ShieldPerkActive = false;
@@ -79,14 +80,13 @@ public partial class player : Area2D
 	private void OnAreaEntered(Area2D node)
 	{
 
-		if (node is Coin) ; // if it's a coin, then don't do anything. 
+		if (node is Coin || node is Bullet) ; // if it's a coin or a bullet, then don't do anything
 		else LowerPlayerHealth(); // in any other case, it's an enemy what hit the player, so we lower the health
 
 	}
 
 	private void UsePerk(int inventory_index)
 	{
-		GD.Print(PlayerVariables.Instance.PlayerInventory[inventory_index]);
 		switch (PlayerVariables.Instance.PlayerInventory[inventory_index])
 		{
 			case 0:
@@ -143,7 +143,6 @@ public partial class player : Area2D
 
 		UpdateHealthBarTexture();
 
-
 		if (PlayerVariables.Instance.PlayerHealth <= 0) EmitSignal(SignalName.PlayerHealthDepleted);
 		else _CarCrash.Play(); // if it's not game over yet, play de carcrash sound. otherwise the game over sound will be played
 	}
@@ -180,7 +179,8 @@ public partial class player : Area2D
 
 	private void UseBulletPerk()
 	{
-
+		EmitSignal(SignalName.BulletPerkUsed);
+		_ExtraLifePerkSound.Play();
 	}
 
 	private void UseDoubleMoneyPerk()
