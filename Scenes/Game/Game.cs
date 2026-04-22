@@ -311,6 +311,7 @@ public partial class Game : Node2D
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
 		_Player.SetDefaultHealthBar();
+		_Player.RestartPlayerVariables();
 
 		// we assign the shopreadylabel opacity to zero.
 		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);

@@ -22,10 +22,6 @@ public partial class player : Area2D
 	// variables
 	private bool ShieldPerkActive = false;
 
-	// -------------------------------
-	// ShieldPerkActive, _ShieldPerkActiveTimer, _ShieldPerkInUse --> THIS VARIABLES HAVE TO BE RESETTED WHEN THE GAME RESTARTS OR STARTS.
-	// -------------------------------
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -216,10 +212,17 @@ public partial class player : Area2D
 		}
 	}
 
+	// this is used to set the timers in the player to true or false. mostly used by perks.
 	public void SetPlayerTimers(bool state)
 	{
-		if(ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
-		
-		
+		if (ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
+	}
+
+	public void RestartPlayerVariables()
+	{
+		ShieldPerkActive = false;
+		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
+		// in addition to the comment below, when the game is over this timer gets paused anyways, but we do it here too just so we have a control over the game.
+		_ShieldPerkActiveTimer.SetPaused(false); // this pauses the shieldperkactive timer. when activating this timer again on the game, this restarts from its default value and waits until the timeout, so it's fine to just pause it here.
 	}
 }
