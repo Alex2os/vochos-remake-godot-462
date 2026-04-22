@@ -15,6 +15,7 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _ExtraLifePerkSound;
 	[Export] private AudioStreamPlayer _ShieldPerkSound;
 	[Export] private AudioStreamPlayer _ShieldPerkHitSound;
+	[Export] private AudioStreamPlayer _BulletSpawnSound;
 	[Export] private Timer _ShieldPerkActiveTimer;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
@@ -89,11 +90,11 @@ public partial class player : Area2D
 	{
 		switch (PlayerVariables.Instance.PlayerInventory[inventory_index])
 		{
-			case 0:
+			case 0: //
 				if (ShieldPerkActive) return;
 				UseShieldPerk();
 				break;
-			case 1:
+			case 1: // 
 				// if health is already full, then just return.
 				if (PlayerVariables.Instance.PlayerHealth == 3) return;
 				// in any other case, use the extra life perk
@@ -102,7 +103,7 @@ public partial class player : Area2D
 			case 2:
 				UseDoublePointsPerk();
 				break;
-			case 3:
+			case 3: //
 				UseBulletPerk();
 				break;
 			case 4:
@@ -180,7 +181,7 @@ public partial class player : Area2D
 	private void UseBulletPerk()
 	{
 		EmitSignal(SignalName.BulletPerkUsed);
-		_ExtraLifePerkSound.Play();
+		_BulletSpawnSound.Play(); // we reproduce the bullet spawn sound here instead of the bullet, as the bullet could be destroyed pretty soon in some cases.
 	}
 
 	private void UseDoubleMoneyPerk()
