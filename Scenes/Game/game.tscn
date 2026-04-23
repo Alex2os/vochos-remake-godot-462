@@ -17,6 +17,9 @@
 [ext_resource type="Script" uid="uid://uxb5fjcy464x" path="res://Scenes/Game/ShopReadyLabel.cs" id="15_8e3kh"]
 [ext_resource type="PackedScene" uid="uid://cbvc45yudheq4" path="res://Scenes/Bullet/bullet.tscn" id="16_56qi8"]
 [ext_resource type="AudioStream" uid="uid://cqiwxb8fw1cf7" path="res://assets/sound effects/bullet-enemyhit.wav" id="17_2vowc"]
+[ext_resource type="Texture2D" uid="uid://cxvvrwpwybm4v" path="res://assets/perks/medium sizes/time slow medium.png" id="18_lemb1"]
+[ext_resource type="Texture2D" uid="uid://dgt3ih0dj4ik1" path="res://assets/perks/medium sizes/shield medium.png" id="18_yox4t"]
+[ext_resource type="Texture2D" uid="uid://s1i1hs5cvdnn" path="res://assets/perks/medium sizes/double money medium.png" id="20_a6ftd"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -61,6 +64,10 @@ _InventoryInGamePath = NodePath("InventoryInGame")
 _GamePausedLabelPath = NodePath("GamePausedLabel")
 _ShopReadyLabelPath = NodePath("ShopReadyLabel")
 _BulletHitEnemySoundPath = NodePath("BulletHitEnemySound")
+_PerkTimerTexture1Path = NodePath("PerkTimerTexture1")
+_PerkTimerTexture3Path = NodePath("PerkTimerTexture3")
+_PerkTimerTexture2Path = NodePath("PerkTimerTexture2")
+_ShieldPerkTimerPath = NodePath("ShieldPerkTimer")
 
 [node name="EnemyMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -211,5 +218,73 @@ metadata/_edit_lock_ = true
 [node name="BulletHitEnemySound" type="AudioStreamPlayer" parent="." unique_id=212240483]
 stream = ExtResource("17_2vowc")
 volume_db = -12.0
+
+[node name="PerkTimerText1" type="Label" parent="." unique_id=8264310]
+texture_filter = 1
+offset_left = 870.0
+offset_top = 20.0
+offset_right = 945.0
+offset_bottom = 83.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("5_ciybh")
+theme_override_font_sizes/font_size = 40
+text = "0:15"
+
+[node name="PerkTimerText2" type="Label" parent="." unique_id=117138727]
+texture_filter = 1
+offset_left = 870.0
+offset_top = 80.0
+offset_right = 945.0
+offset_bottom = 155.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("5_ciybh")
+theme_override_font_sizes/font_size = 40
+text = "0:20
+"
+
+[node name="PerkTimerText3" type="Label" parent="." unique_id=818399982]
+texture_filter = 1
+offset_left = 870.0
+offset_top = 140.0
+offset_right = 945.0
+offset_bottom = 215.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("5_ciybh")
+theme_override_font_sizes/font_size = 40
+text = "0:25
+"
+
+[node name="PerkTimerTexture1" type="Sprite2D" parent="." unique_id=1516614957]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(966, 35)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("18_lemb1")
+
+[node name="PerkTimerTexture2" type="Sprite2D" parent="." unique_id=504026738]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(965.99994, 95)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("18_yox4t")
+
+[node name="PerkTimerTexture3" type="Sprite2D" parent="." unique_id=846126251]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(966, 155)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("20_a6ftd")
+
+[node name="ShieldPerkTimer" type="Timer" parent="." unique_id=1279766137]
+wait_time = 15.0
 
 [editable path="GameOver"]

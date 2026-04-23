@@ -34,6 +34,10 @@ public partial class Game : Node2D
 	[Export] private NodePath _GamePausedLabelPath;
 	[Export] private NodePath _ShopReadyLabelPath;
 	[Export] private NodePath _BulletHitEnemySoundPath;
+	[Export] private NodePath _PerkTimerTexture1Path;
+	[Export] private NodePath _PerkTimerTexture3Path;
+	[Export] private NodePath _PerkTimerTexture2Path;
+	[Export] private NodePath _ShieldPerkTimerPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -63,7 +67,12 @@ public partial class Game : Node2D
 	private Button _MainMenuButton;
 	private SpeedingGame _SpeedingGame;
 	private player _Player;
-	
+	private Sprite2D _PerkTimerTexture1;
+	private Sprite2D _PerkTimerTexture2;
+	private Sprite2D _PerkTimerTexture3;
+	private Timer _ShieldPerkTimer;
+	[Signal] public delegate void ShieldPerkEndedEventHandler();
+
 	// initialize all the variables used in the game
 	private int _TotalScore;
 	private int _EnemySpeed;
@@ -108,6 +117,10 @@ public partial class Game : Node2D
 		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
 		_GamePausedLabel = GetNode<RichTextLabel>(_GamePausedLabelPath);
 		_BulletHitEnemySound = GetNode<AudioStreamPlayer>(_BulletHitEnemySoundPath);
+		_PerkTimerTexture1 = GetNode<Sprite2D>(_PerkTimerTexture1Path);
+		_PerkTimerTexture2 = GetNode<Sprite2D>(_PerkTimerTexture2Path);
+		_PerkTimerTexture3 = GetNode<Sprite2D>(_PerkTimerTexture3Path);
+		_ShieldPerkTimer = GetNode<Timer>(_ShieldPerkTimerPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -118,7 +131,9 @@ public partial class Game : Node2D
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += OnShopAvailable;
-		
+		_Player.ShieldPerkUsed += OnShieldPerkUsed;
+		_ShieldPerkTimer.Timeout += OnShieldTimerTimeout;
+		ShieldPerkEnded += _Player.OnShieldPerkEnded;
 
 		GameStarted();
 
@@ -201,7 +216,7 @@ public partial class Game : Node2D
 		{
 			set_process_bool = true;
 			_IsGamePaused = false;
-			_GameMusic.VolumeDb += 10; 
+			_GameMusic.VolumeDb += 10;
 		}
 		else // if it's game over, then this will pop up, pausing the game.
 		{
@@ -210,7 +225,7 @@ public partial class Game : Node2D
 			_GameMusic.VolumeDb -= 10; // with this we can make the volume in db of and audiostream lower, so if the game is paused, the db will lower, and if it's unpaused, the db will go up again.
 		}
 
-		if(!_GameOver && !_IsGamePaused) _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if the game is not over and game is not paused, don't show the label
+		if (!_GameOver && !_IsGamePaused) _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if the game is not over and game is not paused, don't show the label
 		else if (!_GameOver && _IsGamePaused) _GamePausedLabel.Modulate = new Color(1, 1, 1, 1); // otherwise, show it.
 		else _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if it's any other case (which is every time _gameover is true) then hide the label.
 
@@ -230,7 +245,7 @@ public partial class Game : Node2D
 		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
 			if (speed is Timer timer) timer.SetPaused(!set_process_bool); // if the process are turning back to true, then put the paused state to false, and viceversa.
-			
+
 			if (speed is AnimationPlayer anim)
 			{
 				if (_GameOver) anim.Stop();
@@ -239,7 +254,9 @@ public partial class Game : Node2D
 
 		// stop process and timers for player
 		_Player.SetProcess(set_process_bool);
-		_Player.SetPlayerTimers(set_process_bool);
+
+		// perks
+		_ShieldPerkTimer.SetPaused(!set_process_bool);
 
 	}
 
@@ -286,7 +303,7 @@ public partial class Game : Node2D
 
 	}
 
-	
+
 	private void OnBulletHitEnemy()
 	{
 		// we can't play the sound directly from the bullet object, because it gets destroyed when touching the enemy. so we play it from the game instead, using a signal or event handler that tells when the bullet hit an enemy.
@@ -328,12 +345,12 @@ public partial class Game : Node2D
 		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.QueueFree();
 
 		foreach (Node speed in _SpeedingGame.GetChildren()) if (speed is Timer timer)
-			{
-				// set the timer again for the next game. waittime is resetted and setpaused state is set to false to keep the timer going.
-				timer.SetPaused(false);
-				timer.WaitTime = 10;
-				timer.Start();
-			}
+		{
+			// set the timer again for the next game. waittime is resetted and setpaused state is set to false to keep the timer going.
+			timer.SetPaused(false);
+			timer.WaitTime = 10;
+			timer.Start();
+		}
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
@@ -342,6 +359,9 @@ public partial class Game : Node2D
 
 		// we assign the shopreadylabel opacity to zero.
 		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
+
+		// we set the player's perks to paused. when a perk is used, they get restarted and set to not paused. 
+		_ShieldPerkTimer.SetPaused(true);
 
 		GameStarted();
 
@@ -408,7 +428,7 @@ public partial class Game : Node2D
 		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
 
 		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
-														 
+
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
 	}
 
@@ -444,6 +464,8 @@ public partial class Game : Node2D
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
 	}
 
+	// ==============
+	// !!!! check if this is really needed in the game
 	private void ShowPausedLabel(bool paused_state)
 	{
 		if (paused_state) ;
@@ -462,4 +484,12 @@ public partial class Game : Node2D
 	{
 		_InventoryInGame.UpdateInventoryPerksTextures();
 	}
+
+	private void OnShieldPerkUsed()
+	{
+		_ShieldPerkTimer.SetPaused(false); // we have to unpause the timer before using the .Start() method
+		_ShieldPerkTimer.Start();
+	}
+	
+	private void OnShieldTimerTimeout() { EmitSignal(SignalName.ShieldPerkEnded); }
 }

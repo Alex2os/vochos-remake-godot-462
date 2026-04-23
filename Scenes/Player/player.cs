@@ -16,10 +16,10 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _ShieldPerkSound;
 	[Export] private AudioStreamPlayer _ShieldPerkHitSound;
 	[Export] private AudioStreamPlayer _BulletSpawnSound;
-	[Export] private Timer _ShieldPerkActiveTimer;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 	[Signal] public delegate void BulletPerkUsedEventHandler();
+	[Signal] public delegate void ShieldPerkUsedEventHandler();
 
 	// variables
 	private bool ShieldPerkActive = false;
@@ -29,7 +29,6 @@ public partial class player : Area2D
 	{
 
 		AreaEntered += OnAreaEntered;
-		_ShieldPerkActiveTimer.Timeout += OnShieldPerkTimerTimeout;
 		UpdateHealthBarTexture(); // this is used here so when coming from shop the health bar is updated here, when the car or player object is ready again.
 
 	}
@@ -152,17 +151,17 @@ public partial class player : Area2D
 	private void UseShieldPerk()
 	{
 		ShieldPerkActive = true;
+		EmitSignal(SignalName.ShieldPerkUsed);
 
-		_ShieldPerkActiveTimer.Start();
 		_ShieldPerkSound.Play();
 		_ShieldPerkInUse.Modulate = new Color(1, 1, 1, 1); // we show the shield perk sprite on the player
+		
 	}
 
 	// when the timer gets to the timeout, we stop the timer and also set the shield perk active variable to false.
-	private void OnShieldPerkTimerTimeout()
+	public void OnShieldPerkEnded()
 	{
 		ShieldPerkActive = false;
-		_ShieldPerkActiveTimer.Stop();
 		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0); // we hide the shield perk sprite
 	}
 
@@ -214,16 +213,16 @@ public partial class player : Area2D
 	}
 
 	// this is used to set the timers in the player to true or false. mostly used by perks.
-	public void SetPlayerTimers(bool state)
-	{
-		if (ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
-	}
+	// public void SetPlayerTimers(bool state)
+	//{
+	//	if (ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
+	// }
 
 	public void RestartPlayerVariables()
 	{
 		ShieldPerkActive = false;
 		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
 		// in addition to the comment below, when the game is over this timer gets paused anyways, but we do it here too just so we have a control over the game.
-		_ShieldPerkActiveTimer.SetPaused(false); // this pauses the shieldperkactive timer. when activating this timer again on the game, this restarts from its default value and waits until the timeout, so it's fine to just pause it here.
+		// _ShieldPerkActiveTimer.SetPaused(false); // this pauses the shieldperkactive timer. when activating this timer again on the game, this restarts from its default value and waits until the timeout, so it's fine to just pause it here.
 	}
 }
