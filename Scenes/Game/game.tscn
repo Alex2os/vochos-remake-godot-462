@@ -67,7 +67,12 @@ _BulletHitEnemySoundPath = NodePath("BulletHitEnemySound")
 _PerkTimerTexture1Path = NodePath("PerkTimerTexture1")
 _PerkTimerTexture3Path = NodePath("PerkTimerTexture3")
 _PerkTimerTexture2Path = NodePath("PerkTimerTexture2")
-_ShieldPerkTimerPath = NodePath("ShieldPerkTimer")
+_PerkTimerText1Path = NodePath("PerkTimerText1")
+_PerkTimerText3Path = NodePath("PerkTimerText3")
+_PerkTimerText2Path = NodePath("PerkTimerText2")
+_PerkTimer1Path = NodePath("PerkTimer1")
+_PerkTimer2Path = NodePath("PerkTimer2")
+_PerkTimer3Path = NodePath("PerkTimer3")
 
 [node name="EnemyMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -220,11 +225,12 @@ stream = ExtResource("17_2vowc")
 volume_db = -12.0
 
 [node name="PerkTimerText1" type="Label" parent="." unique_id=8264310]
+z_index = 2
 texture_filter = 1
 offset_left = 870.0
 offset_top = 20.0
-offset_right = 945.0
-offset_bottom = 83.0
+offset_right = 935.0
+offset_bottom = 56.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -232,13 +238,15 @@ theme_override_constants/shadow_outline_size = 10
 theme_override_fonts/font = ExtResource("5_ciybh")
 theme_override_font_sizes/font_size = 40
 text = "0:15"
+horizontal_alignment = 2
 
 [node name="PerkTimerText2" type="Label" parent="." unique_id=117138727]
+z_index = 2
 texture_filter = 1
 offset_left = 870.0
-offset_top = 80.0
-offset_right = 945.0
-offset_bottom = 155.0
+offset_top = 77.0
+offset_right = 935.0
+offset_bottom = 152.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -247,12 +255,14 @@ theme_override_fonts/font = ExtResource("5_ciybh")
 theme_override_font_sizes/font_size = 40
 text = "0:20
 "
+horizontal_alignment = 2
 
 [node name="PerkTimerText3" type="Label" parent="." unique_id=818399982]
+z_index = 2
 texture_filter = 1
 offset_left = 870.0
 offset_top = 140.0
-offset_right = 945.0
+offset_right = 935.0
 offset_bottom = 215.0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -262,6 +272,7 @@ theme_override_fonts/font = ExtResource("5_ciybh")
 theme_override_font_sizes/font_size = 40
 text = "0:25
 "
+horizontal_alignment = 2
 
 [node name="PerkTimerTexture1" type="Sprite2D" parent="." unique_id=1516614957]
 texture_filter = 1
@@ -284,7 +295,13 @@ position = Vector2(966, 155)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("20_a6ftd")
 
-[node name="ShieldPerkTimer" type="Timer" parent="." unique_id=1279766137]
+[node name="PerkTimer1" type="Timer" parent="." unique_id=1279766137]
+wait_time = 15.0
+
+[node name="PerkTimer2" type="Timer" parent="." unique_id=1864189985]
+wait_time = 15.0
+
+[node name="PerkTimer3" type="Timer" parent="." unique_id=2092098010]
 wait_time = 15.0
 
 [editable path="GameOver"]

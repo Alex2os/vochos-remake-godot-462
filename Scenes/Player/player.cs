@@ -19,7 +19,7 @@ public partial class player : Area2D
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 	[Signal] public delegate void BulletPerkUsedEventHandler();
-	[Signal] public delegate void ShieldPerkUsedEventHandler();
+	[Signal] public delegate void ShieldPerkUsedEventHandler(int value);
 
 	// variables
 	private bool ShieldPerkActive = false;
@@ -151,7 +151,7 @@ public partial class player : Area2D
 	private void UseShieldPerk()
 	{
 		ShieldPerkActive = true;
-		EmitSignal(SignalName.ShieldPerkUsed);
+		EmitSignal(SignalName.ShieldPerkUsed, GameManager.PerksNumbers["shield"]); // remember that for the signals that activate a perk, we need to send the respective perk number associated to that perk.
 
 		_ShieldPerkSound.Play();
 		_ShieldPerkInUse.Modulate = new Color(1, 1, 1, 1); // we show the shield perk sprite on the player

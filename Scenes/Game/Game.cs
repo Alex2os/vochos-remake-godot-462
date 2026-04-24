@@ -37,7 +37,12 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimerTexture1Path;
 	[Export] private NodePath _PerkTimerTexture3Path;
 	[Export] private NodePath _PerkTimerTexture2Path;
-	[Export] private NodePath _ShieldPerkTimerPath;
+	[Export] private NodePath _PerkTimerText1Path;
+	[Export] private NodePath _PerkTimerText3Path;
+	[Export] private NodePath _PerkTimerText2Path;
+	[Export] private NodePath _PerkTimer1Path;
+	[Export] private NodePath _PerkTimer2Path;
+	[Export] private NodePath _PerkTimer3Path;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -56,6 +61,9 @@ public partial class Game : Node2D
 	private Label _GameOverLabel;
 	private Label _GameOverStatsLabel;
 	private Label _GameOverRestartLabel;
+	private Label _PerkTimerText1;
+	private Label _PerkTimerText2;
+	private Label _PerkTimerText3;
 	private RichTextLabel _ShopReadyLabel;
 	private AnimationPlayer _AnimationPlayer;
 	private AudioStreamPlayer _GameOverCrash;
@@ -70,7 +78,9 @@ public partial class Game : Node2D
 	private Sprite2D _PerkTimerTexture1;
 	private Sprite2D _PerkTimerTexture2;
 	private Sprite2D _PerkTimerTexture3;
-	private Timer _ShieldPerkTimer;
+	private Timer _PerkTimer1;
+	private Timer _PerkTimer2;
+	private Timer _PerkTimer3;
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 
 	// initialize all the variables used in the game
@@ -83,6 +93,9 @@ public partial class Game : Node2D
 	private bool _ShopAvailable = false;
 	private bool _GameOver = false;
 	private bool _IsGamePaused = false;
+	private bool[] PerksTimerSlot = [false, false, false];
+	private int[] _PerkActiveInTimer = [-1, -1, -1];
+
 	// variables for the timers. this is to keep track of the timers whenever we pause the game, so when we resume the game, we already have the time the timers were left im.
 
 	// Called when the node enters the scene tree for the first time.
@@ -120,7 +133,12 @@ public partial class Game : Node2D
 		_PerkTimerTexture1 = GetNode<Sprite2D>(_PerkTimerTexture1Path);
 		_PerkTimerTexture2 = GetNode<Sprite2D>(_PerkTimerTexture2Path);
 		_PerkTimerTexture3 = GetNode<Sprite2D>(_PerkTimerTexture3Path);
-		_ShieldPerkTimer = GetNode<Timer>(_ShieldPerkTimerPath);
+		_PerkTimer1 = GetNode<Timer>(_PerkTimer1Path);
+		_PerkTimer2 = GetNode<Timer>(_PerkTimer2Path);
+		_PerkTimer3 = GetNode<Timer>(_PerkTimer3Path);
+		_PerkTimerText1 = GetNode<Label>(_PerkTimerText1Path);
+		_PerkTimerText2 = GetNode<Label>(_PerkTimerText2Path);
+		_PerkTimerText3 = GetNode<Label>(_PerkTimerText3Path);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -131,8 +149,12 @@ public partial class Game : Node2D
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += OnShopAvailable;
-		_Player.ShieldPerkUsed += OnShieldPerkUsed;
-		_ShieldPerkTimer.Timeout += OnShieldTimerTimeout;
+		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
+		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
+		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
+		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
+		_PerkTimer2.Timeout += () => OnPerkTimerTimeout(1, _PerkActiveInTimer[1]);
+		_PerkTimer3.Timeout += () => OnPerkTimerTimeout(2, _PerkActiveInTimer[2]);
 		ShieldPerkEnded += _Player.OnShieldPerkEnded;
 
 		GameStarted();
@@ -151,6 +173,10 @@ public partial class Game : Node2D
 		// pausing the game if _gameover is false
 		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
 
+		if (PerksTimerSlot[0]) _PerkTimerText1.Text = $"{_PerkTimer1.TimeLeft:F1}"; // we can short the amount of numbers after the . of a float/double number using $ to use the variable inside the string and then using :F1, :F2, etc., to shorten the amount of numbers. in this case we use :F1 to just have one number after the point.
+		if (PerksTimerSlot[1]) _PerkTimerText1.Text = $"{_PerkTimer2.TimeLeft:F1}";
+		if (PerksTimerSlot[2]) _PerkTimerText1.Text = $"{_PerkTimer3.TimeLeft:F1}";
+
 	}
 
 	private void SpawnRoad()
@@ -159,6 +185,7 @@ public partial class Game : Node2D
 		Road road = (Road)_RoadScene.Instantiate();
 		_RoadContainer.AddChild(road);
 		road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y);
+
 	}
 
 	private void SpawnEnemy()
@@ -255,9 +282,10 @@ public partial class Game : Node2D
 		// stop process and timers for player
 		_Player.SetProcess(set_process_bool);
 
-		// perks
-		_ShieldPerkTimer.SetPaused(!set_process_bool);
-
+		// perks' timers
+		_PerkTimer1.SetPaused(!set_process_bool);
+		_PerkTimer2.SetPaused(!set_process_bool);
+		_PerkTimer3.SetPaused(!set_process_bool);
 	}
 
 	private void OnEnemyDestroyed()
@@ -361,7 +389,9 @@ public partial class Game : Node2D
 		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
 
 		// we set the player's perks to paused. when a perk is used, they get restarted and set to not paused. 
-		_ShieldPerkTimer.SetPaused(true);
+		_PerkTimer1.SetPaused(true);
+		_PerkTimer2.SetPaused(true);
+		_PerkTimer3.SetPaused(true);
 
 		GameStarted();
 
@@ -485,11 +515,73 @@ public partial class Game : Node2D
 		_InventoryInGame.UpdateInventoryPerksTextures();
 	}
 
-	private void OnShieldPerkUsed()
+	private void OnPlayerUsedPerk(int perk_number)
 	{
-		_ShieldPerkTimer.SetPaused(false); // we have to unpause the timer before using the .Start() method
-		_ShieldPerkTimer.Start();
+		int i;
+
+		// we search for an empty spot on the perks' timers
+		for (i = 0; i < 3; i++)
+		{
+			// if there's a slot that's empty (so that the index of the array has a value of -1) then we assign the perk number to it and we break
+			if (_PerkActiveInTimer[i] == -1)
+			{
+				_PerkActiveInTimer[i] = perk_number;
+				break;
+			}
+		}
+
+		// we use this variable to assign the perk duration depending on the perk number on the following ifs
+		// also, on the ifs we do any necessary operations for the perks being used
+		int perk_duration_seconds = 0;
+
+		// it's still needed to add all the durations and all the methods or actions to be done in the ifs.
+		// also, it's needed to control the perks' timers textures and texts (modulate and assign them) so they are shown properly in the game when a perk is activated.
+		if (perk_number == GameManager.PerksNumbers["shield"]) perk_duration_seconds = 15;
+
+		// depending on the value of i is the timer that we will use and start
+		switch (i)
+		{
+			case 0:
+				_PerkTimer1.WaitTime = perk_duration_seconds;
+				_PerkTimer1.Start();
+				break;
+			case 1:
+				_PerkTimer2.WaitTime = perk_duration_seconds;
+				_PerkTimer2.Start();
+				break;
+			case 2:
+				_PerkTimer3.WaitTime = perk_duration_seconds;
+				_PerkTimer3.Start();
+				break;
+		}
+
+		GD.Print(i);
+
+		// finally, we update the perkstimerslot to true with the i value, so we know is active.
+		PerksTimerSlot[i] = true;
 	}
-	
-	private void OnShieldTimerTimeout() { EmitSignal(SignalName.ShieldPerkEnded); }
+
+	private void OnPerkTimerTimeout(int timer_number, int perk_number)
+	{
+		// in this case only 4 out of the 6 perks can have timers. in this case, we use their original perk number, so there is no confusion in the code. the extralife and bullet perks are not here, as those don't use timers.
+		if (perk_number == GameManager.PerksNumbers["shield"]) EmitSignal(SignalName.ShieldPerkEnded);
+
+		switch (timer_number)
+		{
+			case 0:
+				_PerkTimer1.Stop();
+				_PerkActiveInTimer[0] = -1; // we assign the perk active in timer (its number) to -1, to say that there's no perk active there when the timer is freed. we have to do this for the OnPlayerUsedPerk function.
+				break;
+			case 1:
+				_PerkTimer2.Stop();
+				_PerkActiveInTimer[1] = -1;
+				break;
+			case 2:
+				_PerkTimer3.Stop();
+				_PerkActiveInTimer[2] = -1;
+				break;
+		}
+
+
+	}
 }

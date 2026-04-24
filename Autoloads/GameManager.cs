@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic; // used for dictionaries
 
 public partial class GameManager : Node
 {
@@ -12,6 +12,17 @@ public partial class GameManager : Node
 	public bool ComingFromShop = false;
 	// number of perks in the game
 	public const int NumberOfPerks = 6;
+
+	// a dictionary for the perks' numbers
+	public static readonly Dictionary<string, int> PerksNumbers = new Dictionary<string, int>
+{
+	{ "shield", 0 },
+	{ "health", 1 },
+	{ "double_points", 2 },
+	{ "bullet", 3 },
+	{ "double_money", 4 },
+	{ "slow_time", 5 }
+};
 
 	// names of the perks
 	public static readonly string[] PerksNames = new string[6] { "Shield",
@@ -42,7 +53,6 @@ public partial class GameManager : Node
 	};
 
 	public int RerollShopCost = 1;
-
 
 
 	// Called when the node enters the scene tree for the first time.
