@@ -83,6 +83,7 @@ public partial class Game : Node2D
 	private Timer _PerkTimer3;
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
+	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
 
 	// initialize all the variables used in the game
 	private int _TotalScore;
@@ -94,10 +95,10 @@ public partial class Game : Node2D
 	private bool _ShopAvailable = false;
 	private bool _GameOver = false;
 	private bool _IsGamePaused = false;
-	private bool[] PerksTimerSlot = [false, false, false];
+	private bool _DoublePointsPerkActive = false; // variable used to know if the double points perk is active, so we can give the player double points correctly
+	private bool _DoubleMoneyPerkActive = false; // same as the double points perk, but for the double money perk
+	private bool[] _PerksTimerSlot = [false, false, false];
 	private int[] _PerkActiveInTimer = [-1, -1, -1];
-
-	// variables for the timers. this is to keep track of the timers whenever we pause the game, so when we resume the game, we already have the time the timers were left im.
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -151,12 +152,16 @@ public partial class Game : Node2D
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += OnShopAvailable;
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
+		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
 		_PerkTimer2.Timeout += () => OnPerkTimerTimeout(1, _PerkActiveInTimer[1]);
 		_PerkTimer3.Timeout += () => OnPerkTimerTimeout(2, _PerkActiveInTimer[2]);
+
+		// we subscribe the player's functions to the signals here in the game scene like the below lines of code.
 		ShieldPerkEnded += _Player.OnShieldPerkEnded;
+		DoublePointsPerkEnded += _Player.OnDoublePointsPerkEnded;
 
 		// we load the medium size perks to use them when a perk is activated, and we assign its perk texture. we load all of them so there's no problem when assigning them, as we use the respective perk number to assign them, so it's better to have them this way.
 		_PerksTextureTimers = new Texture2D[]
@@ -186,9 +191,9 @@ public partial class Game : Node2D
 		// pausing the game if _gameover is false
 		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
 
-		if (PerksTimerSlot[0]) _PerkTimerText1.Text = $"{_PerkTimer1.TimeLeft:F1}"; // we can short the amount of numbers after the . of a float/double number using $ to use the variable inside the string and then using :F1, :F2, etc., to shorten the amount of numbers. in this case we use :F1 to just have one number after the point.
-		if (PerksTimerSlot[1]) _PerkTimerText1.Text = $"{_PerkTimer2.TimeLeft:F1}";
-		if (PerksTimerSlot[2]) _PerkTimerText1.Text = $"{_PerkTimer3.TimeLeft:F1}";
+		if (_PerksTimerSlot[0]) _PerkTimerText1.Text = $"{_PerkTimer1.TimeLeft:F1}"; // we can short the amount of numbers after the . of a float/double number using $ to use the variable inside the string and then using :F1, :F2, etc., to shorten the amount of numbers. in this case we use :F1 to just have one number after the point.
+		if (_PerksTimerSlot[1]) _PerkTimerText2.Text = $"{_PerkTimer2.TimeLeft:F1}";
+		if (_PerksTimerSlot[2]) _PerkTimerText3.Text = $"{_PerkTimer3.TimeLeft:F1}";
 
 	}
 
@@ -303,8 +308,11 @@ public partial class Game : Node2D
 
 	private void OnEnemyDestroyed()
 	{
-		PlayerVariables.Instance.PlayerScore++;
-		_TotalScore = PlayerVariables.Instance.PlayerScore; // every time a enemy dies/gets destroyed, a point gets added to the total score
+
+		if (_DoublePointsPerkActive) PlayerVariables.Instance.PlayerScore += 2;
+		else PlayerVariables.Instance.PlayerScore++;
+
+		_TotalScore = PlayerVariables.Instance.PlayerScore; // every time a enemy dies/gets destroyed, a point gets added to the total score. if the double points perk is active, then 2 points get added to the score.
 
 		_ScoreLabel.Text = _TotalScore.ToString();
 
@@ -312,11 +320,16 @@ public partial class Game : Node2D
 
 	private void OnCoinHitsPlayer()
 	{
-		PlayerVariables.Instance.PlayerCoins++; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
-		_LeftCoins = PlayerVariables.Instance.PlayerCoins;
+		int money_gained = 1;
 
-		PlayerVariables.Instance.PlayerTotalCoins++; // total coins are the coins obtained in general in all of the game
-		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins++;
+		// still needed to implement the double money perk correctly here in the game scene code
+		if (_DoubleMoneyPerkActive) money_gained = money_gained * 2;
+
+		PlayerVariables.Instance.PlayerCoins += money_gained;
+		_LeftCoins = PlayerVariables.Instance.PlayerCoins; // left coins are the actual coins in game, because with the coins you will be able to buy things in the future.
+
+		PlayerVariables.Instance.PlayerTotalCoins += money_gained;
+		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins;  // total coins are the coins obtained in general in all of the game
 
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
 		_CoinSound.Play();
@@ -401,10 +414,28 @@ public partial class Game : Node2D
 		// we assign the shopreadylabel opacity to zero.
 		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
 
-		// we set the player's perks to paused. when a perk is used, they get restarted and set to not paused. 
-		_PerkTimer1.SetPaused(true);
-		_PerkTimer2.SetPaused(true);
-		_PerkTimer3.SetPaused(true);
+		// we assign the perks' timers texts and textures modulate so they are not shown if they were active before.
+		_PerkTimerText1.Modulate = new Color(0, 0, 0, 0);
+		_PerkTimerText2.Modulate = new Color(0, 0, 0, 0);
+		_PerkTimerText3.Modulate = new Color(0, 0, 0, 0);
+
+		_PerkTimerTexture1.Texture = null;
+		_PerkTimerTexture2.Texture = null;
+		_PerkTimerTexture3.Texture = null;
+
+		// we also have to reassign the variables used for the timers
+		_PerksTimerSlot = [false, false, false];
+		_PerkActiveInTimer = [-1, -1, -1];
+
+		// we set the perk timers paused state to false, so they can work properly.
+		_PerkTimer1.SetPaused(false);
+		_PerkTimer2.SetPaused(false);
+		_PerkTimer3.SetPaused(false);
+
+		// we set the player's perks to stop. when a perk is used, they get restarted and used correctly.
+		_PerkTimer1.Stop();
+		_PerkTimer2.Stop();
+		_PerkTimer3.Stop();
 
 		GameStarted();
 
@@ -430,6 +461,8 @@ public partial class Game : Node2D
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 
 		_SpawningCarEnemyTimer.WaitTime -= 0.2; // we keep lowing the timer
+
+		// GD.Print(_SpawningCarEnemyTimer.WaitTime);
 
 		// adjust the new speed for all the existing enemy objects
 		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
@@ -550,6 +583,11 @@ public partial class Game : Node2D
 		// it's still needed to add all the durations and all the methods or actions to be done in the ifs.
 		// also, it's needed to control the perks' timers textures and texts (modulate and assign them) so they are shown properly in the game when a perk is activated.
 		if (perk_number == GameManager.PerksNumbers["shield"]) perk_duration_seconds = 15;
+		else if (perk_number == GameManager.PerksNumbers["double-points"])
+		{
+			perk_duration_seconds = 20;
+			_DoublePointsPerkActive = true;
+		}
 
 		// depending on the value of i is the timer that we will use and start
 		switch (i)
@@ -561,7 +599,7 @@ public partial class Game : Node2D
 
 				_PerkTimerTexture1.Texture = _PerksTextureTimers[perk_number];
 				_PerkTimerTexture1.Modulate = new Color(1, 1, 1, 1);
-				
+
 				_PerkTimer1.Start();
 				break;
 			case 1:
@@ -571,6 +609,7 @@ public partial class Game : Node2D
 
 				_PerkTimerTexture2.Texture = _PerksTextureTimers[perk_number];
 				_PerkTimerTexture2.Modulate = new Color(1, 1, 1, 1);
+
 				_PerkTimer2.Start();
 				break;
 			case 2:
@@ -580,6 +619,7 @@ public partial class Game : Node2D
 
 				_PerkTimerTexture3.Texture = _PerksTextureTimers[perk_number];
 				_PerkTimerTexture3.Modulate = new Color(1, 1, 1, 1);
+
 				_PerkTimer3.Start();
 				break;
 		}
@@ -587,14 +627,19 @@ public partial class Game : Node2D
 		GD.Print(i);
 
 		// finally, we update the perkstimerslot to true with the i value, so we know is active.
-		PerksTimerSlot[i] = true;
+		_PerksTimerSlot[i] = true;
 	}
 
 	private void OnPerkTimerTimeout(int timer_number, int perk_number)
 	{
 		// in this case only 4 out of the 6 perks can have timers. in this case, we use their original perk number, so there is no confusion in the code. the extralife and bullet perks are not here, as those don't use timers.
 		if (perk_number == GameManager.PerksNumbers["shield"]) EmitSignal(SignalName.ShieldPerkEnded);
-
+		else if (perk_number == GameManager.PerksNumbers["double-points"])
+		{
+			_DoublePointsPerkActive = false;
+			EmitSignal(SignalName.DoublePointsPerkEnded);
+		}
+		
 		switch (timer_number)
 		{
 			case 0:
@@ -624,7 +669,7 @@ public partial class Game : Node2D
 
 				_PerkTimerTexture3.Texture = null;
 				_PerkTimerTexture3.Modulate = new Color(0, 0, 0, 0);
-				
+
 				_PerkActiveInTimer[2] = -1;
 				break;
 		}

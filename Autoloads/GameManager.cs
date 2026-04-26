@@ -18,10 +18,10 @@ public partial class GameManager : Node
 {
 	{ "shield", 0 },
 	{ "health", 1 },
-	{ "double_points", 2 },
+	{ "double-points", 2 },
 	{ "bullet", 3 },
 	{ "double_money", 4 },
-	{ "slow_time", 5 }
+	{ "slow-time", 5 }
 };
 
 	// names of the perks

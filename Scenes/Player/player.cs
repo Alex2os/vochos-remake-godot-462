@@ -16,13 +16,18 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _ShieldPerkSound;
 	[Export] private AudioStreamPlayer _ShieldPerkHitSound;
 	[Export] private AudioStreamPlayer _BulletSpawnSound;
+	[Export] private AudioStreamPlayer _DoublePointsPerkSound;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
+
+	// perk signals
 	[Signal] public delegate void BulletPerkUsedEventHandler();
 	[Signal] public delegate void ShieldPerkUsedEventHandler(int value);
+	[Signal] public delegate void DoublePointsPerkUsedEventHandler(int value);
 
 	// variables
 	private bool ShieldPerkActive = false;
+	private bool DoublePointsPerkActive = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -94,12 +99,13 @@ public partial class player : Area2D
 				UseShieldPerk();
 				break;
 			case 1: // 
-				// if health is already full, then just return.
+					// if health is already full, then just return.
 				if (PlayerVariables.Instance.PlayerHealth == 3) return;
 				// in any other case, use the extra life perk
 				UseExtraLifePerk();
 				break;
 			case 2:
+				if (DoublePointsPerkActive) return;
 				UseDoublePointsPerk();
 				break;
 			case 3: //
@@ -155,7 +161,7 @@ public partial class player : Area2D
 
 		_ShieldPerkSound.Play();
 		_ShieldPerkInUse.Modulate = new Color(1, 1, 1, 1); // we show the shield perk sprite on the player
-		
+
 	}
 
 	// when the timer gets to the timeout, we stop the timer and also set the shield perk active variable to false.
@@ -174,8 +180,12 @@ public partial class player : Area2D
 
 	private void UseDoublePointsPerk()
 	{
-
+		DoublePointsPerkActive = true;
+		EmitSignal(SignalName.DoublePointsPerkUsed, GameManager.PerksNumbers["double-points"]);
+		_DoublePointsPerkSound.Play();
 	}
+
+	public void OnDoublePointsPerkEnded(){ DoublePointsPerkActive = false; }
 
 	private void UseBulletPerk()
 	{
@@ -221,6 +231,7 @@ public partial class player : Area2D
 	public void RestartPlayerVariables()
 	{
 		ShieldPerkActive = false;
+		DoublePointsPerkActive = false;
 		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
 		// in addition to the comment below, when the game is over this timer gets paused anyways, but we do it here too just so we have a control over the game.
 		// _ShieldPerkActiveTimer.SetPaused(false); // this pauses the shieldperkactive timer. when activating this timer again on the game, this restarts from its default value and waits until the timeout, so it's fine to just pause it here.
