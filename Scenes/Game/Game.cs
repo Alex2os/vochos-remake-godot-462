@@ -81,6 +81,7 @@ public partial class Game : Node2D
 	private Timer _PerkTimer1;
 	private Timer _PerkTimer2;
 	private Timer _PerkTimer3;
+	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 
 	// initialize all the variables used in the game
@@ -156,6 +157,18 @@ public partial class Game : Node2D
 		_PerkTimer2.Timeout += () => OnPerkTimerTimeout(1, _PerkActiveInTimer[1]);
 		_PerkTimer3.Timeout += () => OnPerkTimerTimeout(2, _PerkActiveInTimer[2]);
 		ShieldPerkEnded += _Player.OnShieldPerkEnded;
+
+		// we load the medium size perks to use them when a perk is activated, and we assign its perk texture. we load all of them so there's no problem when assigning them, as we use the respective perk number to assign them, so it's better to have them this way.
+		_PerksTextureTimers = new Texture2D[]
+		{
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/shield medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/extra life medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/double points medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/bullet medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/double money medium.png"),
+			GD.Load<Texture2D>("res://assets/perks/medium sizes/time slow medium.png"),
+
+		};
 
 		GameStarted();
 
@@ -543,14 +556,30 @@ public partial class Game : Node2D
 		{
 			case 0:
 				_PerkTimer1.WaitTime = perk_duration_seconds;
+
+				_PerkTimerText1.Modulate = new Color(1, 1, 1, 1);
+
+				_PerkTimerTexture1.Texture = _PerksTextureTimers[perk_number];
+				_PerkTimerTexture1.Modulate = new Color(1, 1, 1, 1);
+				
 				_PerkTimer1.Start();
 				break;
 			case 1:
 				_PerkTimer2.WaitTime = perk_duration_seconds;
+
+				_PerkTimerText2.Modulate = new Color(1, 1, 1, 1);
+
+				_PerkTimerTexture2.Texture = _PerksTextureTimers[perk_number];
+				_PerkTimerTexture2.Modulate = new Color(1, 1, 1, 1);
 				_PerkTimer2.Start();
 				break;
 			case 2:
 				_PerkTimer3.WaitTime = perk_duration_seconds;
+
+				_PerkTimerText3.Modulate = new Color(1, 1, 1, 1);
+
+				_PerkTimerTexture3.Texture = _PerksTextureTimers[perk_number];
+				_PerkTimerTexture3.Modulate = new Color(1, 1, 1, 1);
 				_PerkTimer3.Start();
 				break;
 		}
@@ -570,14 +599,32 @@ public partial class Game : Node2D
 		{
 			case 0:
 				_PerkTimer1.Stop();
+
+				_PerkTimerText1.Modulate = new Color(0, 0, 0, 0);
+
+				_PerkTimerTexture1.Texture = null;
+				_PerkTimerTexture1.Modulate = new Color(0, 0, 0, 0);
+
 				_PerkActiveInTimer[0] = -1; // we assign the perk active in timer (its number) to -1, to say that there's no perk active there when the timer is freed. we have to do this for the OnPlayerUsedPerk function.
 				break;
 			case 1:
 				_PerkTimer2.Stop();
+
+				_PerkTimerText2.Modulate = new Color(0, 0, 0, 0);
+
+				_PerkTimerTexture2.Texture = null;
+				_PerkTimerTexture2.Modulate = new Color(0, 0, 0, 0);
+
 				_PerkActiveInTimer[1] = -1;
 				break;
 			case 2:
 				_PerkTimer3.Stop();
+
+				_PerkTimerText3.Modulate = new Color(0, 0, 0, 0);
+
+				_PerkTimerTexture3.Texture = null;
+				_PerkTimerTexture3.Modulate = new Color(0, 0, 0, 0);
+				
 				_PerkActiveInTimer[2] = -1;
 				break;
 		}

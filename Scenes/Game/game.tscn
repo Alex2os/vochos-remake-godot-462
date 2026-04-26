@@ -225,6 +225,7 @@ stream = ExtResource("17_2vowc")
 volume_db = -12.0
 
 [node name="PerkTimerText1" type="Label" parent="." unique_id=8264310]
+modulate = Color(1, 1, 1, 0)
 z_index = 2
 texture_filter = 1
 offset_left = 870.0
@@ -241,6 +242,7 @@ text = "0:15"
 horizontal_alignment = 2
 
 [node name="PerkTimerText2" type="Label" parent="." unique_id=117138727]
+modulate = Color(1, 1, 1, 0)
 z_index = 2
 texture_filter = 1
 offset_left = 870.0
@@ -258,6 +260,7 @@ text = "0:20
 horizontal_alignment = 2
 
 [node name="PerkTimerText3" type="Label" parent="." unique_id=818399982]
+modulate = Color(1, 1, 1, 0)
 z_index = 2
 texture_filter = 1
 offset_left = 870.0

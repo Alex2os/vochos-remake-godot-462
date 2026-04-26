@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://bki1v5suxdqjl"]
+[gd_scene format=3 uid="uid://bki1v5suxdqjl"]
 
 [ext_resource type="Script" uid="uid://ljvpot13u3np" path="res://Scenes/Shop/Shop.cs" id="1_78vcx"]
 [ext_resource type="Texture2D" uid="uid://h7067pg1nb5m" path="res://assets/perks/perks frame.png" id="2_8dak6"]
@@ -187,31 +187,31 @@ _data = {
 &"not enough space": SubResource("Animation_fobo1")
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dak6"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e3u78"]
+texture = ExtResource("4_m2v70")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bjl"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tknpo"]
-texture = ExtResource("5_e3u78")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rjc2l"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fobo1"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqg8q"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_33sfn"]
-texture = ExtResource("15_wcnk8")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xybqi"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fsgtm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inpq"]
 texture = ExtResource("5_e3u78")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fsgtm"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xybqi"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e3u78"]
-texture = ExtResource("4_m2v70")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_33sfn"]
+texture = ExtResource("15_wcnk8")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqg8q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fobo1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rjc2l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tknpo"]
+texture = ExtResource("5_e3u78")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w8bjl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dak6"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2t1f2"]
 texture = ExtResource("4_m2v70")
@@ -219,13 +219,13 @@ texture = ExtResource("4_m2v70")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t1yip"]
 texture = ExtResource("4_m2v70")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oha7t"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cjwgl"]
+texture = ExtResource("4_xybqi")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e32fq"]
 texture = ExtResource("4_fsgtm")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcnk8"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fsgtm"]
-texture = ExtResource("4_fsgtm")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e3u78"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xybqi"]
 content_margin_left = 0.0
@@ -235,40 +235,40 @@ content_margin_bottom = 0.0
 texture = ExtResource("4_cjwgl")
 region_rect = Rect2(0, 0, 50, 15)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e3u78"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e32fq"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fsgtm"]
 texture = ExtResource("4_fsgtm")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cjwgl"]
-texture = ExtResource("4_xybqi")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wcnk8"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ps16d"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_274ew"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ps16d"]
-texture = ExtResource("7_oha7t")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wcnk8"]
-texture = ExtResource("8_ps16d")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oha7t"]
+texture = ExtResource("4_fsgtm")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m2v70"]
 texture = ExtResource("4_kcc5r")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhep2"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wcnk8"]
+texture = ExtResource("8_ps16d")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ps16d"]
+texture = ExtResource("7_oha7t")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_274ew"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ps16d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvgt3"]
+texture = ExtResource("17_e32fq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n1lh6"]
 texture = ExtResource("17_2t1f2")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmhh8"]
 texture = ExtResource("18_t1yip")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n1lh6"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhep2"]
 texture = ExtResource("17_2t1f2")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uvgt3"]
-texture = ExtResource("17_e32fq")
-
-[node name="Shop" type="Node2D" node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
+[node name="Shop" type="Node2D" unique_id=290475641 node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
@@ -297,40 +297,40 @@ _RerollShopSound = NodePath("ShopRerollSound")
 _ClickButtonSound = NodePath("ClickButtonSound")
 metadata/_edit_lock_ = true
 
-[node name="PerksFrame1" type="Sprite2D" parent="."]
+[node name="PerksFrame1" type="Sprite2D" parent="." unique_id=930672786]
 texture_filter = 1
 position = Vector2(139, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
-[node name="PerksFrame2" type="Sprite2D" parent="."]
+[node name="PerksFrame2" type="Sprite2D" parent="." unique_id=1843831283]
 texture_filter = 1
 position = Vector2(389, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
-[node name="PerksFrame3" type="Sprite2D" parent="."]
+[node name="PerksFrame3" type="Sprite2D" parent="." unique_id=124437827]
 texture_filter = 1
 position = Vector2(639, 500)
 scale = Vector2(4, 4)
 texture = ExtResource("2_8dak6")
 
-[node name="Perk1" type="Sprite2D" parent="."]
+[node name="Perk1" type="Sprite2D" parent="." unique_id=1042798044]
 texture_filter = 1
 position = Vector2(139, 495)
 scale = Vector2(4, 4)
 
-[node name="Perk2" type="Sprite2D" parent="."]
+[node name="Perk2" type="Sprite2D" parent="." unique_id=1494076616]
 texture_filter = 1
 position = Vector2(389, 495)
 scale = Vector2(4, 4)
 
-[node name="Perk3" type="Sprite2D" parent="."]
+[node name="Perk3" type="Sprite2D" parent="." unique_id=1894862172]
 texture_filter = 1
 position = Vector2(639, 495)
 scale = Vector2(4, 4)
 
-[node name="ShopTitle" type="Label" parent="."]
+[node name="ShopTitle" type="Label" parent="." unique_id=740739716]
 z_index = 3
 texture_filter = 1
 offset_left = 44.0
@@ -348,7 +348,7 @@ theme_override_font_sizes/font_size = 100
 text = "Shop"
 metadata/_edit_lock_ = true
 
-[node name="ShopSubtitle" type="Label" parent="."]
+[node name="ShopSubtitle" type="Label" parent="." unique_id=1773966094]
 z_index = 3
 texture_filter = 1
 offset_left = 42.0
@@ -367,7 +367,7 @@ theme_override_font_sizes/font_size = 50
 text = "Buy your goodies!"
 metadata/_edit_lock_ = true
 
-[node name="PerkLabel1" type="Label" parent="."]
+[node name="PerkLabel1" type="Label" parent="." unique_id=472429625]
 texture_filter = 1
 offset_left = 40.0
 offset_top = 355.0
@@ -384,7 +384,7 @@ text = "example text"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="PerkLabel2" type="Label" parent="."]
+[node name="PerkLabel2" type="Label" parent="." unique_id=1027699353]
 texture_filter = 1
 offset_left = 290.0
 offset_top = 355.0
@@ -401,7 +401,7 @@ text = "example text"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="PerkLabel3" type="Label" parent="."]
+[node name="PerkLabel3" type="Label" parent="." unique_id=1886545517]
 texture_filter = 1
 offset_left = 540.0
 offset_top = 355.0
@@ -418,24 +418,18 @@ text = "example text"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayerPerks" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_8dak6")
-}
-autoplay = "perks anim"
+[node name="AnimationPlayerPerks" type="AnimationPlayer" parent="." unique_id=1687826565]
+libraries/ = SubResource("AnimationLibrary_8dak6")
+autoplay = &"perks anim"
 
-[node name="AnimationPlayerWords" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_274ew")
-}
-autoplay = "words anim"
+[node name="AnimationPlayerWords" type="AnimationPlayer" parent="." unique_id=438646436]
+libraries/ = SubResource("AnimationLibrary_274ew")
+autoplay = &"words anim"
 
-[node name="NotEnoughAnimations" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_oqg8q")
-}
+[node name="NotEnoughAnimations" type="AnimationPlayer" parent="." unique_id=1537215311]
+libraries/ = SubResource("AnimationLibrary_oqg8q")
 
-[node name="NotEnoughSpaceLabel" type="Label" parent="."]
+[node name="NotEnoughSpaceLabel" type="Label" parent="." unique_id=1268602611]
 offset_left = 315.0
 offset_top = -100.0
 offset_right = 662.0
@@ -449,7 +443,7 @@ theme_override_font_sizes/font_size = 50
 text = "Not enough space!"
 metadata/_edit_lock_ = true
 
-[node name="PerkButton1" type="Button" parent="."]
+[node name="PerkButton1" type="Button" parent="." unique_id=1722442129]
 texture_filter = 1
 offset_left = 95.0
 offset_top = 590.0
@@ -457,23 +451,23 @@ offset_right = 185.0
 offset_bottom = 635.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_e3u78")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 text = "
 "
 icon_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PerkButton1"]
+[node name="Label" type="Label" parent="PerkButton1" unique_id=72537824]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -494,7 +488,7 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "Buy"
 
-[node name="PerkButton2" type="Button" parent="."]
+[node name="PerkButton2" type="Button" parent="." unique_id=1825245187]
 texture_filter = 1
 offset_left = 345.0
 offset_top = 590.0
@@ -502,20 +496,20 @@ offset_right = 435.0
 offset_bottom = 635.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_2t1f2")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PerkButton2"]
+[node name="Label" type="Label" parent="PerkButton2" unique_id=954787983]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -536,7 +530,7 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "Buy"
 
-[node name="PerkButton3" type="Button" parent="."]
+[node name="PerkButton3" type="Button" parent="." unique_id=167846011]
 texture_filter = 1
 offset_left = 595.0
 offset_top = 590.0
@@ -544,22 +538,22 @@ offset_right = 685.0
 offset_bottom = 635.0
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_t1yip")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_0inpq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_33sfn")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_tknpo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 text = "
 "
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PerkButton3"]
+[node name="Label" type="Label" parent="PerkButton3" unique_id=15413396]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -580,7 +574,7 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "Buy"
 
-[node name="RerollButton" type="Button" parent="."]
+[node name="RerollButton" type="Button" parent="." unique_id=370814068]
 z_index = 3
 texture_filter = 1
 offset_left = 785.0
@@ -590,22 +584,22 @@ offset_bottom = 185.0
 pivot_offset = Vector2(95, 30)
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_oha7t")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wcnk8")
-theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_fsgtm")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_xybqi")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e3u78")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_e32fq")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_cjwgl")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e32fq")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_e3u78")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xybqi")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxTexture_fsgtm")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_wcnk8")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_oha7t")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 text = "
 "
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="RerollButton"]
+[node name="Label" type="Label" parent="RerollButton" unique_id=638911826]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -627,7 +621,7 @@ theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
 text = "Reroll Shop"
 
-[node name="LeaveShopButton" type="Button" parent="."]
+[node name="LeaveShopButton" type="Button" parent="." unique_id=506221974]
 z_index = 1
 texture_filter = 1
 offset_left = 785.0
@@ -637,22 +631,22 @@ offset_bottom = 104.0
 pivot_offset = Vector2(95, 30)
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ps16d")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_274ew")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ps16d")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_wcnk8")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_m2v70")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_wcnk8")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ps16d")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_274ew")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ps16d")
 icon_alignment = 1
 text_direction = 3
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="LeaveShopButton"]
+[node name="Label" type="Label" parent="LeaveShopButton" unique_id=1708283750]
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -677,20 +671,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="ShopMusic" type="AudioStreamPlayer" parent="."]
+[node name="ShopMusic" type="AudioStreamPlayer" parent="." unique_id=422599103]
 stream = ExtResource("4_w8bjl")
 volume_db = -10.0
 autoplay = true
 
-[node name="ShopRerollSound" type="AudioStreamPlayer" parent="."]
+[node name="ShopRerollSound" type="AudioStreamPlayer" parent="." unique_id=2098730496]
 stream = ExtResource("5_274ew")
 volume_db = -5.0
 
-[node name="ClickButtonSound" type="AudioStreamPlayer" parent="."]
+[node name="ClickButtonSound" type="AudioStreamPlayer" parent="." unique_id=144823214]
 stream = ExtResource("6_fobo1")
 volume_db = -1.0
 
-[node name="InventoryLabel" type="Label" parent="."]
+[node name="InventoryLabel" type="Label" parent="." unique_id=1990449473]
 texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -715,46 +709,46 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="InventoryFrame1" type="Sprite2D" parent="."]
+[node name="InventoryFrame1" type="Sprite2D" parent="." unique_id=1473075247]
 texture_filter = 1
 position = Vector2(846, 380)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
 metadata/_edit_lock_ = true
 
-[node name="InventoryFrame2" type="Sprite2D" parent="."]
+[node name="InventoryFrame2" type="Sprite2D" parent="." unique_id=1922685573]
 texture_filter = 1
 position = Vector2(846, 510)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
 metadata/_edit_lock_ = true
 
-[node name="InventoryFrame3" type="Sprite2D" parent="."]
+[node name="InventoryFrame3" type="Sprite2D" parent="." unique_id=1403306965]
 texture_filter = 1
 position = Vector2(846, 640)
 scale = Vector2(4, 4)
 texture = ExtResource("6_rjc2l")
 metadata/_edit_lock_ = true
 
-[node name="InventoryPerk1" type="Sprite2D" parent="."]
+[node name="InventoryPerk1" type="Sprite2D" parent="." unique_id=357491869]
 texture_filter = 1
 position = Vector2(846, 375)
 scale = Vector2(4, 4)
 metadata/_edit_lock_ = true
 
-[node name="InventoryPerk2" type="Sprite2D" parent="."]
+[node name="InventoryPerk2" type="Sprite2D" parent="." unique_id=639794144]
 texture_filter = 1
 position = Vector2(846, 505)
 scale = Vector2(4, 4)
 metadata/_edit_lock_ = true
 
-[node name="InventoryPerk3" type="Sprite2D" parent="."]
+[node name="InventoryPerk3" type="Sprite2D" parent="." unique_id=1459724887]
 texture_filter = 1
 position = Vector2(846, 635)
 scale = Vector2(4, 4)
 metadata/_edit_lock_ = true
 
-[node name="SellInventoryPerk1" type="Button" parent="."]
+[node name="SellInventoryPerk1" type="Button" parent="." unique_id=797355780]
 texture_filter = 1
 offset_left = 901.0
 offset_top = 359.0
@@ -763,20 +757,20 @@ offset_bottom = 404.0
 pivot_offset = Vector2(35, 20)
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_uvgt3")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 disabled = true
 
-[node name="Label" type="Label" parent="SellInventoryPerk1"]
+[node name="Label" type="Label" parent="SellInventoryPerk1" unique_id=2058012127]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -798,7 +792,7 @@ text = "Sell"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SellInventoryPerk2" type="Button" parent="."]
+[node name="SellInventoryPerk2" type="Button" parent="." unique_id=1640006629]
 texture_filter = 1
 offset_left = 901.0
 offset_top = 490.0
@@ -807,20 +801,20 @@ offset_bottom = 535.0
 pivot_offset = Vector2(35, 20)
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_uvgt3")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 disabled = true
 
-[node name="Label" type="Label" parent="SellInventoryPerk2"]
+[node name="Label" type="Label" parent="SellInventoryPerk2" unique_id=809098165]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -842,7 +836,7 @@ text = "Sell"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SellInventoryPerk3" type="Button" parent="."]
+[node name="SellInventoryPerk3" type="Button" parent="." unique_id=176406153]
 texture_filter = 1
 offset_left = 901.0
 offset_top = 620.0
@@ -851,20 +845,20 @@ offset_bottom = 665.0
 pivot_offset = Vector2(35, 20)
 theme_override_fonts/font = ExtResource("2_dqdqq")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
-theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
 theme_override_styles/normal = SubResource("StyleBoxTexture_uvgt3")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_fsgtm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n1lh6")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_xybqi")
+theme_override_styles/hover = SubResource("StyleBoxTexture_rmhh8")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_oqg8q")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fobo1")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_rjc2l")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_fhep2")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_w8bjl")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dak6")
 disabled = true
 
-[node name="Label" type="Label" parent="SellInventoryPerk3"]
+[node name="Label" type="Label" parent="SellInventoryPerk3" unique_id=1800439327]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -886,7 +880,7 @@ text = "Sell"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ShopWallpaper" type="Sprite2D" parent="."]
+[node name="ShopWallpaper" type="Sprite2D" parent="." unique_id=94180087]
 z_index = -1
 texture_filter = 1
 position = Vector2(500, 350)
@@ -894,7 +888,7 @@ scale = Vector2(4, 4)
 texture = ExtResource("20_t1yip")
 metadata/_edit_lock_ = true
 
-[node name="PerkCostLabel1" type="Label" parent="."]
+[node name="PerkCostLabel1" type="Label" parent="." unique_id=1630566195]
 texture_filter = 1
 offset_left = 109.0
 offset_top = 601.0
@@ -911,7 +905,7 @@ text = "$"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="PerkCostLabel2" type="Label" parent="."]
+[node name="PerkCostLabel2" type="Label" parent="." unique_id=347758926]
 texture_filter = 1
 offset_left = 357.0
 offset_top = 601.0
@@ -928,7 +922,7 @@ text = "$"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="PerkCostLabel3" type="Label" parent="."]
+[node name="PerkCostLabel3" type="Label" parent="." unique_id=1110875066]
 texture_filter = 1
 offset_left = 607.0
 offset_top = 601.0
@@ -945,7 +939,7 @@ text = "$"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="ActualMoneyLabel" type="Label" parent="."]
+[node name="ActualMoneyLabel" type="Label" parent="." unique_id=2075588853]
 texture_filter = 1
 offset_left = 371.0
 offset_top = 41.0
@@ -961,7 +955,7 @@ theme_override_font_sizes/font_size = 30
 text = "Money: "
 horizontal_alignment = 1
 
-[node name="NotEnoughMoneyLabel" type="Label" parent="."]
+[node name="NotEnoughMoneyLabel" type="Label" parent="." unique_id=769875414]
 offset_left = 315.0
 offset_top = -100.0
 offset_right = 669.0
@@ -975,7 +969,7 @@ theme_override_font_sizes/font_size = 50
 text = "Not enough money!"
 metadata/_edit_lock_ = true
 
-[node name="RerollShopCostLabel" type="Label" parent="."]
+[node name="RerollShopCostLabel" type="Label" parent="." unique_id=1362630842]
 texture_filter = 1
 offset_left = 785.0
 offset_top = 195.0
