@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cxvvrwpwybm4v" path="res://assets/perks/medium sizes/time slow medium.png" id="18_lemb1"]
 [ext_resource type="Texture2D" uid="uid://dgt3ih0dj4ik1" path="res://assets/perks/medium sizes/shield medium.png" id="18_yox4t"]
 [ext_resource type="Texture2D" uid="uid://s1i1hs5cvdnn" path="res://assets/perks/medium sizes/double money medium.png" id="20_a6ftd"]
+[ext_resource type="PackedScene" uid="uid://boqwvshus54xr" path="res://Scenes/ParkingLotRoad/parking_lot_road.tscn" id="21_nxex1"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -36,6 +37,7 @@ _RoadScene = ExtResource("2_qxfds")
 _CarEnemyScene = ExtResource("4_i1e5p")
 _CoinScene = ExtResource("4_flgk0")
 _BulletScene = ExtResource("16_56qi8")
+_ParkingLotRoadScene = ExtResource("21_nxex1")
 _SpeedingGamePath = NodePath("SpeedingGame")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")

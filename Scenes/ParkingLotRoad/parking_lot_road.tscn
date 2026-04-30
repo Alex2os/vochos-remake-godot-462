@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://boqwvshus54xr"]
+
+[ext_resource type="Texture2D" uid="uid://cv01gd8jogyr4" path="res://assets/road/starting game parking lot extended.png" id="1_a42dw"]
+[ext_resource type="Script" uid="uid://cga21jslcbadj" path="res://Scenes/ParkingLotRoad/ParkingLotRoad.cs" id="1_yuxlg"]
+
+[node name="ParkingLotRoad" type="Node2D" unique_id=707412613]
+script = ExtResource("1_yuxlg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=849128583]
+texture_filter = 1
+texture_repeat = 1
+scale = Vector2(4, 4)
+texture = ExtResource("1_a42dw")

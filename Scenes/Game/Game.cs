@@ -6,6 +6,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _CarEnemyScene;
 	[Export] private PackedScene _CoinScene;
 	[Export] private PackedScene _BulletScene;
+	[Export] private PackedScene _ParkingLotRoadScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -43,6 +44,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimer1Path;
 	[Export] private NodePath _PerkTimer2Path;
 	[Export] private NodePath _PerkTimer3Path;
+
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -201,6 +203,13 @@ public partial class Game : Node2D
 		if (_PerksTimerSlot[1]) _PerkTimerText2.Text = $"{_PerkTimer2.TimeLeft:F1}";
 		if (_PerksTimerSlot[2]) _PerkTimerText3.Text = $"{_PerkTimer3.TimeLeft:F1}";
 
+	}
+
+	private void SpawnParkingLotRoad()
+	{
+		ParkingLotRoad parking_lot_road = (ParkingLotRoad)_ParkingLotRoadScene.Instantiate();
+		_RoadContainer.AddChild(parking_lot_road);
+		parking_lot_road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y +1175);
 	}
 
 	private void SpawnRoad()
@@ -452,6 +461,7 @@ public partial class Game : Node2D
 		AssignGameVariables();
 		UpdateLabels(); // this function is used for when the user comes from the shop, to re-update the labels that contain the user's score and money.
 
+		SpawnParkingLotRoad();
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 		_CarStarting.Play();
 		_GameMusic.Play();
@@ -466,8 +476,8 @@ public partial class Game : Node2D
 		EnemyManager.Instance.EnemySpeed += 30;
 
 		if (GameManager.Instance.EnemyTimerWaitTime >= 0.4 && GameManager.Instance.EnemyTimerWaitTime <= 0.5) ; // if the waittime has reached a threshold, we stop lowering it.
-		// the reason we use an interval to check if we keep lowering the timer or not, is that the values are a little bit weird with the decimals. so we use this interval for the condition.
-		// another thing to note here is that if the timer keeps lowering to when it's zero or below zero weird stuff happens in the game, like for example the cars spawning way too fast, that haundreds of them spawn in seconds.
+																												// the reason we use an interval to check if we keep lowering the timer or not, is that the values are a little bit weird with the decimals. so we use this interval for the condition.
+																												// another thing to note here is that if the timer keeps lowering to when it's zero or below zero weird stuff happens in the game, like for example the cars spawning way too fast, that haundreds of them spawn in seconds.
 		else GameManager.Instance.EnemyTimerWaitTime -= 0.2; // we keep lowering the timer. we use the gamemanager as when changing to the shop, the timer gets restarted, so we dont want that to happen.		
 
 		if (_SlowTimePerkActive) return; // if the slowtimeperk is active, we return and dont update the enemies' speed, including the _EnemySpeed variable, as we use that one to spawn enemies.
