@@ -17,6 +17,7 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _ShieldPerkHitSound;
 	[Export] private AudioStreamPlayer _BulletSpawnSound;
 	[Export] private AudioStreamPlayer _DoublePointsPerkSound;
+	[Export] private AudioStreamPlayer _DoubleMoneyPerkSound;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 
@@ -24,10 +25,12 @@ public partial class player : Area2D
 	[Signal] public delegate void BulletPerkUsedEventHandler();
 	[Signal] public delegate void ShieldPerkUsedEventHandler(int value);
 	[Signal] public delegate void DoublePointsPerkUsedEventHandler(int value);
+	[Signal] public delegate void DoubleMoneyPerkUsedEventHandler(int value);
 
 	// variables
 	private bool ShieldPerkActive = false;
 	private bool DoublePointsPerkActive = false;
+	private bool DoubleMoneyPerkActive = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -98,20 +101,21 @@ public partial class player : Area2D
 				if (ShieldPerkActive) return;
 				UseShieldPerk();
 				break;
-			case 1: // 
+			case 1: //
 					// if health is already full, then just return.
 				if (PlayerVariables.Instance.PlayerHealth == 3) return;
 				// in any other case, use the extra life perk
 				UseExtraLifePerk();
 				break;
-			case 2:
+			case 2: //
 				if (DoublePointsPerkActive) return;
 				UseDoublePointsPerk();
 				break;
 			case 3: //
 				UseBulletPerk();
 				break;
-			case 4:
+			case 4: //
+				if(DoubleMoneyPerkActive) return;
 				UseDoubleMoneyPerk();
 				break;
 			case 5:
@@ -126,12 +130,6 @@ public partial class player : Area2D
 		PlayerVariables.Instance.PlayerInventory[inventory_index] = -1; // this is to reassign the inventory perk id when a perk is used. if there's no perk, this will axtivate too, so everytime we check this function the perk id of the inventory slot will be assigned to -1 at the ond of the function.
 																		// we then update the texture of the perk in the game inventory, sending a signal the game scene can use and successfully update it.
 		EmitSignal(SignalName.UpdateInventoryPerkTexture);
-	}
-
-	// this function is used when the game restarts. by default the car has the nohit health bar texture.
-	public void SetDefaultHealthBar()
-	{
-		_HealthBar.Texture = _HealthBar_NoHit;
 	}
 
 	private void LowerPlayerHealth() // we lower the health of the player, and check if the health is equal or less than zero to send the game over signal.
@@ -195,8 +193,12 @@ public partial class player : Area2D
 
 	private void UseDoubleMoneyPerk()
 	{
-
+		DoubleMoneyPerkActive = true;
+		EmitSignal(SignalName.DoubleMoneyPerkUsed, GameManager.PerksNumbers["double-money"]);
+		_DoubleMoneyPerkSound.Play();
 	}
+
+	public void OnDoubleMoneyPerkEnded(){ DoubleMoneyPerkActive = false; }
 
 	private void UseSlowTimePerk()
 	{
@@ -232,8 +234,9 @@ public partial class player : Area2D
 	{
 		ShieldPerkActive = false;
 		DoublePointsPerkActive = false;
+		DoubleMoneyPerkActive = false;
+		_HealthBar.Texture = _HealthBar_NoHit;
 		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
-		// in addition to the comment below, when the game is over this timer gets paused anyways, but we do it here too just so we have a control over the game.
-		// _ShieldPerkActiveTimer.SetPaused(false); // this pauses the shieldperkactive timer. when activating this timer again on the game, this restarts from its default value and waits until the timeout, so it's fine to just pause it here.
+
 	}
 }

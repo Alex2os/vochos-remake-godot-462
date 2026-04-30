@@ -84,6 +84,7 @@ public partial class Game : Node2D
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
+	[Signal] public delegate void DoubleMoneyPerkEndedEventHandler();
 
 	// initialize all the variables used in the game
 	private int _TotalScore;
@@ -153,6 +154,7 @@ public partial class Game : Node2D
 		_ShopAvailableTimer.Timeout += OnShopAvailable;
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
+		_Player.DoubleMoneyPerkUsed += OnPlayerUsedPerk;
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
@@ -162,6 +164,7 @@ public partial class Game : Node2D
 		// we subscribe the player's functions to the signals here in the game scene like the below lines of code.
 		ShieldPerkEnded += _Player.OnShieldPerkEnded;
 		DoublePointsPerkEnded += _Player.OnDoublePointsPerkEnded;
+		DoubleMoneyPerkEnded += _Player.OnDoubleMoneyPerkEnded;
 
 		// we load the medium size perks to use them when a perk is activated, and we assign its perk texture. we load all of them so there's no problem when assigning them, as we use the respective perk number to assign them, so it's better to have them this way.
 		_PerksTextureTimers = new Texture2D[]
@@ -244,6 +247,8 @@ public partial class Game : Node2D
 
 			if (speed is AnimationPlayer anim) anim.Stop();
 		}
+
+		_MainMenuButton.Disabled = false;
 
 		PauseGame();
 
@@ -408,8 +413,6 @@ public partial class Game : Node2D
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
-		_Player.SetDefaultHealthBar();
-		_Player.RestartPlayerVariables();
 
 		// we assign the shopreadylabel opacity to zero.
 		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
@@ -503,9 +506,14 @@ public partial class Game : Node2D
 		// player inventory
 		for (int i = 0; i < _PlayerInventory.Length; i++) _PlayerInventory[i] = PlayerVariables.Instance.PlayerInventory[i];
 
+		// player variables that need to be restarted each time the game starts
+		_Player.RestartPlayerVariables();
+
 		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
 
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
+
+		_MainMenuButton.Disabled = true; // we dusable the main menu button when the game starts, so the player cant click it. we reenable it when the player loses.
 	}
 
 	private bool CheckComingFromShop()
@@ -588,6 +596,11 @@ public partial class Game : Node2D
 			perk_duration_seconds = 20;
 			_DoublePointsPerkActive = true;
 		}
+		else if (perk_number == GameManager.PerksNumbers["double-money"])
+		{
+			perk_duration_seconds = 20;
+			_DoubleMoneyPerkActive = true;
+		}
 
 		// depending on the value of i is the timer that we will use and start
 		switch (i)
@@ -638,6 +651,11 @@ public partial class Game : Node2D
 		{
 			_DoublePointsPerkActive = false;
 			EmitSignal(SignalName.DoublePointsPerkEnded);
+		}
+		else if (perk_number == GameManager.PerksNumbers["double-money"])
+		{
+			_DoubleMoneyPerkActive = false;
+			EmitSignal(SignalName.DoubleMoneyPerkEnded);
 		}
 		
 		switch (timer_number)

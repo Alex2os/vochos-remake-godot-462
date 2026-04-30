@@ -20,7 +20,7 @@ public partial class GameManager : Node
 	{ "health", 1 },
 	{ "double-points", 2 },
 	{ "bullet", 3 },
-	{ "double_money", 4 },
+	{ "double-money", 4 },
 	{ "slow-time", 5 }
 };
 

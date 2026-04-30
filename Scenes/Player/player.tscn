@@ -13,11 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://b6qodx482c1x6" path="res://assets/perks/shield-inuse.png" id="11_74mp2"]
 [ext_resource type="AudioStream" uid="uid://3bg7bfqqu8e3" path="res://assets/sound effects/bullet-spawn.wav" id="12_oikmp"]
 [ext_resource type="AudioStream" uid="uid://b8g3gvvwh4oin" path="res://assets/sound effects/double-points-perk.mp3" id="13_06tpx"]
+[ext_resource type="AudioStream" uid="uid://cyvbdrdpw5ori" path="res://assets/sound effects/double-money-perk.wav" id="14_7g0yx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfr5m"]
 size = Vector2(18, 23)
 
-[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar", "_ShieldPerkInUse", "_ExtraLifePerkSound", "_ShieldPerkSound", "_ShieldPerkHitSound", "_BulletSpawnSound", "_DoublePointsPerkSound")]
+[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar", "_ShieldPerkInUse", "_ExtraLifePerkSound", "_ShieldPerkSound", "_ShieldPerkHitSound", "_BulletSpawnSound", "_DoublePointsPerkSound", "_DoubleMoneyPerkSound")]
 z_index = 1
 script = ExtResource("1_a3d8c")
 _CarCrash = NodePath("CarCrash")
@@ -32,6 +33,7 @@ _ShieldPerkSound = NodePath("ShieldPerk")
 _ShieldPerkHitSound = NodePath("ShieldPerkHit")
 _BulletSpawnSound = NodePath("BulletSpawnSound")
 _DoublePointsPerkSound = NodePath("DoublePointsPerk")
+_DoubleMoneyPerkSound = NodePath("DoubleMoneyPerk")
 metadata/_edit_lock_ = true
 
 [node name="CarSkin" type="Sprite2D" parent="." unique_id=521307505]
@@ -83,3 +85,7 @@ volume_db = -4.0
 [node name="DoublePointsPerk" type="AudioStreamPlayer" parent="." unique_id=131210887]
 stream = ExtResource("13_06tpx")
 volume_db = 12.0
+
+[node name="DoubleMoneyPerk" type="AudioStreamPlayer" parent="." unique_id=1843193332]
+stream = ExtResource("14_7g0yx")
+volume_db = -4.0

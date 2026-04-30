@@ -31,6 +31,11 @@ public partial class PlayerVariables : Node
 		PlayerHealth = 3;
 
 		// we empty the player inventory
-		for (int i = 0; i < PlayerInventory.Length; i++) PlayerInventory[i] = 2;
+		// for (int i = 0; i < PlayerInventory.Length; i++) PlayerInventory[i] = 2;
+
+		// for testing only, we assign the perk numbers directly from here to not wait until the shop when testing the game.
+		PlayerInventory[0] = 4;
+		PlayerInventory[1] = 4;
+		PlayerInventory[2] = 4;
 	}
 }
