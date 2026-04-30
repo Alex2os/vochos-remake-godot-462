@@ -18,6 +18,7 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _BulletSpawnSound;
 	[Export] private AudioStreamPlayer _DoublePointsPerkSound;
 	[Export] private AudioStreamPlayer _DoubleMoneyPerkSound;
+	[Export] private AudioStreamPlayer _SlowTimePerkSound;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 
@@ -26,11 +27,13 @@ public partial class player : Area2D
 	[Signal] public delegate void ShieldPerkUsedEventHandler(int value);
 	[Signal] public delegate void DoublePointsPerkUsedEventHandler(int value);
 	[Signal] public delegate void DoubleMoneyPerkUsedEventHandler(int value);
+	[Signal] public delegate void SlowTimePerkUsedEventHandler(int value);
 
 	// variables
 	private bool ShieldPerkActive = false;
 	private bool DoublePointsPerkActive = false;
 	private bool DoubleMoneyPerkActive = false;
+	private bool SlowTimePerkActive = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -97,28 +100,29 @@ public partial class player : Area2D
 	{
 		switch (PlayerVariables.Instance.PlayerInventory[inventory_index])
 		{
-			case 0: //
+			case 0: 
 				if (ShieldPerkActive) return;
 				UseShieldPerk();
 				break;
-			case 1: //
+			case 1: 
 					// if health is already full, then just return.
 				if (PlayerVariables.Instance.PlayerHealth == 3) return;
 				// in any other case, use the extra life perk
 				UseExtraLifePerk();
 				break;
-			case 2: //
+			case 2: 
 				if (DoublePointsPerkActive) return;
 				UseDoublePointsPerk();
 				break;
-			case 3: //
+			case 3: 
 				UseBulletPerk();
 				break;
-			case 4: //
-				if(DoubleMoneyPerkActive) return;
+			case 4: 
+				if (DoubleMoneyPerkActive) return;
 				UseDoubleMoneyPerk();
 				break;
 			case 5:
+				if (SlowTimePerkActive) return;
 				UseSlowTimePerk();
 				break;
 			case -1:
@@ -183,7 +187,7 @@ public partial class player : Area2D
 		_DoublePointsPerkSound.Play();
 	}
 
-	public void OnDoublePointsPerkEnded(){ DoublePointsPerkActive = false; }
+	public void OnDoublePointsPerkEnded() { DoublePointsPerkActive = false; }
 
 	private void UseBulletPerk()
 	{
@@ -198,14 +202,18 @@ public partial class player : Area2D
 		_DoubleMoneyPerkSound.Play();
 	}
 
-	public void OnDoubleMoneyPerkEnded(){ DoubleMoneyPerkActive = false; }
+	public void OnDoubleMoneyPerkEnded() { DoubleMoneyPerkActive = false; }
 
 	private void UseSlowTimePerk()
 	{
-
+		SlowTimePerkActive = true;
+		EmitSignal(SignalName.DoubleMoneyPerkUsed, GameManager.PerksNumbers["slow-time"]);
+		_SlowTimePerkSound.Play();
 	}
 
-	public void UpdateHealthBarTexture()
+	public void OnSlowTimePerkEnded() { SlowTimePerkActive = false; }
+
+	private void UpdateHealthBarTexture()
 	{
 		switch (PlayerVariables.Instance.PlayerHealth)
 		{
@@ -223,20 +231,14 @@ public partial class player : Area2D
 				break;
 		}
 	}
-
-	// this is used to set the timers in the player to true or false. mostly used by perks.
-	// public void SetPlayerTimers(bool state)
-	//{
-	//	if (ShieldPerkActive) _ShieldPerkActiveTimer.SetPaused(!state);
-	// }
-
 	public void RestartPlayerVariables()
 	{
 		ShieldPerkActive = false;
 		DoublePointsPerkActive = false;
 		DoubleMoneyPerkActive = false;
-		_HealthBar.Texture = _HealthBar_NoHit;
-		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
+		SlowTimePerkActive = false;
+		UpdateHealthBarTexture();
 
+		_ShieldPerkInUse.Modulate = new Color(0, 0, 0, 0);
 	}
 }

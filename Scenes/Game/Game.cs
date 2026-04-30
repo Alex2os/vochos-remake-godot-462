@@ -85,6 +85,7 @@ public partial class Game : Node2D
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
 	[Signal] public delegate void DoubleMoneyPerkEndedEventHandler();
+	[Signal] public delegate void SlowTimePerkEndedEventHandler();
 
 	// initialize all the variables used in the game
 	private int _TotalScore;
@@ -98,6 +99,7 @@ public partial class Game : Node2D
 	private bool _IsGamePaused = false;
 	private bool _DoublePointsPerkActive = false; // variable used to know if the double points perk is active, so we can give the player double points correctly
 	private bool _DoubleMoneyPerkActive = false; // same as the double points perk, but for the double money perk
+	private bool _SlowTimePerkActive = false; // variable for the slowtime perk, same as the other two above.
 	private bool[] _PerksTimerSlot = [false, false, false];
 	private int[] _PerkActiveInTimer = [-1, -1, -1];
 
@@ -165,6 +167,7 @@ public partial class Game : Node2D
 		ShieldPerkEnded += _Player.OnShieldPerkEnded;
 		DoublePointsPerkEnded += _Player.OnDoublePointsPerkEnded;
 		DoubleMoneyPerkEnded += _Player.OnDoubleMoneyPerkEnded;
+		SlowTimePerkEnded += _Player.OnSlowTimePerkEnded;
 
 		// we load the medium size perks to use them when a perk is activated, and we assign its perk texture. we load all of them so there's no problem when assigning them, as we use the respective perk number to assign them, so it's better to have them this way.
 		_PerksTextureTimers = new Texture2D[]
@@ -601,6 +604,12 @@ public partial class Game : Node2D
 			perk_duration_seconds = 20;
 			_DoubleMoneyPerkActive = true;
 		}
+		else if(perk_number == GameManager.PerksNumbers["slow-time"])
+		{
+			perk_duration_seconds = 15;
+			_SlowTimePerkActive = true;
+			_GameMusic.PitchScale = (float)0.74; // we pitch down the game music so it feels slowed, as we are slowing the time with this perk.
+		}
 
 		// depending on the value of i is the timer that we will use and start
 		switch (i)
@@ -656,6 +665,12 @@ public partial class Game : Node2D
 		{
 			_DoubleMoneyPerkActive = false;
 			EmitSignal(SignalName.DoubleMoneyPerkEnded);
+		}
+		else if (perk_number == GameManager.PerksNumbers["slow-time"])
+		{
+			_SlowTimePerkActive = false;
+			EmitSignal(SignalName.SlowTimePerkEnded);
+			_GameMusic.PitchScale = 1; // we return the pitch of the game music to its original pitch, which is 1
 		}
 		
 		switch (timer_number)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://sov5qkxw4hef"
+path="res://.godot/imported/time-slow-perk.wav-d7efcc629c287c289bce890e9ebbdc95.sample"
+
+[deps]
+
+source_file="res://assets/sound effects/time-slow-perk.wav"
+dest_files=["res://.godot/imported/time-slow-perk.wav-d7efcc629c287c289bce890e9ebbdc95.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
