@@ -21,7 +21,6 @@ public partial class SpeedingGame : Node2D
 	{
 		_AnimationPlayer.Play("speedinggameanim");
 		EmitSignal(SignalName.SpeedingTheGame);
-		_SpeedingGameTimer.WaitTime += 10; // we add 10 seconds each time.
 		_SpeedingGameTimer.Start();
 	}
 }

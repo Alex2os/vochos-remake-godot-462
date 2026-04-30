@@ -462,14 +462,21 @@ public partial class Game : Node2D
 	{
 		GD.Print("speeding the game!");
 
-		// increase the speeds for enemies.
+		// increase the speeds for enemies, in the EnemyManager variable.
 		EnemyManager.Instance.EnemySpeed += 30;
-		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 
-		if (GameManager.Instance.EnemyTimerWaitTime == 0.4) ; // if the waittime has reached a threshold, we stop lowering it.
+		if (GameManager.Instance.EnemyTimerWaitTime >= 0.4 && GameManager.Instance.EnemyTimerWaitTime <= 0.5) ; // if the waittime has reached a threshold, we stop lowering it.
+		// the reason we use an interval to check if we keep lowering the timer or not, is that the values are a little bit weird with the decimals. so we use this interval for the condition.
+		// another thing to note here is that if the timer keeps lowering to when it's zero or below zero weird stuff happens in the game, like for example the cars spawning way too fast, that haundreds of them spawn in seconds.
+		else GameManager.Instance.EnemyTimerWaitTime -= 0.2; // we keep lowering the timer. we use the gamemanager as when changing to the shop, the timer gets restarted, so we dont want that to happen.		
+
+		if (_SlowTimePerkActive) return; // if the slowtimeperk is active, we return and dont update the enemies' speed, including the _EnemySpeed variable, as we use that one to spawn enemies.
+										 // by letting the other variables be updated each time the speeding the game function is activated, we have no trouble managing this function when the-
+										 // slow time perk is active, and we let the variables update properly. the only difference is that the new speed is stored and not updated directly to the enemies,-
+										 // until the slow time perk is done.
 		else
 		{
-			GameManager.Instance.EnemyTimerWaitTime -= 0.2; // we keep lowering the timer. we use the gamemanager as when changing to the shop, the timer gets restarted, so we dont want that to happen.
+			_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 			_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 		}
 
@@ -580,6 +587,25 @@ public partial class Game : Node2D
 		_InventoryInGame.UpdateInventoryPerksTextures();
 	}
 
+	// the both functions below (slowenemies and normalspeedenemies) are used for the slow time perk when it's activated and when it ended.
+	private void SlowEnemies()
+	{
+
+		_EnemySpeed = 70;
+		_SpawningCarEnemyTimer.WaitTime = 3.0;
+		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
+
+	}
+
+	private void NormalSpeedEnemies()
+	{
+
+		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
+		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
+		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
+
+	}
+
 	private void OnPlayerUsedPerk(int perk_number)
 	{
 		int i;
@@ -617,6 +643,7 @@ public partial class Game : Node2D
 			perk_duration_seconds = 15;
 			_SlowTimePerkActive = true;
 			_GameMusic.PitchScale = (float)0.74; // we pitch down the game music so it feels slowed, as we are slowing the time with this perk.
+			SlowEnemies();
 		}
 
 		// depending on the value of i is the timer that we will use and start
@@ -678,6 +705,7 @@ public partial class Game : Node2D
 		{
 			_SlowTimePerkActive = false;
 			EmitSignal(SignalName.SlowTimePerkEnded);
+			NormalSpeedEnemies();
 			_GameMusic.PitchScale = 1; // we return the pitch of the game music to its original pitch, which is 1
 		}
 
