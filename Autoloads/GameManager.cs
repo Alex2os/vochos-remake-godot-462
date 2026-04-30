@@ -10,6 +10,7 @@ public partial class GameManager : Node
 	private PackedScene _ShopScene = GD.Load<PackedScene>("res://Scenes/Shop/shop.tscn");
 
 	public bool ComingFromShop = false;
+	public double EnemyTimerWaitTime = 2.0; // 2 seconds 
 	// number of perks in the game
 	public const int NumberOfPerks = 6;
 
@@ -84,5 +85,6 @@ public partial class GameManager : Node
 	public void InitializeGameManagerVariables()
 	{
 		ComingFromShop = false;
+		EnemyTimerWaitTime = 2.0;
 	}
 }

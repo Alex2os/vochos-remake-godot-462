@@ -466,9 +466,14 @@ public partial class Game : Node2D
 		EnemyManager.Instance.EnemySpeed += 30;
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed;
 
-		_SpawningCarEnemyTimer.WaitTime -= 0.2; // we keep lowing the timer
+		if (GameManager.Instance.EnemyTimerWaitTime == 0.4) ; // if the waittime has reached a threshold, we stop lowering it.
+		else
+		{
+			GameManager.Instance.EnemyTimerWaitTime -= 0.2; // we keep lowering the timer. we use the gamemanager as when changing to the shop, the timer gets restarted, so we dont want that to happen.
+			_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
+		}
 
-		// GD.Print(_SpawningCarEnemyTimer.WaitTime);
+		GD.Print(_SpawningCarEnemyTimer.WaitTime);
 
 		// adjust the new speed for all the existing enemy objects
 		foreach (CarEnemy enemy in _EnemyContainer.GetChildren()) enemy._CarEnemySpeed = _EnemySpeed;
@@ -515,6 +520,9 @@ public partial class Game : Node2D
 		_InventoryInGame.UpdateInventoryPerksTextures(); // this updates the textures of the perks in the inventory
 
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
+
+		// we assign again the timer to the gamemanager variable. with this, when coming back from shop this will have the value it was left in before going to the shop.
+		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
 		_MainMenuButton.Disabled = true; // we dusable the main menu button when the game starts, so the player cant click it. we reenable it when the player loses.
 	}
@@ -604,7 +612,7 @@ public partial class Game : Node2D
 			perk_duration_seconds = 20;
 			_DoubleMoneyPerkActive = true;
 		}
-		else if(perk_number == GameManager.PerksNumbers["slow-time"])
+		else if (perk_number == GameManager.PerksNumbers["slow-time"])
 		{
 			perk_duration_seconds = 15;
 			_SlowTimePerkActive = true;
@@ -672,7 +680,7 @@ public partial class Game : Node2D
 			EmitSignal(SignalName.SlowTimePerkEnded);
 			_GameMusic.PitchScale = 1; // we return the pitch of the game music to its original pitch, which is 1
 		}
-		
+
 		switch (timer_number)
 		{
 			case 0:
