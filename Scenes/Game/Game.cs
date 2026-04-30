@@ -538,6 +538,8 @@ public partial class Game : Node2D
 
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
 
+		_GameMusic.PitchScale = 1; // music for the game. could be that the pitchscale was left on a different value than the normal, which is 1
+
 		// we assign again the timer to the gamemanager variable. with this, when coming back from shop this will have the value it was left in before going to the shop.
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
