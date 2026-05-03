@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dgt3ih0dj4ik1" path="res://assets/perks/medium sizes/shield medium.png" id="18_yox4t"]
 [ext_resource type="Texture2D" uid="uid://s1i1hs5cvdnn" path="res://assets/perks/medium sizes/double money medium.png" id="20_a6ftd"]
 [ext_resource type="PackedScene" uid="uid://boqwvshus54xr" path="res://Scenes/ParkingLotRoad/parking_lot_road.tscn" id="21_nxex1"]
+[ext_resource type="PackedScene" uid="uid://cxhjwgru056cn" path="res://Scenes/ShopPickable/shop_pickable.tscn" id="22_pa3qg"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -311,5 +312,8 @@ wait_time = 15.0
 
 [node name="PerkTimer3" type="Timer" parent="." unique_id=2092098010]
 wait_time = 15.0
+
+[node name="ShopPickable" parent="." unique_id=1212069849 instance=ExtResource("22_pa3qg")]
+position = Vector2(643, 60)
 
 [editable path="GameOver"]

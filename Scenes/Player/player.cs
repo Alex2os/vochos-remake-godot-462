@@ -91,8 +91,8 @@ public partial class player : Area2D
 	private void OnAreaEntered(Area2D node)
 	{
 
-		if (node is Coin || node is Bullet) ; // if it's a coin or a bullet, then don't do anything
-		else LowerPlayerHealth(); // in any other case, it's an enemy what hit the player, so we lower the health
+		if (node is CarEnemy) LowerPlayerHealth(); // if it's an enemy what hit the player, we lower the player's health. 
+		// if anything else hit the player it won't lower their health, like coins or the shopPickable.
 
 	}
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://5a60j6m0dic3"]
+[gd_scene format=3 uid="uid://5a60j6m0dic3"]
 
 [ext_resource type="Texture2D" uid="uid://cpgqgfp3fk1xb" path="res://assets/coins/coin animations.png" id="1_h37oj"]
 [ext_resource type="Script" uid="uid://dwje6rj03d32t" path="res://Scenes/Coin/Coin.cs" id="1_peex2"]
@@ -110,18 +110,17 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_55yue"]
-radius = 17.0
-height = 34.0
+radius = 21.0
+height = 42.0
 
-[node name="Coin" type="Area2D"]
+[node name="Coin" type="Area2D" unique_id=406750322]
 script = ExtResource("1_peex2")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1181491541]
 texture_filter = 1
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_1no2p")
 autoplay = "default"
-frame_progress = 0.954125
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=48031347]
 shape = SubResource("CapsuleShape2D_55yue")
