@@ -32,6 +32,11 @@ _data = {
 &"shop anim": SubResource("Animation_oejk7")
 }
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_pa3qg"]
+specular_color = Color(0, 0, 0, 1)
+texture_filter = 1
+texture_repeat = 1
+
 [node name="Game" type="Node2D" unique_id=285963340]
 script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
@@ -78,6 +83,7 @@ _PerkTimer1Path = NodePath("PerkTimer1")
 _PerkTimer2Path = NodePath("PerkTimer2")
 _PerkTimer3Path = NodePath("PerkTimer3")
 _ShopPickableContainerPath = NodePath("ShopPickableContainer")
+_TransparentBlackScreenPath = NodePath("TransparentBlackScreen")
 
 [node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -118,7 +124,7 @@ wait_time = 3.5
 autostart = true
 
 [node name="ShopAvailableTimer" type="Timer" parent="." unique_id=251858297]
-wait_time = 30.0
+wait_time = 35.0
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=185217818]
@@ -194,6 +200,14 @@ bbcode_enabled = true
 text = "
     Game paused..."
 script = ExtResource("14_upfqs")
+metadata/_edit_lock_ = true
+
+[node name="TransparentBlackScreen" type="Sprite2D" parent="." unique_id=591569766]
+modulate = Color(0, 0, 0, 0)
+z_index = 2
+position = Vector2(500, 350)
+scale = Vector2(1000, 700)
+texture = SubResource("CanvasTexture_pa3qg")
 metadata/_edit_lock_ = true
 
 [node name="ShopReadyLabel" type="RichTextLabel" parent="." unique_id=1384954700]

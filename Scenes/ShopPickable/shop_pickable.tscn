@@ -1,141 +1,7 @@
 [gd_scene format=3 uid="uid://cxhjwgru056cn"]
 
 [ext_resource type="Script" uid="uid://g3oty6dr2b1k" path="res://Scenes/ShopPickable/ShopPickable.cs" id="1_1tlnk"]
-[ext_resource type="Texture2D" uid="uid://dcjicjefy6d7d" path="res://assets/shop/shop-pickable-animation-sprite.png" id="2_1tlnk"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ahny8"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(0, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oxfrs"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(20, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nkhr0"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(40, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jhbry"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(60, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3ihyd"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(80, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_demfb"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(100, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jnxi1"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(120, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oy00c"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(140, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xuv7u"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(160, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0xqbb"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(180, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_25oe5"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(200, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v2agx"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(220, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kmgak"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(240, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pfoay"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(260, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7aaaq"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(280, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nosen"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(300, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xbtfu"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(320, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8rys3"]
-atlas = ExtResource("2_1tlnk")
-region = Rect2(340, 0, 20, 20)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_dopsb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ahny8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oxfrs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nkhr0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jhbry")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3ihyd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_demfb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jnxi1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oy00c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xuv7u")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0xqbb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_25oe5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v2agx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kmgak")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pfoay")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7aaaq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nosen")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xbtfu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8rys3")
-}],
-"loop": true,
-"name": &"default",
-"speed": 14.0
-}]
+[ext_resource type="Texture2D" uid="uid://dgma7ovpt8c5m" path="res://assets/shop/shop-pickable-sprite.png" id="2_1tlnk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p4krc"]
 radius = 23.0
@@ -144,13 +10,11 @@ height = 46.0
 [node name="ShopPickable" type="Area2D" unique_id=1212069849]
 script = ExtResource("1_1tlnk")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=711654314]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=928591799]
 texture_filter = 1
 texture_repeat = 1
 scale = Vector2(2, 2)
-sprite_frames = SubResource("SpriteFrames_dopsb")
-autoplay = "default"
-frame_progress = 0.8586531
+texture = ExtResource("2_1tlnk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1392867138]
 shape = SubResource("CapsuleShape2D_p4krc")

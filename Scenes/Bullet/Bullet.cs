@@ -3,7 +3,7 @@ using System;
 
 public partial class Bullet : Area2D
 {
-	[Export] public float _BulletSpeed = 250;
+	[Export] public float _BulletSpeed = 400;
 	[Signal] public delegate void BulletHitEnemyEventHandler();
 	
 	public override void _Ready()

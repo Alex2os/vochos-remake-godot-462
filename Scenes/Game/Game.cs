@@ -46,7 +46,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimer2Path;
 	[Export] private NodePath _PerkTimer3Path;
 	[Export] private NodePath _ShopPickableContainerPath;
-
+	[Export] private NodePath _TransparentBlackScreenPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -85,6 +85,7 @@ public partial class Game : Node2D
 	private Timer _PerkTimer1;
 	private Timer _PerkTimer2;
 	private Timer _PerkTimer3;
+	private Sprite2D _TransparentBlackScreen;
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
@@ -148,6 +149,7 @@ public partial class Game : Node2D
 		_PerkTimerText2 = GetNode<Label>(_PerkTimerText2Path);
 		_PerkTimerText3 = GetNode<Label>(_PerkTimerText3Path);
 		_ShopPickableContainer = GetNode<Node2D>(_ShopPickableContainerPath);
+		_TransparentBlackScreen = GetNode<Sprite2D>(_TransparentBlackScreenPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -244,7 +246,7 @@ public partial class Game : Node2D
 
 	}
 
-	
+
 	private void OnShopPickableHitPlayer()
 	{
 		// in this case, we have to use CallDeferred to call the function, as it gives us an error when using the function normally.
@@ -301,17 +303,33 @@ public partial class Game : Node2D
 			set_process_bool = true;
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
+			_TransparentBlackScreen.Modulate = new Color(0, 0, 0, 0); // we hide the transparent black screen every time the game is unpaused
 		}
 		else // if it's game over, then this will pop up, pausing the game.
 		{
 			set_process_bool = false;
 			_IsGamePaused = true;
 			_GameMusic.VolumeDb -= 10; // with this we can make the volume in db of and audiostream lower, so if the game is paused, the db will lower, and if it's unpaused, the db will go up again.
+			_TransparentBlackScreen.Modulate = new Color(0, 0, 0, (float)0.5); // we show the transparent black screen every time the game is paused
 		}
 
-		if (!_GameOver && !_IsGamePaused) _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if the game is not over and game is not paused, don't show the label
-		else if (!_GameOver && _IsGamePaused) _GamePausedLabel.Modulate = new Color(1, 1, 1, 1); // otherwise, show it.
-		else _GamePausedLabel.Modulate = new Color(0, 0, 0, 0); // if it's any other case (which is every time _gameover is true) then hide the label.
+		// in the paused menu we show the gamepausedlabel and the main menu button, besides the other options.
+		if (!_GameOver && !_IsGamePaused) // if the game is not over and game is not paused, don't show the labels / options
+		{
+			_GamePausedLabel.Modulate = new Color(0, 0, 0, 0);
+			_MainMenuButton.Modulate = new Color(0, 0, 0, 0);
+			_MainMenuButton.Disabled = true;
+		}
+		else if (!_GameOver && _IsGamePaused) // otherwise, show them.
+		{ 
+			_GamePausedLabel.Modulate = new Color(1, 1, 1, 1);
+			_MainMenuButton.Modulate = new Color(1, 1, 1, 1);
+			_MainMenuButton.Disabled = false;
+		}
+		else
+		{ // if it's any other case (which is every time _gameover is true) then hide the options, excepting the main menu button, as that is part of the game over screen too.
+			_GamePausedLabel.Modulate = new Color(0, 0, 0, 0);
+		}
 
 		// set the paused state of the timers to false, so they can follow in the time whey were left in or get paused.
 		SetPausedStateTimers(_IsGamePaused);
@@ -325,10 +343,10 @@ public partial class Game : Node2D
 
 		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.SetProcess(set_process_bool);
 
-		foreach(Node bullet in _BulletContainer.GetChildren()) bullet.SetProcess(set_process_bool);
+		foreach (Node bullet in _BulletContainer.GetChildren()) bullet.SetProcess(set_process_bool);
 
-		foreach(Node shop_pickable in _ShopPickableContainer.GetChildren()) shop_pickable.SetProcess(set_process_bool);
-		
+		foreach (Node shop_pickable in _ShopPickableContainer.GetChildren()) shop_pickable.SetProcess(set_process_bool);
+
 
 		// stop/start the timer for speeding game and the animation.
 		foreach (Node speed in _SpeedingGame.GetChildren())
@@ -555,6 +573,8 @@ public partial class Game : Node2D
 		_EnemySpeed = EnemyManager.Instance.EnemySpeed; // enemy
 
 		_GameMusic.PitchScale = 1; // music for the game. could be that the pitchscale was left on a different value than the normal, which is 1
+
+		_TransparentBlackScreen.Modulate = new Color(0, 0, 0, 0); // we assign the transparent black screen to not visible when starting the game.
 
 		// we assign again the timer to the gamemanager variable. with this, when coming back from shop this will have the value it was left in before going to the shop.
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
