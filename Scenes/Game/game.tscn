@@ -39,6 +39,7 @@ _CarEnemyScene = ExtResource("4_i1e5p")
 _CoinScene = ExtResource("4_flgk0")
 _BulletScene = ExtResource("16_56qi8")
 _ParkingLotRoadScene = ExtResource("21_nxex1")
+_ShopPickableScene = ExtResource("22_pa3qg")
 _SpeedingGamePath = NodePath("SpeedingGame")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")
@@ -46,8 +47,8 @@ _SpawningCarEnemyTimerPath = NodePath("EnemyTimer")
 _RoadContainerPath = NodePath("RoadContainer")
 _EnemyContainerPath = NodePath("EnemyContainer")
 _BulletContainerPath = NodePath("BulletContainer")
-_EnemyMarkerRightPath = NodePath("EnemyMarkerRight")
-_EnemyMarkerLeftPath = NodePath("EnemyMarkerLeft")
+_SpawnMarkerRightPath = NodePath("SpawnMarkerRight")
+_SpawnMarkerLeftPath = NodePath("SpawnMarkerLeft")
 _PlayerPath = NodePath("Player")
 _ScoreLabelPath = NodePath("ScoreLabel")
 _CoinContainerPath = NodePath("CoinContainer")
@@ -76,12 +77,13 @@ _PerkTimerText2Path = NodePath("PerkTimerText2")
 _PerkTimer1Path = NodePath("PerkTimer1")
 _PerkTimer2Path = NodePath("PerkTimer2")
 _PerkTimer3Path = NodePath("PerkTimer3")
+_ShopPickableContainerPath = NodePath("ShopPickableContainer")
 
-[node name="EnemyMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
+[node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
 metadata/_edit_lock_ = true
 
-[node name="EnemyMarkerRight" type="Marker2D" parent="." unique_id=1341597037]
+[node name="SpawnMarkerRight" type="Marker2D" parent="." unique_id=1341597037]
 position = Vector2(850, -100)
 metadata/_edit_lock_ = true
 
@@ -116,7 +118,7 @@ wait_time = 3.5
 autostart = true
 
 [node name="ShopAvailableTimer" type="Timer" parent="." unique_id=251858297]
-wait_time = 20.0
+wait_time = 30.0
 autostart = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=185217818]
@@ -313,7 +315,6 @@ wait_time = 15.0
 [node name="PerkTimer3" type="Timer" parent="." unique_id=2092098010]
 wait_time = 15.0
 
-[node name="ShopPickable" parent="." unique_id=1212069849 instance=ExtResource("22_pa3qg")]
-position = Vector2(643, 60)
+[node name="ShopPickableContainer" type="Node2D" parent="." unique_id=1708465160]
 
 [editable path="GameOver"]

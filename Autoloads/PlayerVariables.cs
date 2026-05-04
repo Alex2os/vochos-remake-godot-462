@@ -25,13 +25,13 @@ public partial class PlayerVariables : Node
 
 	public void InitializePlayerVariables()
 	{
-		PlayerCoins = 1000;
+		PlayerCoins = 0;
 		PlayerTotalCoins = 0;
 		PlayerScore = 0;
 		PlayerHealth = 3;
 
 		// we empty the player inventory
-		for (int i = 0; i < PlayerInventory.Length; i++) PlayerInventory[i] = 0;
+		for (int i = 0; i < PlayerInventory.Length; i++) PlayerInventory[i] = -1;
 
 		// for testing only, we assign the perk numbers directly from here to not wait until the shop when testing the game.
 		/*

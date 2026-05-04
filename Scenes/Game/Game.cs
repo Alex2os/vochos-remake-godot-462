@@ -7,6 +7,7 @@ public partial class Game : Node2D
 	[Export] private PackedScene _CoinScene;
 	[Export] private PackedScene _BulletScene;
 	[Export] private PackedScene _ParkingLotRoadScene;
+	[Export] private PackedScene _ShopPickableScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -14,8 +15,8 @@ public partial class Game : Node2D
 	[Export] private NodePath _RoadContainerPath;
 	[Export] private NodePath _EnemyContainerPath;
 	[Export] private NodePath _BulletContainerPath;
-	[Export] private NodePath _EnemyMarkerRightPath;
-	[Export] private NodePath _EnemyMarkerLeftPath;
+	[Export] private NodePath _SpawnMarkerRightPath;
+	[Export] private NodePath _SpawnMarkerLeftPath;
 	[Export] private NodePath _PlayerPath;
 	[Export] private NodePath _ScoreLabelPath;
 	[Export] private NodePath _CoinContainerPath;
@@ -44,6 +45,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimer1Path;
 	[Export] private NodePath _PerkTimer2Path;
 	[Export] private NodePath _PerkTimer3Path;
+	[Export] private NodePath _ShopPickableContainerPath;
 
 
 	private Timer _SpawningRoadTimer;
@@ -54,9 +56,10 @@ public partial class Game : Node2D
 	private Node2D _RoadContainer;
 	private Node2D _CoinContainer;
 	private Node2D _BulletContainer;
+	private Node2D _ShopPickableContainer;
 	private InventoryInGame _InventoryInGame;
-	private Marker2D _EnemyMarkerRight;
-	private Marker2D _EnemyMarkerLeft;
+	private Marker2D _SpawnMarkerRight;
+	private Marker2D _SpawnMarkerLeft;
 	private Marker2D _SpawningRoadMarker;
 	private Label _ScoreLabel;
 	private Label _CoinLabel;
@@ -66,7 +69,6 @@ public partial class Game : Node2D
 	private Label _PerkTimerText1;
 	private Label _PerkTimerText2;
 	private Label _PerkTimerText3;
-	private RichTextLabel _ShopReadyLabel;
 	private AnimationPlayer _AnimationPlayer;
 	private AudioStreamPlayer _GameOverCrash;
 	private AudioStreamPlayer _CarStarting;
@@ -115,8 +117,8 @@ public partial class Game : Node2D
 		_RoadContainer = GetNode<Node2D>(_RoadContainerPath);
 		_EnemyContainer = GetNode<Node2D>(_EnemyContainerPath);
 		_BulletContainer = GetNode<Node2D>(_BulletContainerPath);
-		_EnemyMarkerLeft = GetNode<Marker2D>(_EnemyMarkerLeftPath);
-		_EnemyMarkerRight = GetNode<Marker2D>(_EnemyMarkerRightPath);
+		_SpawnMarkerLeft = GetNode<Marker2D>(_SpawnMarkerLeftPath);
+		_SpawnMarkerRight = GetNode<Marker2D>(_SpawnMarkerRightPath);
 		_Player = GetNode<player>(_PlayerPath);
 		_ScoreLabel = GetNode<Label>(_ScoreLabelPath);
 		_CoinTimer = GetNode<Timer>(_CoinTimerPath);
@@ -125,7 +127,6 @@ public partial class Game : Node2D
 		_GameOverLabel = GetNode<Label>(_GameOverLabelPath);
 		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
 		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
-		_ShopReadyLabel = GetNode<RichTextLabel>(_ShopReadyLabelPath);
 		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
 		_GameOverCrash = GetNode<AudioStreamPlayer>(_GameOverCrashPath);
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
@@ -146,6 +147,7 @@ public partial class Game : Node2D
 		_PerkTimerText1 = GetNode<Label>(_PerkTimerText1Path);
 		_PerkTimerText2 = GetNode<Label>(_PerkTimerText2Path);
 		_PerkTimerText3 = GetNode<Label>(_PerkTimerText3Path);
+		_ShopPickableContainer = GetNode<Node2D>(_ShopPickableContainerPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -155,7 +157,7 @@ public partial class Game : Node2D
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
-		_ShopAvailableTimer.Timeout += OnShopAvailable;
+		_ShopAvailableTimer.Timeout += SpawnShopPickable;
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
 		_Player.DoubleMoneyPerkUsed += OnPlayerUsedPerk;
@@ -193,9 +195,6 @@ public partial class Game : Node2D
 		// restarting condition check and function
 		if (_GameOver && Input.IsActionJustPressed("restart")) RestartGame();
 
-		// going to shop if available
-		if (_ShopAvailable && Input.IsActionJustPressed("use shop")) GameManager.Instance.ChangeSceneToShop();
-
 		// pausing the game if _gameover is false
 		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
 
@@ -209,7 +208,7 @@ public partial class Game : Node2D
 	{
 		ParkingLotRoad parking_lot_road = (ParkingLotRoad)_ParkingLotRoadScene.Instantiate();
 		_RoadContainer.AddChild(parking_lot_road);
-		parking_lot_road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y +1175);
+		parking_lot_road.Position = new Vector2(_SpawningRoadMarker.Position.X, _SpawningRoadMarker.Position.Y + 1175);
 	}
 
 	private void SpawnRoad()
@@ -226,11 +225,34 @@ public partial class Game : Node2D
 		CarEnemy enemy = (CarEnemy)_CarEnemyScene.Instantiate();
 		_EnemyContainer.AddChild(enemy);
 		enemy._CarEnemySpeed = _EnemySpeed; // adjust the speed for the new enemy objects that are being generated
-		float enemy_x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X);
-		float enemy_y_position = _EnemyMarkerRight.Position.Y;
+		float enemy_x_position = (float)GD.RandRange(_SpawnMarkerLeft.Position.X, _SpawnMarkerRight.Position.X);
+		float enemy_y_position = _SpawnMarkerRight.Position.Y;
 		enemy.Position = new Vector2(enemy_x_position, enemy_y_position);
 		enemy.EnemyDestroyed += OnEnemyDestroyed;
 	}
+
+	private void SpawnShopPickable()
+	{
+		GD.Print("spawning shop pickable");
+
+		ShopPickable shop_pickable = (ShopPickable)_ShopPickableScene.Instantiate();
+		_ShopPickableContainer.AddChild(shop_pickable);
+		float shop_pickable_x_position = (float)GD.RandRange(_SpawnMarkerLeft.Position.X, _SpawnMarkerRight.Position.X);
+		float shop_pickable_y_position = _SpawnMarkerRight.Position.Y;
+		shop_pickable.Position = new Vector2(shop_pickable_x_position, shop_pickable_y_position);
+		shop_pickable.ShopPickableHitPlayer += OnShopPickableHitPlayer;
+
+	}
+
+	
+	private void OnShopPickableHitPlayer()
+	{
+		// in this case, we have to use CallDeferred to call the function, as it gives us an error when using the function normally.
+		// CallDeferred() allows us to call a function when the physics frame has ended. we are working with physics in this case (in our ShopPickable for this case), so for this to not give error we use this.
+		CallDeferred(nameof(ChangeSceneToShop)); // we cant put inside GameManager.Instance.ChangeSceneToShop(), as it will not be recognized.
+	}
+
+	private void ChangeSceneToShop() { GameManager.Instance.ChangeSceneToShop(); }
 
 	private void GameOver()
 	{
@@ -303,6 +325,11 @@ public partial class Game : Node2D
 
 		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.SetProcess(set_process_bool);
 
+		foreach(Node bullet in _BulletContainer.GetChildren()) bullet.SetProcess(set_process_bool);
+
+		foreach(Node shop_pickable in _ShopPickableContainer.GetChildren()) shop_pickable.SetProcess(set_process_bool);
+		
+
 		// stop/start the timer for speeding game and the animation.
 		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
@@ -356,8 +383,8 @@ public partial class Game : Node2D
 	{
 		Coin coin = (Coin)_CoinScene.Instantiate();
 		_CoinContainer.AddChild(coin);
-		float coin_x_position = (float)GD.RandRange(_EnemyMarkerLeft.Position.X, _EnemyMarkerRight.Position.X); // using the same markers as the enemies.
-		float coin_y_position = _EnemyMarkerRight.Position.Y;
+		float coin_x_position = (float)GD.RandRange(_SpawnMarkerLeft.Position.X, _SpawnMarkerRight.Position.X); // using the same markers as the enemies.
+		float coin_y_position = _SpawnMarkerRight.Position.Y;
 		coin.Position = new Vector2(coin_x_position, coin_y_position);
 		coin.CoinHitsPlayer += OnCoinHitsPlayer;
 	}
@@ -425,9 +452,6 @@ public partial class Game : Node2D
 
 		_Player.SetProcess(true);
 		_Player.Position = new Vector2(500, 530);
-
-		// we assign the shopreadylabel opacity to zero.
-		_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
 
 		// we assign the perks' timers texts and textures modulate so they are not shown if they were active before.
 		_PerkTimerText1.Modulate = new Color(0, 0, 0, 0);
@@ -501,14 +525,6 @@ public partial class Game : Node2D
 		GameManager.Instance.ChangeSceneToMainMenu();
 	}
 
-	private void OnShopAvailable()
-	{
-		GD.Print("shop available!");
-		_ShopReadyLabel.Modulate = new Color(1, 1, 1, 1);
-		_ShopAvailableTimer.Stop();
-		_ShopAvailable = true;
-	}
-
 	// in the function below we initialize all the variables from the singleton/autoload
 	private void AssignGameVariables()
 	{
@@ -554,9 +570,6 @@ public partial class Game : Node2D
 		{
 			GameManager.Instance.ComingFromShop = false; // we reassign the variable so there's no trouble if the game is restarted again.
 			_ComingFromShop = GameManager.Instance.ComingFromShop;
-
-			// we assign the opacity of the shopreadylabel to 0, so it doesnt show when returning.
-			_ShopReadyLabel.Modulate = new Color(0, 0, 0, 0);
 
 			return true; // if the player is coming from shop, returns true
 		}

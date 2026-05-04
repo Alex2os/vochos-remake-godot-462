@@ -150,7 +150,7 @@ texture_repeat = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_dopsb")
 autoplay = "default"
-frame_progress = 0.53539336
+frame_progress = 0.8586531
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1392867138]
 shape = SubResource("CapsuleShape2D_p4krc")

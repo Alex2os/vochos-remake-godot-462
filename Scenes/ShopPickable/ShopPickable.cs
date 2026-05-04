@@ -4,7 +4,7 @@ using System;
 public partial class ShopPickable : Area2D
 {
 	[Signal] public delegate void ShopPickableHitPlayerEventHandler();
-	[Export] private int _ShopPickableSpeed = 100;
+	[Export] private int _ShopPickableYSpeed = 150;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -15,9 +15,11 @@ public partial class ShopPickable : Area2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		Position += new Vector2(0, _ShopPickableSpeed * (float)delta);
 
+		Position += new Vector2(0, _ShopPickableYSpeed * (float)delta);
+		
 		if (Position.Y >= 800) QueueFree(); // we destroy the pickable if it reaches a certain y value
+
 	}
 
 	private void OnAreaEntered(Node2D node)
