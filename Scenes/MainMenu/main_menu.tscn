@@ -16,6 +16,12 @@
 [ext_resource type="PackedScene" uid="uid://crnl78esrhtgu" path="res://Scenes/Cloud/cloud.tscn" id="13_w5buf"]
 [ext_resource type="Texture2D" uid="uid://dgc0m0v8hlaok" path="res://assets/buttons/tiny button blue highlight.png" id="14_nqd6t"]
 [ext_resource type="Texture2D" uid="uid://b6v7jup5hjtnx" path="res://assets/buttons/tiny button blue..png" id="15_fo6ee"]
+[ext_resource type="Texture2D" uid="uid://srlub256246b" path="res://assets/buttons/music-active-button.png" id="17_43m2q"]
+[ext_resource type="Texture2D" uid="uid://bxisfa7c0y8cp" path="res://assets/buttons/music-active-button-pressed.png" id="18_xt57n"]
+[ext_resource type="Texture2D" uid="uid://7fhtl4kww8vx" path="res://assets/buttons/music-active-button-hover.png" id="19_os7au"]
+[ext_resource type="Texture2D" uid="uid://hhkr1xghs42w" path="res://assets/buttons/sfx-enabled-button.png" id="20_n0kcp"]
+[ext_resource type="Texture2D" uid="uid://c1owfoechp5aa" path="res://assets/buttons/sfx-enabled-button-pressed.png" id="21_mdh17"]
+[ext_resource type="Texture2D" uid="uid://bptog4a0vf1an" path="res://assets/buttons/sfx-enabled-button-hover.png" id="22_x3jur"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0l8wx"]
 texture = ExtResource("4_adu2g")
@@ -90,7 +96,31 @@ texture = ExtResource("14_nqd6t")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fo6ee"]
 texture = ExtResource("13_nqd6t")
 
-[node name="MainMenu" type="Node2D" unique_id=177978764 node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_os7au"]
+texture = ExtResource("17_43m2q")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0kcp"]
+texture = ExtResource("18_xt57n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_37xt4"]
+texture = ExtResource("19_os7au")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdh17"]
+texture = ExtResource("18_xt57n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3jur"]
+texture = ExtResource("20_n0kcp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sixgq"]
+texture = ExtResource("21_mdh17")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bjx7c"]
+texture = ExtResource("22_x3jur")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3o84h"]
+texture = ExtResource("21_mdh17")
+
+[node name="MainMenu" type="Node2D" unique_id=177978764 node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton", "_SoundButton", "_MusicButton")]
 script = ExtResource("1_v763k")
 _Marker1 = NodePath("MiniCarMarker")
 _Marker2 = NodePath("MiniCarMarker2")
@@ -109,6 +139,8 @@ _MiniCarContainer = NodePath("MiniCarContainer")
 _CloudContainer = NodePath("CloudContainer")
 _CreditsScene = ExtResource("4_nqd6t")
 _CreditsButton = NodePath("CreditsButton")
+_SoundButton = NodePath("SoundButton")
+_MusicButton = NodePath("MusicButton")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1152737903]
 texture_filter = 1
@@ -289,9 +321,9 @@ metadata/_edit_lock_ = true
 z_index = 3
 texture_filter = 1
 offset_left = 860.0
-offset_top = 206.0
+offset_top = 180.0
 offset_right = 993.0
-offset_bottom = 311.0
+offset_bottom = 285.0
 pivot_offset = Vector2(75, 40)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -334,3 +366,27 @@ text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="MusicButton" type="Button" parent="." unique_id=2116528450]
+texture_filter = 1
+texture_repeat = 1
+offset_left = 860.0
+offset_top = 290.0
+offset_right = 993.0
+offset_bottom = 395.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_os7au")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_n0kcp")
+theme_override_styles/hover = SubResource("StyleBoxTexture_37xt4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_mdh17")
+
+[node name="SoundButton" type="Button" parent="." unique_id=933060914]
+texture_filter = 1
+texture_repeat = 1
+offset_left = 860.0
+offset_top = 400.0
+offset_right = 993.0
+offset_bottom = 505.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_x3jur")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_sixgq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_bjx7c")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_3o84h")

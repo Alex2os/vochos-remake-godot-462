@@ -20,6 +20,8 @@ public partial class MainMenu : Node2D
 	[Export] private Node2D _CloudContainer;
 	[Export] private PackedScene _CreditsScene;
 	[Export] private Button _CreditsButton;
+	[Export] private Button _SoundButton;
+	[Export] private Button _MusicButton;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -28,6 +30,8 @@ public partial class MainMenu : Node2D
 		_CreditsButton.Pressed +=OnCreditsButtonPressed;
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
 		_SpawnCloudTimer.Timeout += SpawnCloud;
+		_SoundButton.Pressed += OnSoundButtonPressed;
+		_MusicButton.Pressed += OnMusicSoundPressed;
 		
 
 		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
@@ -36,6 +40,24 @@ public partial class MainMenu : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+	}
+
+	// we assign the soundactive or musicactive variables from the gamemanager autoload here, and also change the textures of the buttons at the same time.
+	private void OnSoundButtonPressed()
+	{
+		if (GameManager.Instance.SoundActive) GameManager.Instance.SoundActive = false;
+		else GameManager.Instance.SoundActive = true;
+
+		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
+		
+	}
+
+	private void OnMusicSoundPressed()
+	{
+		if (GameManager.Instance.MusicActive) GameManager.Instance.MusicActive = false;
+		else GameManager.Instance.MusicActive = true;
+
+		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 	}
 
 	private void OnPlayButtonPressed()
