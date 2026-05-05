@@ -22,6 +22,12 @@
 [ext_resource type="Texture2D" uid="uid://s1i1hs5cvdnn" path="res://assets/perks/medium sizes/double money medium.png" id="20_a6ftd"]
 [ext_resource type="PackedScene" uid="uid://boqwvshus54xr" path="res://Scenes/ParkingLotRoad/parking_lot_road.tscn" id="21_nxex1"]
 [ext_resource type="PackedScene" uid="uid://cxhjwgru056cn" path="res://Scenes/ShopPickable/shop_pickable.tscn" id="22_pa3qg"]
+[ext_resource type="Texture2D" uid="uid://srlub256246b" path="res://assets/buttons/music-active-button.png" id="23_gqd4u"]
+[ext_resource type="Texture2D" uid="uid://bxisfa7c0y8cp" path="res://assets/buttons/music-active-button-pressed.png" id="24_1l3pd"]
+[ext_resource type="Texture2D" uid="uid://7fhtl4kww8vx" path="res://assets/buttons/music-active-button-hover.png" id="25_d3jd4"]
+[ext_resource type="Texture2D" uid="uid://hhkr1xghs42w" path="res://assets/buttons/sfx-enabled-button.png" id="26_56bk2"]
+[ext_resource type="Texture2D" uid="uid://c1owfoechp5aa" path="res://assets/buttons/sfx-enabled-button-pressed.png" id="27_6k7u1"]
+[ext_resource type="Texture2D" uid="uid://bptog4a0vf1an" path="res://assets/buttons/sfx-enabled-button-hover.png" id="28_diago"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -36,6 +42,30 @@ _data = {
 specular_color = Color(0, 0, 0, 1)
 texture_filter = 1
 texture_repeat = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gqd4u"]
+texture = ExtResource("23_gqd4u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1l3pd"]
+texture = ExtResource("24_1l3pd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3jd4"]
+texture = ExtResource("25_d3jd4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56bk2"]
+texture = ExtResource("24_1l3pd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6k7u1"]
+texture = ExtResource("26_56bk2")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_diago"]
+texture = ExtResource("27_6k7u1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fl2fe"]
+texture = ExtResource("28_diago")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56h2t"]
+texture = ExtResource("27_6k7u1")
 
 [node name="Game" type="Node2D" unique_id=285963340]
 script = ExtResource("1_qikps")
@@ -84,6 +114,8 @@ _PerkTimer2Path = NodePath("PerkTimer2")
 _PerkTimer3Path = NodePath("PerkTimer3")
 _ShopPickableContainerPath = NodePath("ShopPickableContainer")
 _TransparentBlackScreenPath = NodePath("TransparentBlackScreen")
+_SoundButtonPath = NodePath("SoundButton")
+_MusicButtonPath = NodePath("MusicButton")
 
 [node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -330,5 +362,35 @@ wait_time = 15.0
 wait_time = 15.0
 
 [node name="ShopPickableContainer" type="Node2D" parent="." unique_id=1708465160]
+
+[node name="MusicButton" type="Button" parent="." unique_id=1020116559]
+modulate = Color(1, 1, 1, 0)
+z_index = 3
+texture_filter = 1
+texture_repeat = 1
+offset_left = 10.0
+offset_top = 300.0
+offset_right = 143.0
+offset_bottom = 405.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_gqd4u")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_1l3pd")
+theme_override_styles/hover = SubResource("StyleBoxTexture_d3jd4")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_56bk2")
+metadata/_edit_lock_ = true
+
+[node name="SoundButton" type="Button" parent="." unique_id=817823554]
+modulate = Color(1, 1, 1, 0)
+z_index = 3
+texture_filter = 1
+texture_repeat = 1
+offset_left = 10.0
+offset_top = 410.0
+offset_right = 143.0
+offset_bottom = 515.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_6k7u1")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_diago")
+theme_override_styles/hover = SubResource("StyleBoxTexture_fl2fe")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_56h2t")
+metadata/_edit_lock_ = true
 
 [editable path="GameOver"]

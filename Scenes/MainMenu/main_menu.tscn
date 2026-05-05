@@ -120,7 +120,7 @@ texture = ExtResource("22_x3jur")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3o84h"]
 texture = ExtResource("21_mdh17")
 
-[node name="MainMenu" type="Node2D" unique_id=177978764 node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton", "_SoundButton", "_MusicButton")]
+[node name="MainMenu" type="Node2D" unique_id=177978764 node_paths=PackedStringArray("_Marker1", "_Marker2", "_Marker3", "_Marker4", "_Marker5", "_CloudMarker1", "_CloudMarker2", "_PlayButton", "_ExitButton", "_SpawnMiniCarTimer", "_SpawnCloudTimer", "_MiniCarContainer", "_CloudContainer", "_CreditsButton", "_SoundButton", "_MusicButton", "_MainMenuMusic")]
 script = ExtResource("1_v763k")
 _Marker1 = NodePath("MiniCarMarker")
 _Marker2 = NodePath("MiniCarMarker2")
@@ -141,6 +141,7 @@ _CreditsScene = ExtResource("4_nqd6t")
 _CreditsButton = NodePath("CreditsButton")
 _SoundButton = NodePath("SoundButton")
 _MusicButton = NodePath("MusicButton")
+_MainMenuMusic = NodePath("MainMenuMusic")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1152737903]
 texture_filter = 1
@@ -267,7 +268,7 @@ theme_override_font_sizes/font_size = 100
 text = "Welcome to Vocho's!"
 metadata/_edit_lock_ = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=823731961]
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="." unique_id=823731961]
 stream = ExtResource("4_0qgbs")
 volume_db = -8.0
 autoplay = true
@@ -321,9 +322,9 @@ metadata/_edit_lock_ = true
 z_index = 3
 texture_filter = 1
 offset_left = 860.0
-offset_top = 180.0
+offset_top = 350.0
 offset_right = 993.0
-offset_bottom = 285.0
+offset_bottom = 455.0
 pivot_offset = Vector2(75, 40)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -370,23 +371,25 @@ metadata/_edit_lock_ = true
 [node name="MusicButton" type="Button" parent="." unique_id=2116528450]
 texture_filter = 1
 texture_repeat = 1
-offset_left = 860.0
-offset_top = 290.0
-offset_right = 993.0
-offset_bottom = 395.0
+offset_left = 10.0
+offset_top = 300.0
+offset_right = 143.0
+offset_bottom = 405.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_os7au")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_n0kcp")
 theme_override_styles/hover = SubResource("StyleBoxTexture_37xt4")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_mdh17")
+metadata/_edit_lock_ = true
 
 [node name="SoundButton" type="Button" parent="." unique_id=933060914]
 texture_filter = 1
 texture_repeat = 1
-offset_left = 860.0
-offset_top = 400.0
-offset_right = 993.0
-offset_bottom = 505.0
+offset_left = 10.0
+offset_top = 410.0
+offset_right = 143.0
+offset_bottom = 515.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_x3jur")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_sixgq")
 theme_override_styles/hover = SubResource("StyleBoxTexture_bjx7c")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_3o84h")
+metadata/_edit_lock_ = true

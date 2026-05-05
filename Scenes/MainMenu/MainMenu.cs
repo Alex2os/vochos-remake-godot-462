@@ -22,17 +22,21 @@ public partial class MainMenu : Node2D
 	[Export] private Button _CreditsButton;
 	[Export] private Button _SoundButton;
 	[Export] private Button _MusicButton;
+	[Export] private AudioStreamPlayer _MainMenuMusic;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_PlayButton.Pressed += OnPlayButtonPressed;
 		_ExitButton.Pressed += OnExitButtonPressed;
-		_CreditsButton.Pressed +=OnCreditsButtonPressed;
+		_CreditsButton.Pressed += OnCreditsButtonPressed;
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
 		_SpawnCloudTimer.Timeout += SpawnCloud;
 		_SoundButton.Pressed += OnSoundButtonPressed;
 		_MusicButton.Pressed += OnMusicSoundPressed;
-		
+
+		// we update the music and sound buttons when the scene is ready. it could be that the player disabled the music or sound inside the game, so to not have visual bugs when returning to the main menu, we do this.
+		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
+		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 
 		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
 	}
@@ -49,13 +53,21 @@ public partial class MainMenu : Node2D
 		else GameManager.Instance.SoundActive = true;
 
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
-		
+
 	}
 
 	private void OnMusicSoundPressed()
 	{
-		if (GameManager.Instance.MusicActive) GameManager.Instance.MusicActive = false;
-		else GameManager.Instance.MusicActive = true;
+		if (GameManager.Instance.MusicActive)
+		{
+			GameManager.Instance.MusicActive = false;
+			_MainMenuMusic.Stop();
+		}
+		else
+		{
+			GameManager.Instance.MusicActive = true;
+			_MainMenuMusic.Play();
+		}
 
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 	}
