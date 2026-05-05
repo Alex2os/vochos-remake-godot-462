@@ -45,13 +45,13 @@ public partial class GamePaused : Control
 
 	private void OnMusicButtonPressed()
 	{
-		GameManager.Instance.MusicActive = !GameManager.Instance.MusicActive;
+		GameManager.Instance.SwitchMusicActiveBool();
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 	}
 
 	private void OnSoundButtonPressed()
 	{
-		GameManager.Instance.SoundActive = !GameManager.Instance.SoundActive;
+		GameManager.Instance.SwitchSoundActiveBool();
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
 		
 	}

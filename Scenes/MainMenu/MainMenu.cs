@@ -32,7 +32,7 @@ public partial class MainMenu : Node2D
 		_SpawnMiniCarTimer.Timeout += SpawnMiniCar;
 		_SpawnCloudTimer.Timeout += SpawnCloud;
 		_SoundButton.Pressed += OnSoundButtonPressed;
-		_MusicButton.Pressed += OnMusicSoundPressed;
+		_MusicButton.Pressed += OnMusicButtonPressed;
 
 		// we update the music and sound buttons when the scene is ready. it could be that the player disabled the music or sound inside the game, so to not have visual bugs when returning to the main menu, we do this.
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
@@ -49,29 +49,19 @@ public partial class MainMenu : Node2D
 	}
 
 	// we assign the soundactive or musicactive variables from the gamemanager autoload here, and also change the textures of the buttons at the same time.
-	private void OnSoundButtonPressed()
+	private void OnMusicButtonPressed()
 	{
-		if (GameManager.Instance.SoundActive) GameManager.Instance.SoundActive = false;
-		else GameManager.Instance.SoundActive = true;
+		GameManager.Instance.SwitchMusicActiveBool();
+		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 
-		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
-
+		if(GameManager.Instance.MusicActive) _MainMenuMusic.Play();
+		else _MainMenuMusic.Stop();
 	}
 
-	private void OnMusicSoundPressed()
+	private void OnSoundButtonPressed()
 	{
-		if (GameManager.Instance.MusicActive)
-		{
-			GameManager.Instance.MusicActive = false;
-			_MainMenuMusic.Stop();
-		}
-		else
-		{
-			GameManager.Instance.MusicActive = true;
-			_MainMenuMusic.Play();
-		}
-
-		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
+		GameManager.Instance.SwitchSoundActiveBool();
+		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
 	}
 
 	private void OnPlayButtonPressed()

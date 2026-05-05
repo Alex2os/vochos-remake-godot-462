@@ -3,6 +3,9 @@ using System.Collections.Generic; // used for dictionaries
 
 public partial class GameManager : Node
 {
+	// this signal is used to tell the subscribers that the MusicActive bool variable has changed. we use this mainly for the game and shop scenes, to stop or start playing their respective music.
+	[Signal] public delegate void MusicActiveBoolChangedEventHandler();
+
 	public static GameManager Instance { get; private set; }
 
 	private PackedScene _MainMenuScene = GD.Load<PackedScene>("res://Scenes/MainMenu/main_menu.tscn");
@@ -13,6 +16,7 @@ public partial class GameManager : Node
 	public double EnemyTimerWaitTime = 2.0; // 2 seconds 
 											// number of perks in the game
 	public const int NumberOfPerks = 6;
+
 	// variables for the music and sound. used to turn on and off the music and sound respectively.
 	public bool MusicActive = true;
 	public bool SoundActive = true;
@@ -137,8 +141,19 @@ public partial class GameManager : Node
 			button.AddThemeStyleboxOverride("hover", styleHover);
 
 		}
-		
+
 	}
+
+	// with this function we switch or change the musicactive bool. if it's true, we switch it to false and viceversa. we make it a function regardless of the musicactive being a-
+	// public variable because of the signal we are sending when switching the variable.
+	public void SwitchMusicActiveBool()
+	{
+		MusicActive = !MusicActive;
+		EmitSignal(SignalName.MusicActiveBoolChanged);
+	}
+
+	// we also have one for the sound, even though we dont send any signal here. we do this to match the switchmusic function, but no more.
+	public void SwitchSoundActiveBool(){ SoundActive = !SoundActive; }
 
 	// this is the same function as the above one for the music, but for the sound button
 	public void ChangeSoundButtonTextures(Button button)

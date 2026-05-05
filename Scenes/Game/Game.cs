@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Game : Node2D
 {
@@ -26,10 +25,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinTimerPath;
 	[Export] private NodePath _CoinLabelPath;
 	[Export] private NodePath _MainMenuButtonPausedGamePath;
-	[Export] private NodePath _GameOverLabelPath;
-	[Export] private NodePath _GameOverStatsLabelPath;
 	[Export] private NodePath _AnimationPlayerPath;
-	[Export] private NodePath _GameOverRestartLabelPath;
 	[Export] private NodePath _GameOverCrashPath;
 	[Export] private NodePath _CarStartingPath;
 	[Export] private NodePath _CoinSoundPath;
@@ -71,9 +67,6 @@ public partial class Game : Node2D
 	private Marker2D _SpawningRoadMarker;
 	private Label _ScoreLabel;
 	private Label _CoinLabel;
-	private Label _GameOverLabel;
-	private Label _GameOverStatsLabel;
-	private Label _GameOverRestartLabel;
 	private Label _PerkTimerText1;
 	private Label _PerkTimerText2;
 	private Label _PerkTimerText3;
@@ -135,9 +128,6 @@ public partial class Game : Node2D
 		_CoinTimer = GetNode<Timer>(_CoinTimerPath);
 		_CoinContainer = GetNode<Node2D>(_CoinContainerPath);
 		_CoinLabel = GetNode<Label>(_CoinLabelPath);
-		_GameOverLabel = GetNode<Label>(_GameOverLabelPath);
-		_GameOverStatsLabel = GetNode<Label>(_GameOverStatsLabelPath);
-		_GameOverRestartLabel = GetNode<Label>(_GameOverRestartLabelPath);
 		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
 		_GameOverCrash = GetNode<AudioStreamPlayer>(_GameOverCrashPath);
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
@@ -173,6 +163,10 @@ public partial class Game : Node2D
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
 		_Player.DoubleMoneyPerkUsed += OnPlayerUsedPerk;
+
+		// gamemanager signals.
+		GameManager.Instance.MusicActiveBoolChanged += OnMusicActiveBoolChanged;
+		
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
@@ -217,6 +211,19 @@ public partial class Game : Node2D
 		if (_PerksTimerSlot[1]) _PerkTimerText2.Text = $"{_PerkTimer2.TimeLeft:F1}";
 		if (_PerksTimerSlot[2]) _PerkTimerText3.Text = $"{_PerkTimer3.TimeLeft:F1}";
 
+	}
+
+	// _ExitTree() is a function integrated by Godot, like _Process.
+	// in this case the function is called when a node is about to exit the SceneTree, so before potentially erasing it
+	// we use this to unsuscribe the function OnMusicActiveBoolChanged from our autoload, as the autoload outlives the game scene when changing to the shop or going back to the main menu
+	// so in this way we unsubscribe the function and when the new game scene is instantiated, we just subscribe again but with the new instance of the scene
+	// also we could use this function for another things that are required to do before erasing a node.
+	public override void _ExitTree(){ GameManager.Instance.MusicActiveBoolChanged -= OnMusicActiveBoolChanged; } // we can unsubscribe any functions with -= instead of +=
+
+	private void OnMusicActiveBoolChanged()
+	{
+		if(GameManager.Instance.MusicActive) _GameMusic.Play();
+		else _GameMusic.Stop();
 	}
 
 	// a function for when the resumegame button is pressed. if the game is paused, then we use the pausegame for that function to unpause the game.
@@ -280,16 +287,6 @@ public partial class Game : Node2D
 		GD.Print("game over!");
 		_GameOver = true;
 
-		// final stats message: 
-		_GameOverStatsLabel.Text = "Total Score: " + _TotalScore.ToString() + "\n" + "Money Left: " + _LeftCoins + "\n" + "Total Money Earned: " + _TotalCoins;
-		// change opacity of text to show the game over and stats
-		_GameOverRestartLabel.Modulate = new Color(1, 1, 1, 1);
-		_AnimationPlayer.Play("restart animation"); // animation for the restart label to play it
-		_GameOverLabel.Modulate = new Color(1, 1, 1, 1);
-		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
-
-
-
 		// change the timer for the speeding game scene and stopping it in case it's active when the game over screen is presented
 		foreach (Node speed in _SpeedingGame.GetChildren())
 		{
@@ -316,13 +313,13 @@ public partial class Game : Node2D
 	{
 		bool set_process_bool; // this helps us to control the process of the nodes, which depends on the variable _isgamepaused
 
-		if (_IsGamePaused)
+		if (_IsGamePaused) // if the game is paused, we unpause
 		{
 			set_process_bool = true;
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
 
-			// if we have instantiated the gamepuased scene, we erase it. in case it's null we dont do anything
+			// if we have instantiated the gamepaused scene, we erase it. in case it's null we dont do anything
 			if (_GamePausedInstance == null) ; 
 			else _GamePausedInstance.QueueFree(); 
 
@@ -339,6 +336,8 @@ public partial class Game : Node2D
 				// game over scene. in this case we don't need signals, but we need to assign some variables.
 				_GameOverInstance = (GameOver)_GameOverScene.Instantiate();
 				AddChild(_GameOverInstance);
+
+				_GameOverInstance.AssignGameOverStatsLabel(_TotalScore.ToString(), _LeftCoins.ToString(), _TotalCoins.ToString());
 
 			}
 			else // if the game isn't over but the game will be paused, then show the game paused scene
@@ -459,12 +458,6 @@ public partial class Game : Node2D
 		// cleaning the labels so they don't show the prior score
 		_CoinLabel.Text = "$0";
 		_ScoreLabel.Text = "0";
-
-		// color function/struct only accepts values from 0 to 1.
-		_GameOverRestartLabel.Modulate = new Color(0, 0, 0, 0);
-		_AnimationPlayer.Stop(); // stop the restart game animation
-		_GameOverLabel.Modulate = new Color(0, 0, 0, 0); // change opacity of text to quit the game over and stats
-		_GameOverStatsLabel.Modulate = new Color(0, 0, 0, 0);
 
 		SetPausedStateTimers(false); // put the state of pause of the timers in false when we start again
 
@@ -596,11 +589,11 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
 		// we free any instances of the gameover or gamepaused scenes when the game starts if there are any.
-		if(_GameOverInstance == null);
-		else _GameOverInstance.QueueFree();
+		// we can use IsInstanceValid to check if any of the instances here is valid and has not been erased from memory yet. we do this so we dont do something like-
+		// if(_GameOverInstance == null), because that gives errors as the program does not recognize the instance as null, even if we have already used QueueFree() on it.
+		if(IsInstanceValid(_GameOverInstance)) _GameOverInstance.QueueFree();
 
-		if(_GamePausedInstance == null);
-		else _GamePausedInstance.QueueFree();
+		if(IsInstanceValid(_GamePausedInstance)) _GamePausedInstance.QueueFree();
 
 		// DEPRECATED COMMENT. STILL IN THE CODE FOR INFORMATION ABOUT CASTING IN FOREACH AND GODOT CLASSES.
 		// we hide the game over scene and the game paused scene here, and disable its buttons. we do this to clean both scenes and buttons when starting the game
