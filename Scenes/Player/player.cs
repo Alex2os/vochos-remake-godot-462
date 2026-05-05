@@ -141,7 +141,7 @@ public partial class player : Area2D
 		// if the player currently has the shield, then we return and also play a special sound when crashing an enemy. the player does not get their health lowered
 		if (ShieldPerkActive)
 		{
-			_ShieldPerkHitSound.Play();
+			GameManager.Instance.PlaySound(_ShieldPerkHitSound);
 			return;
 		}
 
@@ -152,7 +152,7 @@ public partial class player : Area2D
 		UpdateHealthBarTexture();
 
 		if (PlayerVariables.Instance.PlayerHealth <= 0) EmitSignal(SignalName.PlayerHealthDepleted);
-		else _CarCrash.Play(); // if it's not game over yet, play de carcrash sound. otherwise the game over sound will be played
+		else GameManager.Instance.PlaySound(_CarCrash); // if it's not game over yet, play de carcrash sound. otherwise the game over sound will be played
 	}
 
 	// the following functions are for the perks
@@ -161,7 +161,7 @@ public partial class player : Area2D
 		ShieldPerkActive = true;
 		EmitSignal(SignalName.ShieldPerkUsed, GameManager.PerksNumbers["shield"]); // remember that for the signals that activate a perk, we need to send the respective perk number associated to that perk.
 
-		_ShieldPerkSound.Play();
+		GameManager.Instance.PlaySound(_ShieldPerkSound);
 		_ShieldPerkInUse.Modulate = new Color(1, 1, 1, 1); // we show the shield perk sprite on the player
 
 	}
@@ -177,14 +177,14 @@ public partial class player : Area2D
 	{
 		PlayerVariables.Instance.PlayerHealth++;
 		UpdateHealthBarTexture();
-		_ExtraLifePerkSound.Play();
+		GameManager.Instance.PlaySound(_ExtraLifePerkSound);
 	}
 
 	private void UseDoublePointsPerk()
 	{
 		DoublePointsPerkActive = true;
 		EmitSignal(SignalName.DoublePointsPerkUsed, GameManager.PerksNumbers["double-points"]);
-		_DoublePointsPerkSound.Play();
+		GameManager.Instance.PlaySound(_DoublePointsPerkSound);
 	}
 
 	public void OnDoublePointsPerkEnded() { DoublePointsPerkActive = false; }
@@ -192,14 +192,14 @@ public partial class player : Area2D
 	private void UseBulletPerk()
 	{
 		EmitSignal(SignalName.BulletPerkUsed);
-		_BulletSpawnSound.Play(); // we reproduce the bullet spawn sound here instead of the bullet, as the bullet could be destroyed pretty soon in some cases.
+		GameManager.Instance.PlaySound(_BulletSpawnSound); // we reproduce the bullet spawn sound here instead of the bullet, as the bullet could be destroyed pretty soon in some cases.
 	}
 
 	private void UseDoubleMoneyPerk()
 	{
 		DoubleMoneyPerkActive = true;
 		EmitSignal(SignalName.DoubleMoneyPerkUsed, GameManager.PerksNumbers["double-money"]);
-		_DoubleMoneyPerkSound.Play();
+		GameManager.Instance.PlaySound(_DoubleMoneyPerkSound);
 	}
 
 	public void OnDoubleMoneyPerkEnded() { DoubleMoneyPerkActive = false; }
@@ -208,7 +208,7 @@ public partial class player : Area2D
 	{
 		SlowTimePerkActive = true;
 		EmitSignal(SignalName.DoubleMoneyPerkUsed, GameManager.PerksNumbers["slow-time"]);
-		_SlowTimePerkSound.Play();
+		GameManager.Instance.PlaySound(_SlowTimePerkSound);
 	}
 
 	public void OnSlowTimePerkEnded() { SlowTimePerkActive = false; }

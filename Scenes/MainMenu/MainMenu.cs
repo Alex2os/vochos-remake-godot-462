@@ -38,6 +38,8 @@ public partial class MainMenu : Node2D
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 
+		if(GameManager.Instance.MusicActive) _MainMenuMusic.Play(); // we also check for the music active to play the main menu music for the same reason we update the button textures.
+
 		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
 	}
 

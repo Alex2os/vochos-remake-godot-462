@@ -439,7 +439,7 @@ public partial class Game : Node2D
 		_TotalCoins = PlayerVariables.Instance.PlayerTotalCoins;  // total coins are the coins obtained in general in all of the game
 
 		_CoinLabel.Text = "$" + _LeftCoins.ToString();
-		_CoinSound.Play();
+		GameManager.Instance.PlaySound(_CoinSound);
 	}
 
 	private void SpawnCoin()
@@ -550,7 +550,7 @@ public partial class Game : Node2D
 
 		SpawnParkingLotRoad();
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
-		_CarStarting.Play();
+		GameManager.Instance.PlaySound(_CarStarting); // we play the car starting sound when the game starts
 		if (GameManager.Instance.MusicActive) _GameMusic.Play(); // if the music is active, play the music. otherwise dont do anything.
 
 		// we also check the buttons for the music and sound here, because maybe the user disabled the music/sound on the menu, and we solve any visual bugs doing this.

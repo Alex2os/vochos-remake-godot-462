@@ -277,7 +277,7 @@ volume_db = -12.0
 
 [node name="PerkTimerText1" type="Label" parent="." unique_id=8264310]
 modulate = Color(1, 1, 1, 0)
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 870.0
 offset_top = 20.0
@@ -294,7 +294,7 @@ horizontal_alignment = 2
 
 [node name="PerkTimerText2" type="Label" parent="." unique_id=117138727]
 modulate = Color(1, 1, 1, 0)
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 870.0
 offset_top = 77.0
@@ -312,7 +312,7 @@ horizontal_alignment = 2
 
 [node name="PerkTimerText3" type="Label" parent="." unique_id=818399982]
 modulate = Color(1, 1, 1, 0)
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 870.0
 offset_top = 140.0

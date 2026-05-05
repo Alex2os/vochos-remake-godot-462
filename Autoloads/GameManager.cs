@@ -28,7 +28,7 @@ public partial class GameManager : Node
 	{ "slow-time", 5 }
 	};
 
-	// a dictionary for the music and sfx buttons' textures. we use these textures in the menu and in game, so it's better to load them once here.
+	// a dictionary for the music and sfx buttons' textures. we use these textures in the menu and in game, so it's better to load them once here and let the autoload use them, because as we can see it's a private variable for the autoload only.
 	private static readonly Dictionary<string, Texture2D> SoundAndMusicButtonTextures = new Dictionary<string, Texture2D>
 	{
 		{"sfx-active-button", GD.Load<Texture2D>("res://assets/buttons/sfx-enabled-button.png")},
@@ -106,14 +106,14 @@ public partial class GameManager : Node
 	// we could use texturebuttons instead of normal buttons so the code would be cleaner and shorter, but in this case we stick to the buttons we were already using.
 	public void ChangeMusicButtonTextures(Button button)
 	{
-		var styleNormal = new StyleBoxTexture();
+		// the reason we use these many variables is that if we just use one, all the styles will accumulate over each other, causing bugs. so we better just have them separately.
+		var styleNormal = new StyleBoxTexture(); // we need a styleboxtexture to save the style for the button
 		var stylePressed = new StyleBoxTexture();
 		var styleHover = new StyleBoxTexture();
 
 		if (MusicActive)
 		{
-
-			
+			// we assign each texture to the style properly, and update the button with the AddThemeStyleboxOverride, specifying the style and the button state we want to change.
 			styleNormal.Texture = SoundAndMusicButtonTextures["music-active-button"];
 			button.AddThemeStyleboxOverride("normal", styleNormal);
 
@@ -122,7 +122,7 @@ public partial class GameManager : Node
 
 			styleHover.Texture = SoundAndMusicButtonTextures["music-active-button-hover"];
 			button.AddThemeStyleboxOverride("hover", styleHover);
-			
+
 		}
 		else
 		{
@@ -139,6 +139,7 @@ public partial class GameManager : Node
 		}
 	}
 
+	// this is the same function as the above one for the music, but for the sound button
 	public void ChangeSoundButtonTextures(Button button)
 	{
 		var styleNormal = new StyleBoxTexture();
@@ -148,7 +149,6 @@ public partial class GameManager : Node
 		if (SoundActive)
 		{
 
-			
 			styleNormal.Texture = SoundAndMusicButtonTextures["sfx-active-button"];
 			button.AddThemeStyleboxOverride("normal", styleNormal);
 
@@ -157,7 +157,7 @@ public partial class GameManager : Node
 
 			styleHover.Texture = SoundAndMusicButtonTextures["sfx-active-button-hover"];
 			button.AddThemeStyleboxOverride("hover", styleHover);
-			
+
 		}
 		else
 		{
@@ -173,6 +173,9 @@ public partial class GameManager : Node
 
 		}
 	}
+
+	// we can send an audiostreamplayer to this function from anywhere in the scenes and play the audio depending if the sound or sfx is active or not. in this way we can control the sound for all the scenes in one place, instead of checking the condition everywhere.
+	public void PlaySound(AudioStreamPlayer audio) { if (SoundActive) audio.Play(); }
 
 	public void InitializeGameManagerVariables()
 	{
