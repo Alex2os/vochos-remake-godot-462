@@ -35,9 +35,9 @@ public partial class PlayerVariables : Node
 
 		// for testing only, we assign the perk numbers directly from here to not wait until the shop when testing the game.
 		
-		PlayerInventory[0] = 0;
-		PlayerInventory[1] = 0;
-		PlayerInventory[2] = 0;
+		PlayerInventory[0] = 3;
+		PlayerInventory[1] = 3;
+		PlayerInventory[2] = 3;
 		
 	}
 }

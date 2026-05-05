@@ -14,6 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="12_a6c3n"]
 [ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="13_e88am"]
 [ext_resource type="Script" uid="uid://du6fhlfj2pcdq" path="res://Scenes/Game/GamePausedLabel.cs" id="14_a6c3n"]
+[ext_resource type="Texture2D" uid="uid://b50wvp5ypt1vj" path="res://assets/buttons/blue-button.png" id="15_e88am"]
+[ext_resource type="Texture2D" uid="uid://k2dq22xiyvh3" path="res://assets/buttons/blue-button-pressed.png" id="16_hhdby"]
+[ext_resource type="Texture2D" uid="uid://bkn6swblii7gj" path="res://assets/buttons/blue-button-hover.png" id="17_q46rv"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t4tms"]
 texture = ExtResource("2_t6y41")
@@ -95,6 +98,18 @@ texture = ExtResource("13_e88am")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dwro4"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sh81y"]
+texture = ExtResource("15_e88am")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_80r4v"]
+texture = ExtResource("16_hhdby")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ebe2v"]
+texture = ExtResource("17_q46rv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_waigr"]
+texture = ExtResource("16_hhdby")
+
 [node name="GamePaused" type="Node2D" unique_id=504962607]
 
 [node name="ResumeGameButton" type="Button" parent="." unique_id=1622489644]
@@ -142,8 +157,10 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_hjgtq")
-theme_override_font_sizes/font_size = 55
-text = "Resume Game"
+theme_override_font_sizes/font_size = 50
+text = "Resume game"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="MusicButton" type="Button" parent="." unique_id=643932214]
@@ -186,9 +203,9 @@ metadata/_edit_lock_ = true
 z_index = 3
 texture_filter = 1
 offset_left = 350.0
-offset_top = 360.0
+offset_top = 460.0
 offset_right = 650.0
-offset_bottom = 450.0
+offset_bottom = 550.0
 pivot_offset = Vector2(115, 40)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
@@ -226,8 +243,10 @@ theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_hjgtq")
-theme_override_font_sizes/font_size = 60
-text = "Main Menu"
+theme_override_font_sizes/font_size = 50
+text = "Main menu"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="GamePausedLabel" type="RichTextLabel" parent="." unique_id=1713793871]
@@ -247,4 +266,55 @@ bbcode_enabled = true
 text = "
     Game paused..."
 script = ExtResource("14_a6c3n")
+metadata/_edit_lock_ = true
+
+[node name="RestartGameButton" type="Button" parent="." unique_id=327946646]
+z_index = 3
+texture_filter = 1
+offset_left = 350.0
+offset_top = 360.0
+offset_right = 650.0
+offset_bottom = 450.0
+pivot_offset = Vector2(115, 40)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_fonts/font = ExtResource("1_hjgtq")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxTexture_sh81y")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_hmi61")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_80r4v")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_sn8ja")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ebe2v")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_osl7i")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_a6c3n")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_e88am")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_waigr")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_q46rv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grdmm")
+metadata/_edit_lock_ = true
+
+[node name="RestartGameButtonOutline" type="Label" parent="RestartGameButton" unique_id=1788067704]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.5
+offset_top = -27.0
+offset_right = 114.5
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("1_hjgtq")
+theme_override_font_sizes/font_size = 50
+text = "Restart game"
+horizontal_alignment = 1
+vertical_alignment = 1
 metadata/_edit_lock_ = true

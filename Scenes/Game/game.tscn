@@ -83,6 +83,7 @@ _ResumeGameButtonPath = NodePath("GamePaused/ResumeGameButton")
 _MainMenuButtonGameOverPath = NodePath("GameOver/MainMenuButton")
 _GamePausedScenePath = NodePath("GamePaused")
 _GameOverScenePath = NodePath("GameOver")
+_RestartGameButtonPath = NodePath("GamePaused/RestartGameButton")
 
 [node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)

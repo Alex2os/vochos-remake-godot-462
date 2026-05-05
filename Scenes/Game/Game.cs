@@ -51,6 +51,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _MainMenuButtonGameOverPath;
 	[Export] private NodePath _GamePausedScenePath;
 	[Export] private NodePath _GameOverScenePath;
+	[Export] private NodePath _RestartGameButtonPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -92,6 +93,7 @@ public partial class Game : Node2D
 	private Button _SoundButton;
 	private Button _MusicButton;
 	private Button _ResumeGameButton;
+	private Button _RestartGameButton;
 	private Node2D _GamePausedScene;
 	private Node2D _GameOverScene;
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
@@ -162,6 +164,7 @@ public partial class Game : Node2D
 		_ResumeGameButton = GetNode<Button>(_ResumeGameButtonPath);
 		_GamePausedScene = GetNode<Node2D>(_GamePausedScenePath);
 		_GameOverScene = GetNode<Node2D>(_GameOverScenePath);
+		_RestartGameButton = GetNode<Button>(_RestartGameButtonPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -179,6 +182,7 @@ public partial class Game : Node2D
 		_SoundButton.Pressed += OnSoundButtonPressed;
 		_MusicButton.Pressed += OnMusicButtonPressed;
 		_ResumeGameButton.Pressed += OnResumeGameButtonPressed;
+		_RestartGameButton.Pressed += OnRestartButtonPressed;
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
@@ -249,10 +253,10 @@ public partial class Game : Node2D
 	}
 
 	// a function for when the resumegame button is pressed. if the game is paused, then we use the pausegame for that function to unpause the game.
-	private void OnResumeGameButtonPressed()
-	{
-		if (_IsGamePaused) PauseGame();
-	}
+	private void OnResumeGameButtonPressed() { if (_IsGamePaused) PauseGame(); }
+
+	// function for when the restart button is pressed
+	private void OnRestartButtonPressed(){ RestartGame(); }
 
 	private void SpawnParkingLotRoad()
 	{
@@ -337,7 +341,7 @@ public partial class Game : Node2D
 
 		_GameMusic.Stop();
 
-		_GameOverCrash.Play(); // car crashing sound
+		GameManager.Instance.PlaySound(_GameOverCrash); // car crashing sound
 	}
 
 	// this function stops all the processes to show the game over screen. it's arranged to work too with the GameOver() function, so we use less lines of code.
@@ -351,7 +355,7 @@ public partial class Game : Node2D
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
 			// we also disable the buttons so the player cant use them when playing the game. they can only be used when the game is paused
-			foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = true;
+			foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = true;
 			_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
 		}
 		else // if _IsGamePaused is not set to true, this will pause the game. in this case we check too if the game is over to skip disabling the buttons and showing the pause game scene.
@@ -370,7 +374,7 @@ public partial class Game : Node2D
 			else // otherwise, show the paused game scene and allow the buttons in it.
 			{
 				// we allow the buttons to be used assigning disabled to false.
-				foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = false;
+				foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = false;
 				_GamePausedScene.Modulate = new Color(1, 1, 1, 1);
 			}
 
@@ -468,7 +472,7 @@ public partial class Game : Node2D
 	private void OnBulletHitEnemy()
 	{
 		// we can't play the sound directly from the bullet object, because it gets destroyed when touching the enemy. so we play it from the game instead, using a signal or event handler that tells when the bullet hit an enemy.
-		_BulletHitEnemySound.Play();
+		GameManager.Instance.PlaySound(_BulletHitEnemySound);
 	}
 
 	private void RestartGame()
@@ -623,9 +627,11 @@ public partial class Game : Node2D
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
 		// we hide the game over scene and the game paused scene here, and disable its buttons. we do this to clean both scenes and buttons when starting the game
-		foreach(Node node in _GameOverScene.GetChildren()) if(node is Button button) button.Disabled = true;
+		// the .getchildren returns all the children inside the scene, so it's better to first get the node (casting the objects inside the scene to Node like we are doing in-
+		// the foreach) and then checking for the nodes we need. in this case we cast to Node and then we check for the Button nodes with an if. with this we avoid any errors.
+		foreach (Node node in _GameOverScene.GetChildren()) if (node is Button button) button.Disabled = true;
 		_GameOverScene.Modulate = new Color(0, 0, 0, 0);
-		foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = true;
+		foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = true;
 		_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
 	}
 
