@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://b54bjetdenxwf" path="res://assets/buttons/small button blue.png" id="17_e32fq"]
 [ext_resource type="Texture2D" uid="uid://cewcb4kjtimxq" path="res://assets/buttons/small button blue hover.png" id="18_t1yip"]
 [ext_resource type="Texture2D" uid="uid://di6r8ed1bqmyb" path="res://assets/wallpapers/shop wallpaper 2.png" id="20_t1yip"]
+[ext_resource type="PackedScene" uid="uid://msgua1yt7l34" path="res://Scenes/GamePaused/game_paused.tscn" id="21_33sfn"]
 
 [sub_resource type="Animation" id="Animation_8dak6"]
 resource_name = "perks anim"
@@ -268,7 +269,7 @@ texture = ExtResource("18_t1yip")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhep2"]
 texture = ExtResource("17_2t1f2")
 
-[node name="Shop" type="Node2D" unique_id=290475641 node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound")]
+[node name="Shop" type="Node2D" unique_id=290475641 node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound", "_ShopMusic", "_GamePausedScene", "_MainMenuButton", "_RestartGameButton", "_ResumeGameButton", "_MusicButton", "_SoundButton")]
 script = ExtResource("1_78vcx")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
@@ -295,6 +296,13 @@ _SellPerk3Button = NodePath("SellInventoryPerk3")
 _NotEnoughAnimations = NodePath("NotEnoughAnimations")
 _RerollShopSound = NodePath("ShopRerollSound")
 _ClickButtonSound = NodePath("ClickButtonSound")
+_ShopMusic = NodePath("ShopMusic")
+_GamePausedScene = NodePath("GamePaused")
+_MainMenuButton = NodePath("GamePaused/MainMenuButton")
+_RestartGameButton = NodePath("GamePaused/RestartGameButton")
+_ResumeGameButton = NodePath("GamePaused/ResumeGameButton")
+_MusicButton = NodePath("GamePaused/MusicButton")
+_SoundButton = NodePath("GamePaused/SoundButton")
 metadata/_edit_lock_ = true
 
 [node name="PerksFrame1" type="Sprite2D" parent="." unique_id=930672786]
@@ -331,7 +339,7 @@ position = Vector2(639, 495)
 scale = Vector2(4, 4)
 
 [node name="ShopTitle" type="Label" parent="." unique_id=740739716]
-z_index = 3
+z_index = 2
 texture_filter = 1
 offset_left = 44.0
 offset_top = 44.0
@@ -349,7 +357,7 @@ text = "Shop"
 metadata/_edit_lock_ = true
 
 [node name="ShopSubtitle" type="Label" parent="." unique_id=1773966094]
-z_index = 3
+z_index = 2
 texture_filter = 1
 offset_left = 42.0
 offset_top = 148.0
@@ -575,7 +583,7 @@ theme_override_font_sizes/font_size = 40
 text = "Buy"
 
 [node name="RerollButton" type="Button" parent="." unique_id=370814068]
-z_index = 3
+z_index = 2
 texture_filter = 1
 offset_left = 785.0
 offset_top = 125.0
@@ -674,7 +682,6 @@ metadata/_edit_lock_ = true
 [node name="ShopMusic" type="AudioStreamPlayer" parent="." unique_id=422599103]
 stream = ExtResource("4_w8bjl")
 volume_db = -10.0
-autoplay = true
 
 [node name="ShopRerollSound" type="AudioStreamPlayer" parent="." unique_id=2098730496]
 stream = ExtResource("5_274ew")
@@ -985,3 +992,8 @@ theme_override_font_sizes/font_size = 30
 text = "$"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="GamePaused" parent="." unique_id=504962607 instance=ExtResource("21_33sfn")]
+modulate = Color(1, 1, 1, 0)
+
+[editable path="GamePaused"]

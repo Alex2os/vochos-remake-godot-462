@@ -40,6 +40,8 @@ _CoinScene = ExtResource("4_flgk0")
 _BulletScene = ExtResource("16_56qi8")
 _ParkingLotRoadScene = ExtResource("21_nxex1")
 _ShopPickableScene = ExtResource("22_pa3qg")
+_GamePausedScene = ExtResource("22_2lc0x")
+_GameOverScene = ExtResource("12_ypmwd")
 _SpeedingGamePath = NodePath("SpeedingGame")
 _SpawningRoadTimerPath = NodePath("RoadTimer")
 _SpawningRoadMarkerPath = NodePath("RoadMarker")
@@ -117,17 +119,7 @@ modulate = Color(1, 1, 1, 0)
 [node name="GameOver" parent="." unique_id=406446912 instance=ExtResource("12_ypmwd")]
 modulate = Color(1, 1, 1, 0)
 
-[node name="GameOverLabel" parent="GameOver" index="0" unique_id=1344535407]
-modulate = Color(1, 1, 1, 1)
-
-[node name="GameOverStatsLabel" parent="GameOver" index="1" unique_id=1657640695]
-modulate = Color(1, 1, 1, 1)
-
-[node name="GameOverRestartLabel" parent="GameOver" index="2" unique_id=1326772797]
-modulate = Color(1, 1, 1, 1)
-
 [node name="MainMenuButton" parent="GameOver" index="4" unique_id=1185315152]
-modulate = Color(1, 1, 1, 1)
 offset_left = 350.0
 offset_top = 520.0
 offset_right = 650.0

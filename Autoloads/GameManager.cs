@@ -137,6 +137,7 @@ public partial class GameManager : Node
 			button.AddThemeStyleboxOverride("hover", styleHover);
 
 		}
+		
 	}
 
 	// this is the same function as the above one for the music, but for the sound button

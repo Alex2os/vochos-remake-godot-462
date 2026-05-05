@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class Game : Node2D
 {
@@ -8,6 +9,8 @@ public partial class Game : Node2D
 	[Export] private PackedScene _BulletScene;
 	[Export] private PackedScene _ParkingLotRoadScene;
 	[Export] private PackedScene _ShopPickableScene;
+	[Export] private PackedScene _GamePausedScene;
+	[Export] private PackedScene _GameOverScene;
 	[Export] private NodePath _SpeedingGamePath;
 	[Export] private NodePath _SpawningRoadTimerPath;
 	[Export] private NodePath _SpawningRoadMarkerPath;
@@ -90,12 +93,9 @@ public partial class Game : Node2D
 	private Timer _PerkTimer1;
 	private Timer _PerkTimer2;
 	private Timer _PerkTimer3;
-	private Button _SoundButton;
-	private Button _MusicButton;
-	private Button _ResumeGameButton;
-	private Button _RestartGameButton;
-	private Node2D _GamePausedScene;
-	private Node2D _GameOverScene;
+	private GamePaused _GamePausedInstance; // reusable variable for the gamepaused scene. each time the gamepaused scene pops up, we instantiate the scene here, and QueueFree it too when not needed, so we can reutilize this variable.
+	private GameOver _GameOverInstance; // another reusable variable, but now for the game over scene.
+
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
@@ -159,12 +159,6 @@ public partial class Game : Node2D
 		_PerkTimerText2 = GetNode<Label>(_PerkTimerText2Path);
 		_PerkTimerText3 = GetNode<Label>(_PerkTimerText3Path);
 		_ShopPickableContainer = GetNode<Node2D>(_ShopPickableContainerPath);
-		_SoundButton = GetNode<Button>(_SoundButtonPath);
-		_MusicButton = GetNode<Button>(_MusicButtonPath);
-		_ResumeGameButton = GetNode<Button>(_ResumeGameButtonPath);
-		_GamePausedScene = GetNode<Node2D>(_GamePausedScenePath);
-		_GameOverScene = GetNode<Node2D>(_GameOverScenePath);
-		_RestartGameButton = GetNode<Button>(_RestartGameButtonPath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -179,10 +173,6 @@ public partial class Game : Node2D
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
 		_Player.DoubleMoneyPerkUsed += OnPlayerUsedPerk;
-		_SoundButton.Pressed += OnSoundButtonPressed;
-		_MusicButton.Pressed += OnMusicButtonPressed;
-		_ResumeGameButton.Pressed += OnResumeGameButtonPressed;
-		_RestartGameButton.Pressed += OnRestartButtonPressed;
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
@@ -220,43 +210,20 @@ public partial class Game : Node2D
 		// pausing the game if _gameover is false
 		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
 
+		// only for testing.
+		if (Input.IsActionJustPressed("use shop")) ChangeSceneToShop();
+
 		if (_PerksTimerSlot[0]) _PerkTimerText1.Text = $"{_PerkTimer1.TimeLeft:F1}"; // we can short the amount of numbers after the . of a float/double number using $ to use the variable inside the string and then using :F1, :F2, etc., to shorten the amount of numbers. in this case we use :F1 to just have one number after the point.
 		if (_PerksTimerSlot[1]) _PerkTimerText2.Text = $"{_PerkTimer2.TimeLeft:F1}";
 		if (_PerksTimerSlot[2]) _PerkTimerText3.Text = $"{_PerkTimer3.TimeLeft:F1}";
 
 	}
 
-	private void OnSoundButtonPressed()
-	{
-
-		if (GameManager.Instance.SoundActive) GameManager.Instance.SoundActive = false;
-		else GameManager.Instance.SoundActive = true;
-
-		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
-
-	}
-
-	private void OnMusicButtonPressed()
-	{
-		if (GameManager.Instance.MusicActive)
-		{
-			GameManager.Instance.MusicActive = false;
-			_GameMusic.Stop();
-		}
-		else
-		{
-			GameManager.Instance.MusicActive = true;
-			_GameMusic.Play();
-		}
-
-		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
-	}
-
 	// a function for when the resumegame button is pressed. if the game is paused, then we use the pausegame for that function to unpause the game.
-	private void OnResumeGameButtonPressed() { if (_IsGamePaused) PauseGame(); }
+	private void OnUserPressedRestart() { RestartGame(); }
 
 	// function for when the restart button is pressed
-	private void OnRestartButtonPressed(){ RestartGame(); }
+	private void OnUserPressedResumeGame() { if (_IsGamePaused) PauseGame(); }
 
 	private void SpawnParkingLotRoad()
 	{
@@ -354,28 +321,34 @@ public partial class Game : Node2D
 			set_process_bool = true;
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
-			// we also disable the buttons so the player cant use them when playing the game. they can only be used when the game is paused
-			foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = true;
-			_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
+
+			// if we have instantiated the gamepuased scene, we erase it. in case it's null we dont do anything
+			if (_GamePausedInstance == null) ; 
+			else _GamePausedInstance.QueueFree(); 
+
 		}
-		else // if _IsGamePaused is not set to true, this will pause the game. in this case we check too if the game is over to skip disabling the buttons and showing the pause game scene.
+		else // if _IsGamePaused is not set to true, this will pause the game. we also instantiate a new GamePaused scene, and use it here.
 		{
 			set_process_bool = false;
 			_IsGamePaused = true;
 			_GameMusic.VolumeDb -= 10; // with this we can make the volume in db of and audiostream lower, so if the game is paused, the db will lower, and if it's unpaused, the db will go up again.
 
-			if (_GameOver) // if the game is over, we show the game over screen, and we dont let the other options be activated below this if.
+			if (_GameOver) // if the game is over, we show the game over screen, which is a scene.
 			{
 
-				_MainMenuButtonGameOver.Disabled = false;
-				_GameOverScene.Modulate = new Color(1, 1, 1, 1);
+				// game over scene. in this case we don't need signals, but we need to assign some variables.
+				_GameOverInstance = (GameOver)_GameOverScene.Instantiate();
+				AddChild(_GameOverInstance);
 
 			}
-			else // otherwise, show the paused game scene and allow the buttons in it.
+			else // if the game isn't over but the game will be paused, then show the game paused scene
 			{
-				// we allow the buttons to be used assigning disabled to false.
-				foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = false;
-				_GamePausedScene.Modulate = new Color(1, 1, 1, 1);
+				// game paused scene. we also add all the signals needed here
+				_GamePausedInstance = (GamePaused)_GamePausedScene.Instantiate();
+				AddChild(_GamePausedInstance);
+
+				_GamePausedInstance.UserPressedRestart += OnUserPressedRestart;
+				_GamePausedInstance.UserPressedResumeGame += OnUserPressedResumeGame;
 			}
 
 		}
@@ -553,10 +526,6 @@ public partial class Game : Node2D
 		SpawnRoad(); // spawn a road ahead of the timer to start the game earlier (should fix this later)
 		GameManager.Instance.PlaySound(_CarStarting); // we play the car starting sound when the game starts
 		if (GameManager.Instance.MusicActive) _GameMusic.Play(); // if the music is active, play the music. otherwise dont do anything.
-
-		// we also check the buttons for the music and sound here, because maybe the user disabled the music/sound on the menu, and we solve any visual bugs doing this.
-		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
-		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
 	}
 
 	private void OnSpeedingTheGame()
@@ -626,13 +595,17 @@ public partial class Game : Node2D
 		// we assign again the timer to the gamemanager variable. with this, when coming back from shop this will have the value it was left in before going to the shop.
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
+		// we free any instances of the gameover or gamepaused scenes when the game starts if there are any.
+		if(_GameOverInstance == null);
+		else _GameOverInstance.QueueFree();
+
+		if(_GamePausedInstance == null);
+		else _GamePausedInstance.QueueFree();
+
+		// DEPRECATED COMMENT. STILL IN THE CODE FOR INFORMATION ABOUT CASTING IN FOREACH AND GODOT CLASSES.
 		// we hide the game over scene and the game paused scene here, and disable its buttons. we do this to clean both scenes and buttons when starting the game
 		// the .getchildren returns all the children inside the scene, so it's better to first get the node (casting the objects inside the scene to Node like we are doing in-
 		// the foreach) and then checking for the nodes we need. in this case we cast to Node and then we check for the Button nodes with an if. with this we avoid any errors.
-		foreach (Node node in _GameOverScene.GetChildren()) if (node is Button button) button.Disabled = true;
-		_GameOverScene.Modulate = new Color(0, 0, 0, 0);
-		foreach (Node node in _GamePausedScene.GetChildren()) if (node is Button button) button.Disabled = true;
-		_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
 	}
 
 	private bool CheckComingFromShop()

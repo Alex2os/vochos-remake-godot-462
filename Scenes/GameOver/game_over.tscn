@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c3okbqeatfm5k"]
 
+[ext_resource type="Script" uid="uid://bs487auosf18h" path="res://Scenes/GameOver/GameOver.cs" id="1_als7q"]
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_ei7ey"]
 [ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="2_78750"]
 [ext_resource type="Texture2D" uid="uid://bf0a1kfwe6vv0" path="res://assets/buttons/red button hover.png" id="2_apf3g"]
@@ -73,12 +74,18 @@ specular_color = Color(0, 0, 0, 1)
 texture_filter = 1
 texture_repeat = 1
 
-[node name="GameOver" type="Node2D" unique_id=23058149]
+[node name="GameOver" type="Control" unique_id=1966346449 node_paths=PackedStringArray("MainMenuButton")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1000.0
+offset_bottom = 700.0
+script = ExtResource("1_als7q")
+MainMenuButton = NodePath("MainMenuButton")
 
 [node name="GameOverLabel" type="Label" parent="." unique_id=1344535407]
-modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
+layout_mode = 0
 offset_left = 300.0
 offset_top = 120.0
 offset_right = 713.0
@@ -96,9 +103,9 @@ text = "Game Over!
 metadata/_edit_lock_ = true
 
 [node name="GameOverStatsLabel" type="Label" parent="." unique_id=1657640695]
-modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
+layout_mode = 0
 offset_left = 299.0
 offset_top = 210.0
 offset_right = 712.0
@@ -118,13 +125,13 @@ Total money:
 metadata/_edit_lock_ = true
 
 [node name="GameOverRestartLabel" type="Label" parent="." unique_id=1326772797]
-modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
+layout_mode = 0
 offset_left = 315.0
 offset_top = 600.0
 offset_right = 728.0
-offset_bottom = 789.0
+offset_bottom = 788.9999
 scale = Vector2(1, 0.992188)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -138,11 +145,12 @@ metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=96002795]
 libraries/ = SubResource("AnimationLibrary_vifcx")
+autoplay = &"restart animation"
 
 [node name="MainMenuButton" type="Button" parent="." unique_id=1185315152]
-modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
+layout_mode = 0
 offset_left = 360.0
 offset_top = 537.0
 offset_right = 660.0
