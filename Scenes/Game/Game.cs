@@ -22,7 +22,7 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinContainerPath;
 	[Export] private NodePath _CoinTimerPath;
 	[Export] private NodePath _CoinLabelPath;
-	[Export] private NodePath _MainMenuButtonPath;
+	[Export] private NodePath _MainMenuButtonPausedGamePath;
 	[Export] private NodePath _GameOverLabelPath;
 	[Export] private NodePath _GameOverStatsLabelPath;
 	[Export] private NodePath _AnimationPlayerPath;
@@ -33,7 +33,6 @@ public partial class Game : Node2D
 	[Export] private NodePath _GameMusicPath;
 	[Export] private NodePath _ShopAvailableTimerPath;
 	[Export] private NodePath _InventoryInGamePath;
-	[Export] private NodePath _GamePausedLabelPath;
 	[Export] private NodePath _ShopReadyLabelPath;
 	[Export] private NodePath _BulletHitEnemySoundPath;
 	[Export] private NodePath _PerkTimerTexture1Path;
@@ -46,9 +45,12 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimer2Path;
 	[Export] private NodePath _PerkTimer3Path;
 	[Export] private NodePath _ShopPickableContainerPath;
-	[Export] private NodePath _TransparentBlackScreenPath;
 	[Export] private NodePath _SoundButtonPath;
 	[Export] private NodePath _MusicButtonPath;
+	[Export] private NodePath _ResumeGameButtonPath;
+	[Export] private NodePath _MainMenuButtonGameOverPath;
+	[Export] private NodePath _GamePausedScenePath;
+	[Export] private NodePath _GameOverScenePath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -77,8 +79,8 @@ public partial class Game : Node2D
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _BulletHitEnemySound;
 	private AudioStreamPlayer _GameMusic;
-	private RichTextLabel _GamePausedLabel;
-	private Button _MainMenuButton;
+	private Button _MainMenuButtonPausedGame;
+	private Button _MainMenuButtonGameOver;
 	private SpeedingGame _SpeedingGame;
 	private player _Player;
 	private Sprite2D _PerkTimerTexture1;
@@ -89,7 +91,9 @@ public partial class Game : Node2D
 	private Timer _PerkTimer3;
 	private Button _SoundButton;
 	private Button _MusicButton;
-	private Sprite2D _TransparentBlackScreen;
+	private Button _ResumeGameButton;
+	private Node2D _GamePausedScene;
+	private Node2D _GameOverScene;
 	private Texture2D[] _PerksTextureTimers; // array for the perks' timers textures. we save the textures here so we can use them when a perk is activated.
 	[Signal] public delegate void ShieldPerkEndedEventHandler();
 	[Signal] public delegate void DoublePointsPerkEndedEventHandler();
@@ -138,10 +142,10 @@ public partial class Game : Node2D
 		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
 		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
-		_MainMenuButton = GetNode<Button>(_MainMenuButtonPath);
+		_MainMenuButtonPausedGame = GetNode<Button>(_MainMenuButtonPausedGamePath);
+		_MainMenuButtonGameOver = GetNode<Button>(_MainMenuButtonGameOverPath);
 		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
 		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
-		_GamePausedLabel = GetNode<RichTextLabel>(_GamePausedLabelPath);
 		_BulletHitEnemySound = GetNode<AudioStreamPlayer>(_BulletHitEnemySoundPath);
 		_PerkTimerTexture1 = GetNode<Sprite2D>(_PerkTimerTexture1Path);
 		_PerkTimerTexture2 = GetNode<Sprite2D>(_PerkTimerTexture2Path);
@@ -153,9 +157,11 @@ public partial class Game : Node2D
 		_PerkTimerText2 = GetNode<Label>(_PerkTimerText2Path);
 		_PerkTimerText3 = GetNode<Label>(_PerkTimerText3Path);
 		_ShopPickableContainer = GetNode<Node2D>(_ShopPickableContainerPath);
-		_TransparentBlackScreen = GetNode<Sprite2D>(_TransparentBlackScreenPath);
 		_SoundButton = GetNode<Button>(_SoundButtonPath);
 		_MusicButton = GetNode<Button>(_MusicButtonPath);
+		_ResumeGameButton = GetNode<Button>(_ResumeGameButtonPath);
+		_GamePausedScene = GetNode<Node2D>(_GamePausedScenePath);
+		_GameOverScene = GetNode<Node2D>(_GameOverScenePath);
 
 		_SpawningRoadTimer.Timeout += SpawnRoad;
 		_SpawningCarEnemyTimer.Timeout += SpawnEnemy;
@@ -164,13 +170,15 @@ public partial class Game : Node2D
 		_Player.UpdateInventoryPerkTexture += OnUpdateInventoryPerkTexture;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
-		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
+		_MainMenuButtonPausedGame.Pressed += OnMainMenuButtonPressed;
+		_MainMenuButtonGameOver.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += SpawnShopPickable;
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
 		_Player.DoubleMoneyPerkUsed += OnPlayerUsedPerk;
 		_SoundButton.Pressed += OnSoundButtonPressed;
 		_MusicButton.Pressed += OnMusicButtonPressed;
+		_ResumeGameButton.Pressed += OnResumeGameButtonPressed;
 		// we use a single function to control the timers' timeouts. depending on which perk was used, the function OnPerkTimerTimeout controls what to do next.
 		// we use 3 timers as there can only be at maximum 3 perks active with timeouts or timers.
 		_PerkTimer1.Timeout += () => OnPerkTimerTimeout(0, _PerkActiveInTimer[0]);
@@ -240,6 +248,12 @@ public partial class Game : Node2D
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 	}
 
+	// a function for when the resumegame button is pressed. if the game is paused, then we use the pausegame for that function to unpause the game.
+	private void OnResumeGameButtonPressed()
+	{
+		if (_IsGamePaused) PauseGame();
+	}
+
 	private void SpawnParkingLotRoad()
 	{
 		ParkingLotRoad parking_lot_road = (ParkingLotRoad)_ParkingLotRoadScene.Instantiate();
@@ -303,8 +317,7 @@ public partial class Game : Node2D
 		_GameOverLabel.Modulate = new Color(1, 1, 1, 1);
 		_GameOverStatsLabel.Modulate = new Color(1, 1, 1, 1);
 
-		// modulate for the main menu button
-		_MainMenuButton.Modulate = new Color(1, 1, 1, 1);
+
 
 		// change the timer for the speeding game scene and stopping it in case it's active when the game over screen is presented
 		foreach (Node speed in _SpeedingGame.GetChildren())
@@ -318,7 +331,7 @@ public partial class Game : Node2D
 			if (speed is AnimationPlayer anim) anim.Stop();
 		}
 
-		_MainMenuButton.Disabled = false;
+		_MainMenuButtonGameOver.Disabled = false;
 
 		PauseGame();
 
@@ -337,43 +350,30 @@ public partial class Game : Node2D
 			set_process_bool = true;
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
-			_TransparentBlackScreen.Modulate = new Color(0, 0, 0, 0); // we hide the transparent black screen every time the game is unpaused
-			_MusicButton.Modulate = new Color(0, 0, 0, 0); // we hide the music and sound buttons when the game is unpaused
-			_SoundButton.Modulate = new Color(0, 0, 0, 0);
-			// we also disable them so the player cant use them
-			_MusicButton.Disabled = true;
-			_SoundButton.Disabled = true;
+			// we also disable the buttons so the player cant use them when playing the game. they can only be used when the game is paused
+			foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = true;
+			_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
 		}
-		else // if it's game over, then this will pop up, pausing the game.
+		else // if _IsGamePaused is not set to true, this will pause the game. in this case we check too if the game is over to skip disabling the buttons and showing the pause game scene.
 		{
 			set_process_bool = false;
 			_IsGamePaused = true;
 			_GameMusic.VolumeDb -= 10; // with this we can make the volume in db of and audiostream lower, so if the game is paused, the db will lower, and if it's unpaused, the db will go up again.
-			_TransparentBlackScreen.Modulate = new Color(0, 0, 0, (float)0.5); // we show the transparent black screen every time the game is paused
-																			   // in the case of the transparent black screen, we assign a black color (first three zeros) and then the alpha, which in this case is 0.5 for 50% transparency.
-			_MusicButton.Modulate = new Color(1, 1, 1, 1); // we show the music and sound button when pausing the game
-			_SoundButton.Modulate = new Color(1, 1, 1, 1);
-			// we allow the buttons to be used assigning disabled to false.
-			_MusicButton.Disabled = false;
-			_SoundButton.Disabled = false;
-		}
 
-		// in the paused menu we show the gamepausedlabel and the main menu button, besides the other options.
-		if (!_GameOver && !_IsGamePaused) // if the game is not over and game is not paused, don't show the labels / options
-		{
-			_GamePausedLabel.Modulate = new Color(0, 0, 0, 0);
-			_MainMenuButton.Modulate = new Color(0, 0, 0, 0);
-			_MainMenuButton.Disabled = true;
-		}
-		else if (!_GameOver && _IsGamePaused) // otherwise, show them.
-		{
-			_GamePausedLabel.Modulate = new Color(1, 1, 1, 1);
-			_MainMenuButton.Modulate = new Color(1, 1, 1, 1);
-			_MainMenuButton.Disabled = false;
-		}
-		else
-		{ // if it's any other case (which is every time _gameover is true) then hide the options, excepting the main menu button, as that is part of the game over screen too.
-			_GamePausedLabel.Modulate = new Color(0, 0, 0, 0);
+			if (_GameOver) // if the game is over, we show the game over screen, and we dont let the other options be activated below this if.
+			{
+
+				_MainMenuButtonGameOver.Disabled = false;
+				_GameOverScene.Modulate = new Color(1, 1, 1, 1);
+
+			}
+			else // otherwise, show the paused game scene and allow the buttons in it.
+			{
+				// we allow the buttons to be used assigning disabled to false.
+				foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = false;
+				_GamePausedScene.Modulate = new Color(1, 1, 1, 1);
+			}
+
 		}
 
 		// set the paused state of the timers to false, so they can follow in the time whey were left in or get paused.
@@ -488,9 +488,6 @@ public partial class Game : Node2D
 		_AnimationPlayer.Stop(); // stop the restart game animation
 		_GameOverLabel.Modulate = new Color(0, 0, 0, 0); // change opacity of text to quit the game over and stats
 		_GameOverStatsLabel.Modulate = new Color(0, 0, 0, 0);
-
-		// modulate for the mainmenu button
-		_MainMenuButton.Modulate = new Color(0, 0, 0, 0);
 
 		SetPausedStateTimers(false); // put the state of pause of the timers in false when we start again
 
@@ -622,12 +619,14 @@ public partial class Game : Node2D
 
 		_GameMusic.PitchScale = 1; // music for the game. could be that the pitchscale was left on a different value than the normal, which is 1
 
-		_TransparentBlackScreen.Modulate = new Color(0, 0, 0, 0); // we assign the transparent black screen to not visible when starting the game.
-
 		// we assign again the timer to the gamemanager variable. with this, when coming back from shop this will have the value it was left in before going to the shop.
 		_SpawningCarEnemyTimer.WaitTime = GameManager.Instance.EnemyTimerWaitTime;
 
-		_MainMenuButton.Disabled = true; // we dusable the main menu button when the game starts, so the player cant click it. we reenable it when the player loses.
+		// we hide the game over scene and the game paused scene here, and disable its buttons. we do this to clean both scenes and buttons when starting the game
+		foreach(Node node in _GameOverScene.GetChildren()) if(node is Button button) button.Disabled = true;
+		_GameOverScene.Modulate = new Color(0, 0, 0, 0);
+		foreach(Node node in _GamePausedScene.GetChildren()) if(node is Button button) button.Disabled = true;
+		_GamePausedScene.Modulate = new Color(0, 0, 0, 0);
 	}
 
 	private bool CheckComingFromShop()

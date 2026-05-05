@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c3okbqeatfm5k"]
+[gd_scene format=3 uid="uid://c3okbqeatfm5k"]
 
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_ei7ey"]
 [ext_resource type="Texture2D" uid="uid://i6r1f5tg64km" path="res://assets/buttons/red button pressed.png" id="2_78750"]
@@ -43,34 +43,39 @@ _data = {
 &"restart animation": SubResource("Animation_flgk0")
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dncx1"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_78750"]
+texture = ExtResource("2_dncx1")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78750"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_apf3g"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_als7q"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdts5"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owf3c"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_als7q"]
-texture = ExtResource("2_apf3g")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b7xe"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t4ynl"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_apf3g"]
 texture = ExtResource("2_78750")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t4ynl"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7b7xe"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_78750"]
-texture = ExtResource("2_dncx1")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_als7q"]
+texture = ExtResource("2_apf3g")
 
-[node name="GameOver" type="Node2D"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owf3c"]
 
-[node name="GameOverLabel" type="Label" parent="."]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fdts5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_als7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_apf3g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78750"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dncx1"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_apf3g"]
+specular_color = Color(0, 0, 0, 1)
+texture_filter = 1
+texture_repeat = 1
+
+[node name="GameOver" type="Node2D" unique_id=23058149]
+
+[node name="GameOverLabel" type="Label" parent="." unique_id=1344535407]
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
@@ -90,7 +95,7 @@ text = "Game Over!
 "
 metadata/_edit_lock_ = true
 
-[node name="GameOverStatsLabel" type="Label" parent="."]
+[node name="GameOverStatsLabel" type="Label" parent="." unique_id=1657640695]
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
@@ -112,7 +117,7 @@ Total money:
 "
 metadata/_edit_lock_ = true
 
-[node name="GameOverRestartLabel" type="Label" parent="."]
+[node name="GameOverRestartLabel" type="Label" parent="." unique_id=1326772797]
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
@@ -131,12 +136,10 @@ theme_override_font_sizes/font_size = 50
 text = "Press R to restart!"
 metadata/_edit_lock_ = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_vifcx")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=96002795]
+libraries/ = SubResource("AnimationLibrary_vifcx")
 
-[node name="MainMenuButton" type="Button" parent="."]
+[node name="MainMenuButton" type="Button" parent="." unique_id=1185315152]
 modulate = Color(1, 1, 1, 0)
 z_index = 3
 texture_filter = 1
@@ -145,25 +148,25 @@ offset_top = 537.0
 offset_right = 660.0
 offset_bottom = 627.0
 pivot_offset = Vector2(115, 40)
-theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.791999, 0.791999, 0.791999, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_fonts/font = ExtResource("1_ei7ey")
 theme_override_font_sizes/font_size = 60
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dncx1")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_78750")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_apf3g")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_als7q")
-theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fdts5")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_owf3c")
-theme_override_styles/hover = SubResource("StyleBoxTexture_als7q")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7b7xe")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_apf3g")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_t4ynl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_78750")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_t4ynl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_apf3g")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_7b7xe")
+theme_override_styles/hover = SubResource("StyleBoxTexture_als7q")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_owf3c")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_fdts5")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_als7q")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_apf3g")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_78750")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dncx1")
 
-[node name="MainMenuButtonOutline" type="Label" parent="MainMenuButton"]
+[node name="MainMenuButtonOutline" type="Label" parent="MainMenuButton" unique_id=1447202591]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -183,4 +186,12 @@ theme_override_constants/shadow_outline_size = 15
 theme_override_fonts/font = ExtResource("1_ei7ey")
 theme_override_font_sizes/font_size = 60
 text = "Main Menu"
+metadata/_edit_lock_ = true
+
+[node name="TransparentBlackScreen" type="Sprite2D" parent="." unique_id=1717851853]
+modulate = Color(0, 0, 0, 0.49019608)
+z_index = 2
+position = Vector2(500, 350)
+scale = Vector2(1000, 700)
+texture = SubResource("CanvasTexture_apf3g")
 metadata/_edit_lock_ = true

@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://1i8dwqg2na1t" path="res://Scenes/SpeedGame/speeding_game.tscn" id="11_qtymf"]
 [ext_resource type="PackedScene" uid="uid://c3okbqeatfm5k" path="res://Scenes/GameOver/game_over.tscn" id="12_ypmwd"]
 [ext_resource type="PackedScene" uid="uid://dtmrlqgb3yi51" path="res://Scenes/InventoryInGame/inventory_in_game.tscn" id="13_oejk7"]
-[ext_resource type="Script" uid="uid://du6fhlfj2pcdq" path="res://Scenes/Game/GamePausedLabel.cs" id="14_upfqs"]
 [ext_resource type="Script" uid="uid://uxb5fjcy464x" path="res://Scenes/Game/ShopReadyLabel.cs" id="15_8e3kh"]
 [ext_resource type="PackedScene" uid="uid://cbvc45yudheq4" path="res://Scenes/Bullet/bullet.tscn" id="16_56qi8"]
 [ext_resource type="AudioStream" uid="uid://cqiwxb8fw1cf7" path="res://assets/sound effects/bullet-enemyhit.wav" id="17_2vowc"]
@@ -21,13 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://dgt3ih0dj4ik1" path="res://assets/perks/medium sizes/shield medium.png" id="18_yox4t"]
 [ext_resource type="Texture2D" uid="uid://s1i1hs5cvdnn" path="res://assets/perks/medium sizes/double money medium.png" id="20_a6ftd"]
 [ext_resource type="PackedScene" uid="uid://boqwvshus54xr" path="res://Scenes/ParkingLotRoad/parking_lot_road.tscn" id="21_nxex1"]
+[ext_resource type="PackedScene" uid="uid://msgua1yt7l34" path="res://Scenes/GamePaused/game_paused.tscn" id="22_2lc0x"]
 [ext_resource type="PackedScene" uid="uid://cxhjwgru056cn" path="res://Scenes/ShopPickable/shop_pickable.tscn" id="22_pa3qg"]
-[ext_resource type="Texture2D" uid="uid://srlub256246b" path="res://assets/buttons/music-active-button.png" id="23_gqd4u"]
-[ext_resource type="Texture2D" uid="uid://bxisfa7c0y8cp" path="res://assets/buttons/music-active-button-pressed.png" id="24_1l3pd"]
-[ext_resource type="Texture2D" uid="uid://7fhtl4kww8vx" path="res://assets/buttons/music-active-button-hover.png" id="25_d3jd4"]
-[ext_resource type="Texture2D" uid="uid://hhkr1xghs42w" path="res://assets/buttons/sfx-enabled-button.png" id="26_56bk2"]
-[ext_resource type="Texture2D" uid="uid://c1owfoechp5aa" path="res://assets/buttons/sfx-enabled-button-pressed.png" id="27_6k7u1"]
-[ext_resource type="Texture2D" uid="uid://bptog4a0vf1an" path="res://assets/buttons/sfx-enabled-button-hover.png" id="28_diago"]
 
 [sub_resource type="Animation" id="Animation_oejk7"]
 resource_name = "shop anim"
@@ -37,35 +31,6 @@ length = 1.5
 _data = {
 &"shop anim": SubResource("Animation_oejk7")
 }
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_pa3qg"]
-specular_color = Color(0, 0, 0, 1)
-texture_filter = 1
-texture_repeat = 1
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gqd4u"]
-texture = ExtResource("23_gqd4u")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1l3pd"]
-texture = ExtResource("24_1l3pd")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3jd4"]
-texture = ExtResource("25_d3jd4")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56bk2"]
-texture = ExtResource("24_1l3pd")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6k7u1"]
-texture = ExtResource("26_56bk2")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_diago"]
-texture = ExtResource("27_6k7u1")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fl2fe"]
-texture = ExtResource("28_diago")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_56h2t"]
-texture = ExtResource("27_6k7u1")
 
 [node name="Game" type="Node2D" unique_id=285963340]
 script = ExtResource("1_qikps")
@@ -89,7 +54,7 @@ _ScoreLabelPath = NodePath("ScoreLabel")
 _CoinContainerPath = NodePath("CoinContainer")
 _CoinTimerPath = NodePath("CoinTimer")
 _CoinLabelPath = NodePath("CoinLabel")
-_MainMenuButtonPath = NodePath("GameOver/MainMenuButton")
+_MainMenuButtonPausedGamePath = NodePath("GamePaused/MainMenuButton")
 _GameOverLabelPath = NodePath("GameOver/GameOverLabel")
 _GameOverStatsLabelPath = NodePath("GameOver/GameOverStatsLabel")
 _AnimationPlayerPath = NodePath("GameOver/AnimationPlayer")
@@ -100,7 +65,6 @@ _CoinSoundPath = NodePath("CoinSound")
 _GameMusicPath = NodePath("GameMusic")
 _ShopAvailableTimerPath = NodePath("ShopAvailableTimer")
 _InventoryInGamePath = NodePath("InventoryInGame")
-_GamePausedLabelPath = NodePath("GamePausedLabel")
 _ShopReadyLabelPath = NodePath("ShopReadyLabel")
 _BulletHitEnemySoundPath = NodePath("BulletHitEnemySound")
 _PerkTimerTexture1Path = NodePath("PerkTimerTexture1")
@@ -113,9 +77,12 @@ _PerkTimer1Path = NodePath("PerkTimer1")
 _PerkTimer2Path = NodePath("PerkTimer2")
 _PerkTimer3Path = NodePath("PerkTimer3")
 _ShopPickableContainerPath = NodePath("ShopPickableContainer")
-_TransparentBlackScreenPath = NodePath("TransparentBlackScreen")
-_SoundButtonPath = NodePath("SoundButton")
-_MusicButtonPath = NodePath("MusicButton")
+_SoundButtonPath = NodePath("GamePaused/SoundButton")
+_MusicButtonPath = NodePath("GamePaused/MusicButton")
+_ResumeGameButtonPath = NodePath("GamePaused/ResumeGameButton")
+_MainMenuButtonGameOverPath = NodePath("GameOver/MainMenuButton")
+_GamePausedScenePath = NodePath("GamePaused")
+_GameOverScenePath = NodePath("GameOver")
 
 [node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -135,13 +102,35 @@ metadata/_edit_lock_ = true
 [node name="EnemyContainer" type="Node2D" parent="." unique_id=2011967705]
 metadata/_edit_lock_ = true
 
+[node name="ShopPickableContainer" type="Node2D" parent="." unique_id=1708465160]
+
 [node name="CoinContainer" type="Node2D" parent="." unique_id=798676082]
 metadata/_edit_lock_ = true
 
 [node name="SpeedingGame" parent="." unique_id=2097598008 instance=ExtResource("11_qtymf")]
 metadata/_edit_lock_ = true
 
+[node name="GamePaused" parent="." unique_id=504962607 instance=ExtResource("22_2lc0x")]
+modulate = Color(1, 1, 1, 0)
+
 [node name="GameOver" parent="." unique_id=406446912 instance=ExtResource("12_ypmwd")]
+modulate = Color(1, 1, 1, 0)
+
+[node name="GameOverLabel" parent="GameOver" index="0" unique_id=1344535407]
+modulate = Color(1, 1, 1, 1)
+
+[node name="GameOverStatsLabel" parent="GameOver" index="1" unique_id=1657640695]
+modulate = Color(1, 1, 1, 1)
+
+[node name="GameOverRestartLabel" parent="GameOver" index="2" unique_id=1326772797]
+modulate = Color(1, 1, 1, 1)
+
+[node name="MainMenuButton" parent="GameOver" index="4" unique_id=1185315152]
+modulate = Color(1, 1, 1, 1)
+offset_left = 350.0
+offset_top = 520.0
+offset_right = 650.0
+offset_bottom = 610.0
 
 [node name="EnemyTimer" type="Timer" parent="." unique_id=1881880263]
 wait_time = 2.0
@@ -212,34 +201,6 @@ position = Vector2(500, 530)
 libraries/ = SubResource("AnimationLibrary_upfqs")
 
 [node name="InventoryInGame" parent="." unique_id=1026223403 instance=ExtResource("13_oejk7")]
-metadata/_edit_lock_ = true
-
-[node name="GamePausedLabel" type="RichTextLabel" parent="." unique_id=921962921]
-modulate = Color(1, 1, 1, 0)
-z_index = 3
-texture_filter = 1
-offset_left = 235.0
-offset_top = 258.0
-offset_right = 764.0
-offset_bottom = 392.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 15
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_fonts/normal_font = ExtResource("5_ciybh")
-theme_override_font_sizes/normal_font_size = 70
-bbcode_enabled = true
-text = "
-    Game paused..."
-script = ExtResource("14_upfqs")
-metadata/_edit_lock_ = true
-
-[node name="TransparentBlackScreen" type="Sprite2D" parent="." unique_id=591569766]
-modulate = Color(0, 0, 0, 0)
-z_index = 2
-position = Vector2(500, 350)
-scale = Vector2(1000, 700)
-texture = SubResource("CanvasTexture_pa3qg")
 metadata/_edit_lock_ = true
 
 [node name="ShopReadyLabel" type="RichTextLabel" parent="." unique_id=1384954700]
@@ -361,36 +322,5 @@ wait_time = 15.0
 [node name="PerkTimer3" type="Timer" parent="." unique_id=2092098010]
 wait_time = 15.0
 
-[node name="ShopPickableContainer" type="Node2D" parent="." unique_id=1708465160]
-
-[node name="MusicButton" type="Button" parent="." unique_id=1020116559]
-modulate = Color(1, 1, 1, 0)
-z_index = 3
-texture_filter = 1
-texture_repeat = 1
-offset_left = 10.0
-offset_top = 300.0
-offset_right = 143.0
-offset_bottom = 405.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_gqd4u")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_1l3pd")
-theme_override_styles/hover = SubResource("StyleBoxTexture_d3jd4")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_56bk2")
-metadata/_edit_lock_ = true
-
-[node name="SoundButton" type="Button" parent="." unique_id=817823554]
-modulate = Color(1, 1, 1, 0)
-z_index = 3
-texture_filter = 1
-texture_repeat = 1
-offset_left = 10.0
-offset_top = 410.0
-offset_right = 143.0
-offset_bottom = 515.0
-theme_override_styles/normal = SubResource("StyleBoxTexture_6k7u1")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_diago")
-theme_override_styles/hover = SubResource("StyleBoxTexture_fl2fe")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_56h2t")
-metadata/_edit_lock_ = true
-
+[editable path="GamePaused"]
 [editable path="GameOver"]
