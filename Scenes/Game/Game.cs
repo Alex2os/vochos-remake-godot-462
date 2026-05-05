@@ -466,15 +466,17 @@ public partial class Game : Node2D
 		_CoinTimer.Start();
 		_ShopAvailableTimer.Start();
 
+		// we erase all the enemies, bullets, coins, etc. from the containers 
 		foreach (Node road in _RoadContainer.GetChildren()) road.QueueFree();
-
 		foreach (Node coin in _CoinContainer.GetChildren()) coin.QueueFree();
-
 		foreach (Node enemy in _EnemyContainer.GetChildren()) enemy.QueueFree();
+		foreach (Node bullet in _BulletContainer.GetChildren()) bullet.QueueFree();
+		foreach(Node shop_pickable in _ShopPickableContainer.GetChildren()) shop_pickable.QueueFree();
 
+		// we also set the timers for the next game
 		foreach (Node speed in _SpeedingGame.GetChildren()) if (speed is Timer timer)
 		{
-			// set the timer again for the next game. waittime is resetted and setpaused state is set to false to keep the timer going.
+			// waittime is resetted and setpaused state is set to false to keep the timer going.
 			timer.SetPaused(false);
 			timer.WaitTime = 10;
 			timer.Start();
