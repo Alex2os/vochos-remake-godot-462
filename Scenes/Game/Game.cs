@@ -319,9 +319,8 @@ public partial class Game : Node2D
 			_IsGamePaused = false;
 			_GameMusic.VolumeDb += 10;
 
-			// if we have instantiated the gamepaused scene, we erase it. in case it's null we dont do anything
-			if (_GamePausedInstance == null) ; 
-			else _GamePausedInstance.QueueFree(); 
+			// if we have instantiated the gamepaused scene, we erase it (if the instance is valid, in this case.)
+			if (IsInstanceValid(_GamePausedInstance)) _GamePausedInstance.QueueFree(); 
 
 		}
 		else // if _IsGamePaused is not set to true, this will pause the game. we also instantiate a new GamePaused scene, and use it here.

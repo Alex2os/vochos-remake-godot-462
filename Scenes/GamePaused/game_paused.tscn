@@ -125,7 +125,7 @@ _SoundButton = NodePath("SoundButton")
 
 [node name="TransparentBlackScreen" type="Sprite2D" parent="." unique_id=1386112351]
 modulate = Color(0, 0, 0, 0.49019608)
-z_index = 1
+z_index = 2
 position = Vector2(500, 350)
 scale = Vector2(1000, 700)
 texture = SubResource("CanvasTexture_gwbxw")

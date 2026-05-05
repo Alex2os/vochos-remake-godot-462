@@ -15,6 +15,7 @@ public partial class Shop : Node2D
 	// player inventory for the perks
 	private int[] _PlayerInventory = new int[3] { -1, -1, -1 }; // if any index = -1, then it means there's perk in that slot.
 
+	[Export] private PackedScene _GamePausedScene;
 	[Export] private Sprite2D _Perk1;
 	[Export] private Sprite2D _Perk2;
 	[Export] private Sprite2D _Perk3;
@@ -41,14 +42,9 @@ public partial class Shop : Node2D
 	[Export] private AudioStreamPlayer _RerollShopSound;
 	[Export] private AudioStreamPlayer _ClickButtonSound;
 	[Export] private AudioStreamPlayer _ShopMusic;
-	[Export] private Control _GamePausedScene;
-	[Export] private Button _MainMenuButton;
-	[Export] private Button _RestartGameButton;
-	[Export] private Button _ResumeGameButton;
-	[Export] private Button _MusicButton;
-	[Export] private Button _SoundButton;
 
 	private bool _GameShopPaused = false;
+	private GamePaused _GamePausedInstance;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -79,10 +75,6 @@ public partial class Shop : Node2D
 		// we assign the buttons' functions when pressed.
 		_RerollShopButton.Pressed += OnRerollShopButtonPressed;
 		_LeaveShopButton.Pressed += OnLeaveShopButtonPressed;
-		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
-		_ResumeGameButton.Pressed += OnResumeGameButtonPressed;
-		_MusicButton.Pressed += OnMusicButtonPressed;
-		_SoundButton.Pressed += OnSoundButtonPressed;
 
 		// linking alarms and functions for when a perk is bought
 		_BuyPerk1Button.Pressed += OnBuyPerk1Button;
@@ -93,12 +85,15 @@ public partial class Shop : Node2D
 		_SellPerk2Button.Pressed += OnSellPerk2Button;
 		_SellPerk3Button.Pressed += OnSellPerk3Button;
 
+		// signals from the autoload. same as in the game, we add the music bool signal.
+		GameManager.Instance.MusicActiveBoolChanged += OnMusicActiveBoolChanged;
+
 		ChoosePerks(); // choose perks that will randomnly appear on the shop
 
 		GetGlobalPerks(); // in this function we get the perks from the playervariables autoload so we have them here in the shop.
 
 		// we check if the music is enabled or not, same as we do on the main menu.
-		if(GameManager.Instance.MusicActive) _ShopMusic.Play();		
+		if (GameManager.Instance.MusicActive) _ShopMusic.Play();
 
 	}
 
@@ -112,32 +107,43 @@ public partial class Shop : Node2D
 
 	}
 
-	private void OnMainMenuButtonPressed(){ GameManager.Instance.ChangeSceneToMainMenu(); }
+	// we use _ExitTree here in the shop as the same as in the game scene, to unsubscribe the function from the signal
+	public override void _ExitTree() { GameManager.Instance.MusicActiveBoolChanged -= OnMusicActiveBoolChanged; }
 
-	private void OnResumeGameButtonPressed(){ if(_GameShopPaused) PauseGameShop(); }
-
-	private void OnMusicButtonPressed()
+	private void OnMusicActiveBoolChanged()
 	{
-		GameManager.Instance.MusicActive = !GameManager.Instance.MusicActive;
-		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
-		
-
 		if(GameManager.Instance.MusicActive) _ShopMusic.Play();
 		else _ShopMusic.Stop();
 	}
 
-	private void OnSoundButtonPressed()
+	private void OnUserPressedRestart()
 	{
-		GameManager.Instance.SoundActive = !GameManager.Instance.SoundActive;
-		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
+
+	}
+
+	private void OnUserPressedResumeGame()
+	{
+		PauseGameShop();
 	}
 
 	// in this function we pause the game but when in the shop. basically just showing the game paused scene
 	private void PauseGameShop()
 	{
-		if (_GameShopPaused) _GamePausedScene.Modulate = new Color(0, 0, 0, 0);
-		else _GamePausedScene.Modulate = new Color(1, 1, 1, 1);
-		
+		if (_GameShopPaused)
+		{
+
+			if (IsInstanceValid(_GamePausedInstance)) _GamePausedInstance.QueueFree();
+
+		}
+		else
+		{
+			_GamePausedInstance = (GamePaused)_GamePausedScene.Instantiate();
+			AddChild(_GamePausedInstance);
+
+			_GamePausedInstance.UserPressedRestart += OnUserPressedRestart;
+			_GamePausedInstance.UserPressedResumeGame += OnUserPressedResumeGame;
+		}
+
 		_GameShopPaused = !_GameShopPaused;
 	}
 
@@ -176,7 +182,7 @@ public partial class Shop : Node2D
 		}
 		else _NotEnoughAnimations.Play("not enough money");
 
-		_RerollShopSound.Play();
+		GameManager.Instance.PlaySound(_RerollShopSound);
 	}
 
 	public void OnLeaveShopButtonPressed()
@@ -187,7 +193,7 @@ public partial class Shop : Node2D
 		GameManager.Instance.ComingFromShop = true; // we are leaving the shop, so comingfromshop has to be true.
 		UpdateGlobalPerks(); // now, with this function we update the global perks from what we got from the shop.
 
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 
 		GameManager.Instance.ChangeSceneToGame();
 	}
@@ -195,7 +201,7 @@ public partial class Shop : Node2D
 	public void OnBuyPerk1Button()
 	{
 		GD.Print("buying perk1");
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 
 		if (CheckInventorySpace(_PerksChosen[0])) // if the perk is bought, change the text, id and texture.
 		{
@@ -211,7 +217,7 @@ public partial class Shop : Node2D
 	public void OnBuyPerk2Button()
 	{
 		GD.Print("buying perk2");
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 
 		if (CheckInventorySpace(_PerksChosen[1]))
 		{
@@ -228,7 +234,7 @@ public partial class Shop : Node2D
 	public void OnBuyPerk3Button()
 	{
 		GD.Print("buying perk3");
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 
 		if (CheckInventorySpace(_PerksChosen[2]))
 		{
@@ -308,7 +314,7 @@ public partial class Shop : Node2D
 
 		SellPerk(0); // here we send the perk slot.
 
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 	}
 
 	public void OnSellPerk2Button()
@@ -319,7 +325,7 @@ public partial class Shop : Node2D
 		PlayerVariables.Instance.PlayerCoins += GameManager.PerksPricesSelling[_PlayerInventory[1]];
 		SellPerk(1);
 
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 	}
 
 	public void OnSellPerk3Button()
@@ -330,7 +336,7 @@ public partial class Shop : Node2D
 		PlayerVariables.Instance.PlayerCoins += GameManager.PerksPricesSelling[_PlayerInventory[2]];
 		SellPerk(2);
 
-		_ClickButtonSound.Play();
+		GameManager.Instance.PlaySound(_ClickButtonSound);
 	}
 
 	private void SellPerk(int _PerkSlot)

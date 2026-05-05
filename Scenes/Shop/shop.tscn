@@ -163,7 +163,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
 "transitions": PackedFloat32Array(0.216, 1, 0.216, 1),
 "update": 0,
-"values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
+"values": [Vector2(325, -100), Vector2(325, 370), Vector2(325, 350), Vector2(325, -100)]
 }
 
 [sub_resource type="Animation" id="Animation_fobo1"]
@@ -176,10 +176,10 @@ tracks/0/path = NodePath("NotEnoughSpaceLabel:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2, 3),
+"times": PackedFloat32Array(0, 1.0333333, 2.0083334, 3),
 "transitions": PackedFloat32Array(0.216, 1, 0.216, 1),
 "update": 0,
-"values": [Vector2(315, -100), Vector2(315, 370), Vector2(315, 350), Vector2(315, -100)]
+"values": [Vector2(325, -100), Vector2(325, 370), Vector2(325, 350), Vector2(325, -100)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_oqg8q"]
@@ -269,8 +269,9 @@ texture = ExtResource("18_t1yip")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fhep2"]
 texture = ExtResource("17_2t1f2")
 
-[node name="Shop" type="Node2D" unique_id=290475641 node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound", "_ShopMusic", "_GamePausedScene", "_MainMenuButton", "_RestartGameButton", "_ResumeGameButton", "_MusicButton", "_SoundButton")]
+[node name="Shop" type="Node2D" unique_id=290475641 node_paths=PackedStringArray("_Perk1", "_Perk2", "_Perk3", "_InventoryPerk1", "_InventoryPerk2", "_InventoryPerk3", "_Perk1Label", "_Perk2Label", "_Perk3Label", "_Perk1CostLabel", "_Perk2CostLabel", "_Perk3CostLabel", "_ActualMoneyLabel", "_RerollShopCostLabel", "_RerollShopButton", "_LeaveShopButton", "_BuyPerk1Button", "_BuyPerk2Button", "_BuyPerk3Button", "_SellPerk1Button", "_SellPerk2Button", "_SellPerk3Button", "_NotEnoughAnimations", "_RerollShopSound", "_ClickButtonSound", "_ShopMusic")]
 script = ExtResource("1_78vcx")
+_GamePausedScene = ExtResource("21_33sfn")
 _Perk1 = NodePath("Perk1")
 _Perk2 = NodePath("Perk2")
 _Perk3 = NodePath("Perk3")
@@ -297,12 +298,6 @@ _NotEnoughAnimations = NodePath("NotEnoughAnimations")
 _RerollShopSound = NodePath("ShopRerollSound")
 _ClickButtonSound = NodePath("ClickButtonSound")
 _ShopMusic = NodePath("ShopMusic")
-_GamePausedScene = NodePath("GamePaused")
-_MainMenuButton = NodePath("GamePaused/MainMenuButton")
-_RestartGameButton = NodePath("GamePaused/RestartGameButton")
-_ResumeGameButton = NodePath("GamePaused/ResumeGameButton")
-_MusicButton = NodePath("GamePaused/MusicButton")
-_SoundButton = NodePath("GamePaused/SoundButton")
 metadata/_edit_lock_ = true
 
 [node name="PerksFrame1" type="Sprite2D" parent="." unique_id=930672786]
@@ -339,7 +334,7 @@ position = Vector2(639, 495)
 scale = Vector2(4, 4)
 
 [node name="ShopTitle" type="Label" parent="." unique_id=740739716]
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 44.0
 offset_top = 44.0
@@ -357,7 +352,7 @@ text = "Shop"
 metadata/_edit_lock_ = true
 
 [node name="ShopSubtitle" type="Label" parent="." unique_id=1773966094]
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 42.0
 offset_top = 148.0
@@ -436,20 +431,6 @@ autoplay = &"words anim"
 
 [node name="NotEnoughAnimations" type="AnimationPlayer" parent="." unique_id=1537215311]
 libraries/ = SubResource("AnimationLibrary_oqg8q")
-
-[node name="NotEnoughSpaceLabel" type="Label" parent="." unique_id=1268602611]
-offset_left = 315.0
-offset_top = -100.0
-offset_right = 662.0
-offset_bottom = -55.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 0
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/shadow_outline_size = 15
-theme_override_fonts/font = ExtResource("2_dqdqq")
-theme_override_font_sizes/font_size = 50
-text = "Not enough space!"
-metadata/_edit_lock_ = true
 
 [node name="PerkButton1" type="Button" parent="." unique_id=1722442129]
 texture_filter = 1
@@ -583,7 +564,7 @@ theme_override_font_sizes/font_size = 40
 text = "Buy"
 
 [node name="RerollButton" type="Button" parent="." unique_id=370814068]
-z_index = 2
+z_index = 1
 texture_filter = 1
 offset_left = 785.0
 offset_top = 125.0
@@ -655,7 +636,6 @@ text_direction = 3
 metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="LeaveShopButton" unique_id=1708283750]
-z_index = 1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -962,11 +942,27 @@ theme_override_font_sizes/font_size = 30
 text = "Money: "
 horizontal_alignment = 1
 
-[node name="NotEnoughMoneyLabel" type="Label" parent="." unique_id=769875414]
-offset_left = 315.0
+[node name="NotEnoughSpaceLabel" type="Label" parent="." unique_id=1268602611]
+z_index = 2
+offset_left = 325.0
 offset_top = -100.0
-offset_right = 669.0
+offset_right = 672.0
 offset_bottom = -55.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 15
+theme_override_fonts/font = ExtResource("2_dqdqq")
+theme_override_font_sizes/font_size = 50
+text = "Not enough space!"
+metadata/_edit_lock_ = true
+
+[node name="NotEnoughMoneyLabel" type="Label" parent="." unique_id=769875414]
+z_index = 2
+offset_left = 325.0
+offset_top = -100.0
+offset_right = 679.0
+offset_bottom = -54.999985
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
@@ -992,8 +988,3 @@ theme_override_font_sizes/font_size = 30
 text = "$"
 horizontal_alignment = 1
 metadata/_edit_lock_ = true
-
-[node name="GamePaused" parent="." unique_id=504962607 instance=ExtResource("21_33sfn")]
-modulate = Color(1, 1, 1, 0)
-
-[editable path="GamePaused"]
