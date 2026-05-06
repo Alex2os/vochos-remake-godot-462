@@ -23,15 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://msgua1yt7l34" path="res://Scenes/GamePaused/game_paused.tscn" id="22_2lc0x"]
 [ext_resource type="PackedScene" uid="uid://cxhjwgru056cn" path="res://Scenes/ShopPickable/shop_pickable.tscn" id="22_pa3qg"]
 
-[sub_resource type="Animation" id="Animation_oejk7"]
-resource_name = "shop anim"
-length = 1.5
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_upfqs"]
-_data = {
-&"shop anim": SubResource("Animation_oejk7")
-}
-
 [node name="Game" type="Node2D" unique_id=285963340]
 script = ExtResource("1_qikps")
 _RoadScene = ExtResource("2_qxfds")
@@ -56,8 +47,6 @@ _ScoreLabelPath = NodePath("ScoreLabel")
 _CoinContainerPath = NodePath("CoinContainer")
 _CoinTimerPath = NodePath("CoinTimer")
 _CoinLabelPath = NodePath("CoinLabel")
-_MainMenuButtonPausedGamePath = NodePath("GamePaused/MainMenuButton")
-_AnimationPlayerPath = NodePath("GameOver/AnimationPlayer")
 _GameOverCrashPath = NodePath("GameOverCrash")
 _CarStartingPath = NodePath("CarStarting")
 _CoinSoundPath = NodePath("CoinSound")
@@ -76,13 +65,6 @@ _PerkTimer1Path = NodePath("PerkTimer1")
 _PerkTimer2Path = NodePath("PerkTimer2")
 _PerkTimer3Path = NodePath("PerkTimer3")
 _ShopPickableContainerPath = NodePath("ShopPickableContainer")
-_SoundButtonPath = NodePath("GamePaused/SoundButton")
-_MusicButtonPath = NodePath("GamePaused/MusicButton")
-_ResumeGameButtonPath = NodePath("GamePaused/ResumeGameButton")
-_MainMenuButtonGameOverPath = NodePath("GameOver/MainMenuButton")
-_GamePausedScenePath = NodePath("GamePaused")
-_GameOverScenePath = NodePath("GameOver")
-_RestartGameButtonPath = NodePath("GamePaused/RestartGameButton")
 
 [node name="SpawnMarkerLeft" type="Marker2D" parent="." unique_id=290977389]
 position = Vector2(150, -100)
@@ -109,18 +91,6 @@ metadata/_edit_lock_ = true
 
 [node name="SpeedingGame" parent="." unique_id=2097598008 instance=ExtResource("11_qtymf")]
 metadata/_edit_lock_ = true
-
-[node name="GamePaused" parent="." unique_id=504962607 instance=ExtResource("22_2lc0x")]
-modulate = Color(1, 1, 1, 0)
-
-[node name="GameOver" parent="." unique_id=406446912 instance=ExtResource("12_ypmwd")]
-modulate = Color(1, 1, 1, 0)
-
-[node name="MainMenuButton" parent="GameOver" index="4" unique_id=1185315152]
-offset_left = 350.0
-offset_top = 520.0
-offset_right = 650.0
-offset_bottom = 610.0
 
 [node name="EnemyTimer" type="Timer" parent="." unique_id=1881880263]
 wait_time = 2.0
@@ -186,9 +156,6 @@ volume_db = -8.0
 
 [node name="Player" parent="." unique_id=793893814 instance=ExtResource("1_mv0hc")]
 position = Vector2(500, 530)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1006050183]
-libraries/ = SubResource("AnimationLibrary_upfqs")
 
 [node name="InventoryInGame" parent="." unique_id=1026223403 instance=ExtResource("13_oejk7")]
 metadata/_edit_lock_ = true
@@ -311,6 +278,3 @@ wait_time = 15.0
 
 [node name="PerkTimer3" type="Timer" parent="." unique_id=2092098010]
 wait_time = 15.0
-
-[editable path="GamePaused"]
-[editable path="GameOver"]

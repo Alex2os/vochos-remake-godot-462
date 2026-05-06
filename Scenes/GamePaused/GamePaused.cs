@@ -10,10 +10,18 @@ public partial class GamePaused : Control
 	[Export] private Button _RestartGameButton;
 	[Export] private Button _MusicButton;
 	[Export] private Button _SoundButton;
+	[Export] private AudioStreamPlayer _ButtonHoverSound;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// we subscribe our buttons to the function to play the button hover sound
+		_ResumeGameButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_MainMenuButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_RestartGameButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_MusicButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_SoundButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+
 		_ResumeGameButton.Pressed += OnResumeGameButtonPressed;
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
 		_RestartGameButton.Pressed += OnRestartGameButtonPressed;
@@ -30,6 +38,17 @@ public partial class GamePaused : Control
 	{
 		
 	}
+
+	public override void _ExitTree()
+	{
+		_ResumeGameButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_MainMenuButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_RestartGameButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_MusicButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_SoundButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+	}
+
+	private void PlayButtonHoverSound(){ GameManager.Instance.PlaySound(_ButtonHoverSound); }
 
 	private void OnResumeGameButtonPressed()
 	{

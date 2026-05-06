@@ -11,6 +11,7 @@ public partial class GameManager : Node
 	private PackedScene _MainMenuScene = GD.Load<PackedScene>("res://Scenes/MainMenu/main_menu.tscn");
 	private PackedScene _GameScene = GD.Load<PackedScene>("res://Scenes/Game/game.tscn");
 	private PackedScene _ShopScene = GD.Load<PackedScene>("res://Scenes/Shop/shop.tscn");
+	private AudioStreamPlayer ButtonHoverSound;
 
 	public bool ComingFromShop = false;
 	public double EnemyTimerWaitTime = 2.0; // 2 seconds 
@@ -84,6 +85,12 @@ public partial class GameManager : Node
 	public override void _Ready()
 	{
 		Instance = this;
+
+		ButtonHoverSound = new AudioStreamPlayer();
+		AddChild(ButtonHoverSound);
+		AudioStream button_hover_stream = GD.Load<AudioStreamWav>("res://assets/sound effects/button-hover.wav");
+		ButtonHoverSound.Stream = button_hover_stream;
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -153,7 +160,7 @@ public partial class GameManager : Node
 	}
 
 	// we also have one for the sound, even though we dont send any signal here. we do this to match the switchmusic function, but no more.
-	public void SwitchSoundActiveBool(){ SoundActive = !SoundActive; }
+	public void SwitchSoundActiveBool() { SoundActive = !SoundActive; }
 
 	// this is the same function as the above one for the music, but for the sound button
 	public void ChangeSoundButtonTextures(Button button)
@@ -192,6 +199,12 @@ public partial class GameManager : Node
 
 	// we can send an audiostreamplayer to this function from anywhere in the scenes and play the audio depending if the sound or sfx is active or not. in this way we can control the sound for all the scenes in one place, instead of checking the condition everywhere.
 	public void PlaySound(AudioStreamPlayer audio) { if (SoundActive) audio.Play(); }
+
+	// we send this function the button disabled state. if it's disabled, then don't play the sound.
+	public void PlayButtonHoverSound()
+	{
+		PlaySound(ButtonHoverSound);
+	}
 
 	public void InitializeGameManagerVariables()
 	{

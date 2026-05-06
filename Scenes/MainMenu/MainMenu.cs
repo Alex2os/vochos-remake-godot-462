@@ -26,6 +26,14 @@ public partial class MainMenu : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		// we add the function for the button hover sound effect on the buttons.
+		// we send the current disabled state of the buttons too, to check if they're disabled or not.
+		_CreditsButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_MusicButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_SoundButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_PlayButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_ExitButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+
 		_PlayButton.Pressed += OnPlayButtonPressed;
 		_ExitButton.Pressed += OnExitButtonPressed;
 		_CreditsButton.Pressed += OnCreditsButtonPressed;
@@ -38,7 +46,7 @@ public partial class MainMenu : Node2D
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 
-		if(GameManager.Instance.MusicActive) _MainMenuMusic.Play(); // we also check for the music active to play the main menu music for the same reason we update the button textures.
+		if (GameManager.Instance.MusicActive) _MainMenuMusic.Play(); // we also check for the music active to play the main menu music for the same reason we update the button textures.
 
 		SpawnCloud(); // we spawn a cloud in the start so the sky doesn't seem to lonely
 	}
@@ -48,13 +56,23 @@ public partial class MainMenu : Node2D
 	{
 	}
 
+	public override void _ExitTree()
+	{
+		// we also desubscribe the functions when exiting the tree, as errors happen if we leave the current objects connected to the autoload.
+		_CreditsButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_MusicButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_SoundButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_PlayButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_ExitButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+	}
+
 	// we assign the soundactive or musicactive variables from the gamemanager autoload here, and also change the textures of the buttons at the same time.
 	private void OnMusicButtonPressed()
 	{
 		GameManager.Instance.SwitchMusicActiveBool();
 		GameManager.Instance.ChangeMusicButtonTextures(_MusicButton);
 
-		if(GameManager.Instance.MusicActive) _MainMenuMusic.Play();
+		if (GameManager.Instance.MusicActive) _MainMenuMusic.Play();
 		else _MainMenuMusic.Stop();
 	}
 

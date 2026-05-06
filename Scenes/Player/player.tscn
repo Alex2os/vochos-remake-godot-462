@@ -15,11 +15,12 @@
 [ext_resource type="AudioStream" uid="uid://b8g3gvvwh4oin" path="res://assets/sound effects/double-points-perk.mp3" id="13_06tpx"]
 [ext_resource type="AudioStream" uid="uid://cyvbdrdpw5ori" path="res://assets/sound effects/double-money-perk.wav" id="14_7g0yx"]
 [ext_resource type="AudioStream" uid="uid://sov5qkxw4hef" path="res://assets/sound effects/time-slow-perk.wav" id="15_dey5f"]
+[ext_resource type="AudioStream" uid="uid://cgk8r086e6sy7" path="res://assets/sound effects/car-honk.wav" id="16_r5xpd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kfr5m"]
 size = Vector2(18, 23)
 
-[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar", "_ShieldPerkInUse", "_ExtraLifePerkSound", "_ShieldPerkSound", "_ShieldPerkHitSound", "_BulletSpawnSound", "_DoublePointsPerkSound", "_DoubleMoneyPerkSound", "_SlowTimePerkSound")]
+[node name="Player" type="Area2D" unique_id=999539986 node_paths=PackedStringArray("_CarCrash", "_HealthBar", "_ShieldPerkInUse", "_ExtraLifePerkSound", "_ShieldPerkSound", "_ShieldPerkHitSound", "_BulletSpawnSound", "_DoublePointsPerkSound", "_DoubleMoneyPerkSound", "_SlowTimePerkSound", "_CarHonkSound")]
 z_index = 1
 script = ExtResource("1_a3d8c")
 _CarCrash = NodePath("CarCrash")
@@ -36,6 +37,7 @@ _BulletSpawnSound = NodePath("BulletSpawnSound")
 _DoublePointsPerkSound = NodePath("DoublePointsPerk")
 _DoubleMoneyPerkSound = NodePath("DoubleMoneyPerk")
 _SlowTimePerkSound = NodePath("TimeSlowPerk")
+_CarHonkSound = NodePath("CarHonkSound")
 metadata/_edit_lock_ = true
 
 [node name="CarSkin" type="Sprite2D" parent="." unique_id=521307505]
@@ -95,3 +97,7 @@ volume_db = -4.0
 [node name="TimeSlowPerk" type="AudioStreamPlayer" parent="." unique_id=487540020]
 stream = ExtResource("15_dey5f")
 volume_db = -6.0
+
+[node name="CarHonkSound" type="AudioStreamPlayer" parent="." unique_id=2024073909]
+stream = ExtResource("16_r5xpd")
+volume_db = 1.0

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class Shop : Node2D
 {
@@ -72,6 +71,16 @@ public partial class Shop : Node2D
 
 	};
 
+		// we add the function to reproduce the sound from the gamemanager. we do this in all the scripts where this sound is needed so the sound is centralized.
+		_RerollShopButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_LeaveShopButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk1Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk2Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk3Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk1Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk2Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk3Button.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+
 		// we assign the buttons' functions when pressed.
 		_RerollShopButton.Pressed += OnRerollShopButtonPressed;
 		_LeaveShopButton.Pressed += OnLeaveShopButtonPressed;
@@ -108,11 +117,24 @@ public partial class Shop : Node2D
 	}
 
 	// we use _ExitTree here in the shop as the same as in the game scene, to unsubscribe the function from the signal
-	public override void _ExitTree() { GameManager.Instance.MusicActiveBoolChanged -= OnMusicActiveBoolChanged; }
+	public override void _ExitTree()
+	{
+		GameManager.Instance.MusicActiveBoolChanged -= OnMusicActiveBoolChanged;
+
+		// we also need other signals for the buttons to remove.
+		_RerollShopButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_LeaveShopButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk1Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk2Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_BuyPerk3Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk1Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk2Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_SellPerk3Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+	}
 
 	private void OnMusicActiveBoolChanged()
 	{
-		if(GameManager.Instance.MusicActive) _ShopMusic.Play();
+		if (GameManager.Instance.MusicActive) _ShopMusic.Play();
 		else _ShopMusic.Stop();
 	}
 

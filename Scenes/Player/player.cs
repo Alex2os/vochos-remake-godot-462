@@ -19,6 +19,7 @@ public partial class player : Area2D
 	[Export] private AudioStreamPlayer _DoublePointsPerkSound;
 	[Export] private AudioStreamPlayer _DoubleMoneyPerkSound;
 	[Export] private AudioStreamPlayer _SlowTimePerkSound;
+	[Export] private AudioStreamPlayer _CarHonkSound;
 	[Signal] public delegate void PlayerHealthDepletedEventHandler();
 	[Signal] public delegate void UpdateInventoryPerkTextureEventHandler();
 
@@ -73,18 +74,14 @@ public partial class player : Area2D
 		}
 
 		// perks input management.
-		if (Input.IsActionJustPressed("perk1"))
-		{
-			UsePerk(0); // here we send the inventory index that we want to use/check so the user can use the perk.
-		}
-		if (Input.IsActionJustPressed("perk2"))
-		{
-			UsePerk(1);
-		}
-		if (Input.IsActionJustPressed("perk3"))
-		{
-			UsePerk(2);
-		}
+		if (Input.IsActionJustPressed("perk1")) UsePerk(0); // here we send the inventory index that we want to use/check so the user can use the perk.
+		
+		if (Input.IsActionJustPressed("perk2")) UsePerk(1);
+		
+		if (Input.IsActionJustPressed("perk3")) UsePerk(2);
+
+		if(Input.IsActionJustPressed("honk-car")) GameManager.Instance.PlaySound(_CarHonkSound);
+		 
 
 	}
 

@@ -24,8 +24,6 @@ public partial class Game : Node2D
 	[Export] private NodePath _CoinContainerPath;
 	[Export] private NodePath _CoinTimerPath;
 	[Export] private NodePath _CoinLabelPath;
-	[Export] private NodePath _MainMenuButtonPausedGamePath;
-	[Export] private NodePath _AnimationPlayerPath;
 	[Export] private NodePath _GameOverCrashPath;
 	[Export] private NodePath _CarStartingPath;
 	[Export] private NodePath _CoinSoundPath;
@@ -44,13 +42,6 @@ public partial class Game : Node2D
 	[Export] private NodePath _PerkTimer2Path;
 	[Export] private NodePath _PerkTimer3Path;
 	[Export] private NodePath _ShopPickableContainerPath;
-	[Export] private NodePath _SoundButtonPath;
-	[Export] private NodePath _MusicButtonPath;
-	[Export] private NodePath _ResumeGameButtonPath;
-	[Export] private NodePath _MainMenuButtonGameOverPath;
-	[Export] private NodePath _GamePausedScenePath;
-	[Export] private NodePath _GameOverScenePath;
-	[Export] private NodePath _RestartGameButtonPath;
 
 	private Timer _SpawningRoadTimer;
 	private Timer _SpawningCarEnemyTimer;
@@ -70,14 +61,11 @@ public partial class Game : Node2D
 	private Label _PerkTimerText1;
 	private Label _PerkTimerText2;
 	private Label _PerkTimerText3;
-	private AnimationPlayer _AnimationPlayer;
 	private AudioStreamPlayer _GameOverCrash;
 	private AudioStreamPlayer _CarStarting;
 	private AudioStreamPlayer _CoinSound;
 	private AudioStreamPlayer _BulletHitEnemySound;
 	private AudioStreamPlayer _GameMusic;
-	private Button _MainMenuButtonPausedGame;
-	private Button _MainMenuButtonGameOver;
 	private SpeedingGame _SpeedingGame;
 	private player _Player;
 	private Sprite2D _PerkTimerTexture1;
@@ -128,14 +116,11 @@ public partial class Game : Node2D
 		_CoinTimer = GetNode<Timer>(_CoinTimerPath);
 		_CoinContainer = GetNode<Node2D>(_CoinContainerPath);
 		_CoinLabel = GetNode<Label>(_CoinLabelPath);
-		_AnimationPlayer = GetNode<AnimationPlayer>(_AnimationPlayerPath);
 		_GameOverCrash = GetNode<AudioStreamPlayer>(_GameOverCrashPath);
 		_CarStarting = GetNode<AudioStreamPlayer>(_CarStartingPath);
 		_CoinSound = GetNode<AudioStreamPlayer>(_CoinSoundPath);
 		_GameMusic = GetNode<AudioStreamPlayer>(_GameMusicPath);
 		_SpeedingGame = GetNode<SpeedingGame>(_SpeedingGamePath);
-		_MainMenuButtonPausedGame = GetNode<Button>(_MainMenuButtonPausedGamePath);
-		_MainMenuButtonGameOver = GetNode<Button>(_MainMenuButtonGameOverPath);
 		_ShopAvailableTimer = GetNode<Timer>(_ShopAvailableTimerPath);
 		_InventoryInGame = GetNode<InventoryInGame>(_InventoryInGamePath);
 		_BulletHitEnemySound = GetNode<AudioStreamPlayer>(_BulletHitEnemySoundPath);
@@ -157,8 +142,6 @@ public partial class Game : Node2D
 		_Player.UpdateInventoryPerkTexture += OnUpdateInventoryPerkTexture;
 		_CoinTimer.Timeout += SpawnCoin;
 		_SpeedingGame.SpeedingTheGame += OnSpeedingTheGame;
-		_MainMenuButtonPausedGame.Pressed += OnMainMenuButtonPressed;
-		_MainMenuButtonGameOver.Pressed += OnMainMenuButtonPressed;
 		_ShopAvailableTimer.Timeout += SpawnShopPickable;
 		_Player.ShieldPerkUsed += OnPlayerUsedPerk;
 		_Player.DoublePointsPerkUsed += OnPlayerUsedPerk;
@@ -298,8 +281,6 @@ public partial class Game : Node2D
 
 			if (speed is AnimationPlayer anim) anim.Stop();
 		}
-
-		_MainMenuButtonGameOver.Disabled = false;
 
 		PauseGame();
 

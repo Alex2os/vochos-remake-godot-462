@@ -9,6 +9,8 @@ public partial class GameOver : Control
 	public override void _Ready()
 	{
 		_MainMenuButton.Pressed += OnMainMenuButtonPressed;
+
+		_MainMenuButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,6 +18,8 @@ public partial class GameOver : Control
 	{
 		
 	}
+
+	public override void _ExitTree(){ _MainMenuButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound; }
 
 	// through this function we can pass this values to the scene so we can update the game over stats label from outside the scene.
 	public void AssignGameOverStatsLabel(string score, string money_left, string total_money)
