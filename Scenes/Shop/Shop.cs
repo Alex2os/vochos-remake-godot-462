@@ -140,23 +140,17 @@ public partial class Shop : Node2D
 
 	private void OnUserPressedRestart()
 	{
-
+		// in this case we just dont set the comingfromshop variable in the gamemanager, letting the game restart everything just fine.
+		GD.Print("leaving shop and restarting!");
+		GameManager.Instance.ChangeSceneToGame();
 	}
 
-	private void OnUserPressedResumeGame()
-	{
-		PauseGameShop();
-	}
+	private void OnUserPressedResumeGame() { PauseGameShop(); }
 
 	// in this function we pause the game but when in the shop. basically just showing the game paused scene
 	private void PauseGameShop()
 	{
-		if (_GameShopPaused)
-		{
-
-			if (IsInstanceValid(_GamePausedInstance)) _GamePausedInstance.QueueFree();
-
-		}
+		if (_GameShopPaused) if (IsInstanceValid(_GamePausedInstance)) _GamePausedInstance.QueueFree();
 		else
 		{
 			_GamePausedInstance = (GamePaused)_GamePausedScene.Instantiate();
@@ -185,7 +179,7 @@ public partial class Shop : Node2D
 		_Perk3CostLabel.Text = "$" + GameManager.PerksPrices[_PerksChosen[2]].ToString();
 	}
 
-	public void OnRerollShopButtonPressed()
+	private void OnRerollShopButtonPressed()
 	{
 		// here should be the logic to substract certain amount of money to the user for each reroll.
 		GD.Print("rerolling shop");
@@ -207,7 +201,7 @@ public partial class Shop : Node2D
 		GameManager.Instance.PlaySound(_RerollShopSound);
 	}
 
-	public void OnLeaveShopButtonPressed()
+	private void OnLeaveShopButtonPressed()
 	{
 		// logic for when the shop is left
 		GD.Print("leaving shop!");
