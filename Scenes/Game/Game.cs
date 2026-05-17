@@ -188,7 +188,7 @@ public partial class Game : Node2D
 		if (!_GameOver && Input.IsActionJustPressed("pause")) PauseGame();
 
 		// only for testing.
-		if (Input.IsActionJustPressed("use shop")) ChangeSceneToShop();
+		// if (Input.IsActionJustPressed("use shop")) ChangeSceneToShop();
 
 		if (_PerksTimerSlot[0]) _PerkTimerText1.Text = $"{_PerkTimer1.TimeLeft:F1}"; // we can short the amount of numbers after the . of a float/double number using $ to use the variable inside the string and then using :F1, :F2, etc., to shorten the amount of numbers. in this case we use :F1 to just have one number after the point.
 		if (_PerksTimerSlot[1]) _PerkTimerText2.Text = $"{_PerkTimer2.TimeLeft:F1}";

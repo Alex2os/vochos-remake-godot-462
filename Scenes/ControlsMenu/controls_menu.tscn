@@ -1,0 +1,287 @@
+[gd_scene format=3 uid="uid://dntnw8nnjwxwd"]
+
+[ext_resource type="Texture2D" uid="uid://c4cyd3mx6ioc0" path="res://assets/wallpapers/black background with opacity.png" id="1_48g8p"]
+[ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_hii45"]
+[ext_resource type="Texture2D" uid="uid://bh7c1vj210xq2" path="res://assets/keyboard_keys/w-key.png" id="3_wo143"]
+[ext_resource type="Texture2D" uid="uid://iaku3g5lluql" path="res://assets/keyboard_keys/a-key.png" id="4_31ax4"]
+[ext_resource type="Texture2D" uid="uid://dltcyrcqkhcas" path="res://assets/keyboard_keys/s-key.png" id="5_56wcl"]
+[ext_resource type="Texture2D" uid="uid://bxoxmyfbvo8i" path="res://assets/keyboard_keys/d-key.png" id="6_kcjqr"]
+[ext_resource type="Texture2D" uid="uid://dlsqlj5b7gjo3" path="res://assets/keyboard_keys/1-key.png" id="7_oflre"]
+[ext_resource type="Texture2D" uid="uid://caa62s1tfqvk0" path="res://assets/keyboard_keys/2-key.png" id="8_jg0vk"]
+[ext_resource type="Texture2D" uid="uid://cq4bywy7xykwl" path="res://assets/keyboard_keys/3-key.png" id="9_tdhs8"]
+
+[node name="ControlsMenu" type="Control" unique_id=985270771]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=587575733]
+texture = ExtResource("1_48g8p")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1155721769]
+layout_mode = 0
+offset_right = 1000.0
+offset_bottom = 700.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MainControl" type="Control" parent="Margin" unique_id=821220516]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Margin/MainControl" unique_id=796476902]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_constants/shadow_outline_size = 15
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_fonts/normal_font = ExtResource("1_hii45")
+theme_override_font_sizes/normal_font_size = 70
+text = "Controls"
+scroll_active = false
+
+[node name="WASDControl" type="HBoxContainer" parent="Margin/MainControl" unique_id=2027442690]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -230.0
+offset_bottom = -230.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="Margin/MainControl/WASDControl" unique_id=967639574]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="WKey" type="TextureRect" parent="Margin/MainControl/WASDControl/Control" unique_id=2087227491]
+texture_filter = 1
+texture_repeat = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("3_wo143")
+metadata/_edit_lock_ = true
+
+[node name="Control2" type="Control" parent="Margin/MainControl/WASDControl" unique_id=1480517604]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="AKey" type="TextureRect" parent="Margin/MainControl/WASDControl/Control2" unique_id=68759796]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("4_31ax4")
+metadata/_edit_lock_ = true
+
+[node name="Control3" type="Control" parent="Margin/MainControl/WASDControl" unique_id=1237046280]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="SKey" type="TextureRect" parent="Margin/MainControl/WASDControl/Control3" unique_id=403843731]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("5_56wcl")
+metadata/_edit_lock_ = true
+
+[node name="Control4" type="Control" parent="Margin/MainControl/WASDControl" unique_id=863504542]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="DKey" type="TextureRect" parent="Margin/MainControl/WASDControl/Control4" unique_id=353713622]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("6_kcjqr")
+metadata/_edit_lock_ = true
+
+[node name="Control5" type="Control" parent="Margin/MainControl/WASDControl" unique_id=788099217]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Margin/MainControl/WASDControl/Control5" unique_id=1022819470]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -480.0
+offset_right = 480.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_hii45")
+theme_override_font_sizes/font_size = 50
+text = "Movement"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PerksControl" type="HBoxContainer" parent="Margin/MainControl" unique_id=1930131492]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -130.0
+offset_bottom = -130.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="Margin/MainControl/PerksControl" unique_id=1533132493]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="1Key" type="TextureRect" parent="Margin/MainControl/PerksControl/Control" unique_id=1651552257]
+texture_filter = 1
+texture_repeat = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("7_oflre")
+metadata/_edit_lock_ = true
+
+[node name="Control2" type="Control" parent="Margin/MainControl/PerksControl" unique_id=622871206]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="2Key" type="TextureRect" parent="Margin/MainControl/PerksControl/Control2" unique_id=341926311]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("8_jg0vk")
+metadata/_edit_lock_ = true
+
+[node name="Control3" type="Control" parent="Margin/MainControl/PerksControl" unique_id=1200918598]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+
+[node name="3Key" type="TextureRect" parent="Margin/MainControl/PerksControl/Control3" unique_id=1203714672]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("9_tdhs8")
+metadata/_edit_lock_ = true
+
+[node name="Control5" type="Control" parent="Margin/MainControl/PerksControl" unique_id=1378245374]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Margin/MainControl/PerksControl/Control5" unique_id=911572498]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -480.0
+offset_right = 480.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_hii45")
+theme_override_font_sizes/font_size = 50
+text = "Perks"
+horizontal_alignment = 1
+vertical_alignment = 1

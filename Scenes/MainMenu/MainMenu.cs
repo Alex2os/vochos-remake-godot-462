@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class MainMenu : Node2D
 {
@@ -22,6 +21,7 @@ public partial class MainMenu : Node2D
 	[Export] private Button _CreditsButton;
 	[Export] private Button _SoundButton;
 	[Export] private Button _MusicButton;
+	[Export] private Button _ControlsButton;
 	[Export] private AudioStreamPlayer _MainMenuMusic;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -33,6 +33,7 @@ public partial class MainMenu : Node2D
 		_SoundButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
 		_PlayButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
 		_ExitButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
+		_ControlsButton.MouseEntered += GameManager.Instance.PlayButtonHoverSound;
 
 		_PlayButton.Pressed += OnPlayButtonPressed;
 		_ExitButton.Pressed += OnExitButtonPressed;
@@ -64,6 +65,7 @@ public partial class MainMenu : Node2D
 		_SoundButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
 		_PlayButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
 		_ExitButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		_ControlsButton.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
 	}
 
 	// we assign the soundactive or musicactive variables from the gamemanager autoload here, and also change the textures of the buttons at the same time.

@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class Shop : Node2D
 {
@@ -130,6 +131,7 @@ public partial class Shop : Node2D
 		_SellPerk1Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
 		_SellPerk2Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
 		_SellPerk3Button.MouseEntered -= GameManager.Instance.PlayButtonHoverSound;
+		
 	}
 
 	private void OnMusicActiveBoolChanged()
