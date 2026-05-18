@@ -101,7 +101,8 @@ public partial class MainMenu : Node2D
 	{
 
 		Credits _credits = (Credits)_CreditsScene.Instantiate();
-		_ScreensContainer.AddChild(_credits);
+		_ScreensContainer.AddChild(_credits); // we add all the scenes we instantiate that are control to our screenscontainer, which is a control too
+		// by doing this the control screens have their layout correctly and dont end up with weird alignment
 
 	}
 

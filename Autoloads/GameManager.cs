@@ -90,6 +90,7 @@ public partial class GameManager : Node
 		AddChild(ButtonHoverSound);
 		AudioStream button_hover_stream = GD.Load<AudioStreamWav>("res://assets/sound effects/button-hover.wav");
 		ButtonHoverSound.Stream = button_hover_stream;
+		ButtonHoverSound.VolumeDb = -5;
 
 	}
 
