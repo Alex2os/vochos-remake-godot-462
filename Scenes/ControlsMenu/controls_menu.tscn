@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://c4cyd3mx6ioc0" path="res://assets/wallpapers/black background with opacity.png" id="1_48g8p"]
 [ext_resource type="FontFile" uid="uid://btk2h4una6h3s" path="res://assets/fonts/m6x11(1).ttf" id="1_hii45"]
+[ext_resource type="Script" uid="uid://c73a1dg1s34bx" path="res://Scenes/ControlsMenu/ControlsMenu.cs" id="1_su8wm"]
+[ext_resource type="Script" uid="uid://sqqbgra4mbtx" path="res://Scenes/ControlsMenu/RichTextLabelControlsMenu.cs" id="3_rs40v"]
 [ext_resource type="Texture2D" uid="uid://bh7c1vj210xq2" path="res://assets/keyboard_keys/w-key.png" id="3_wo143"]
 [ext_resource type="Texture2D" uid="uid://iaku3g5lluql" path="res://assets/keyboard_keys/a-key.png" id="4_31ax4"]
 [ext_resource type="Texture2D" uid="uid://dltcyrcqkhcas" path="res://assets/keyboard_keys/s-key.png" id="5_56wcl"]
@@ -9,19 +11,63 @@
 [ext_resource type="Texture2D" uid="uid://dlsqlj5b7gjo3" path="res://assets/keyboard_keys/1-key.png" id="7_oflre"]
 [ext_resource type="Texture2D" uid="uid://caa62s1tfqvk0" path="res://assets/keyboard_keys/2-key.png" id="8_jg0vk"]
 [ext_resource type="Texture2D" uid="uid://cq4bywy7xykwl" path="res://assets/keyboard_keys/3-key.png" id="9_tdhs8"]
+[ext_resource type="Texture2D" uid="uid://digol0dma70tb" path="res://assets/keyboard_keys/l-shift-key.png" id="10_mccn3"]
+[ext_resource type="Texture2D" uid="uid://dtlqfywoxggno" path="res://assets/buttons/tiny button red.png" id="12_dpo3m"]
+[ext_resource type="Texture2D" uid="uid://qgs6l4hn7l5d" path="res://assets/buttons/tiny button red pressed.png" id="13_su8wm"]
+[ext_resource type="Texture2D" uid="uid://b8e6tpux8dpgo" path="res://assets/buttons/tiny button red highlight.png" id="14_j7ep4"]
 
-[node name="ControlsMenu" type="Control" unique_id=985270771]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dpo3m"]
+texture = ExtResource("12_dpo3m")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_su8wm"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j7ep4"]
+texture = ExtResource("13_su8wm")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ndeb7"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hk8cj"]
+texture = ExtResource("14_j7ep4")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_avc4o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thvvb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ksep5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yyjuo"]
+texture = ExtResource("13_su8wm")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3x5fg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eocch"]
+
+[node name="ControlsMenu" type="Control" unique_id=985270771 node_paths=PackedStringArray("CloseSceneButton")]
+z_index = 4
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_su8wm")
+CloseSceneButton = NodePath("Margin/MainControl/Button")
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=587575733]
+[node name="Sprite2D" type="TextureRect" parent="." unique_id=1773145997]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -350.0
+offset_right = 500.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_48g8p")
-centered = false
 metadata/_edit_lock_ = true
 
 [node name="Margin" type="MarginContainer" parent="." unique_id=1155721769]
@@ -32,9 +78,62 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
+metadata/_edit_lock_ = true
 
 [node name="MainControl" type="Control" parent="Margin" unique_id=821220516]
 layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="Button" type="Button" parent="Margin/MainControl" unique_id=348222537]
+z_index = 4
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.5
+offset_top = -105.0
+offset_right = 66.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("1_hii45")
+theme_override_styles/normal = SubResource("StyleBoxTexture_dpo3m")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_su8wm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_j7ep4")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ndeb7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hk8cj")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_avc4o")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_thvvb")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_ksep5")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_yyjuo")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_3x5fg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eocch")
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Margin/MainControl/Button" unique_id=1483382811]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.5
+offset_top = -30.5
+offset_right = 22.5
+offset_bottom = 48.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_hii45")
+theme_override_font_sizes/font_size = 90
+text = "X"
+metadata/_edit_lock_ = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Margin/MainControl" unique_id=796476902]
 layout_mode = 1
@@ -43,15 +142,19 @@ anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -120.0
 offset_right = 120.0
-offset_bottom = 60.0
+offset_bottom = 80.0
 grow_horizontal = 2
 theme_override_constants/shadow_outline_size = 15
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0
 theme_override_fonts/normal_font = ExtResource("1_hii45")
 theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
 text = "Controls"
 scroll_active = false
+vertical_alignment = 1
+script = ExtResource("3_rs40v")
+metadata/_edit_lock_ = true
 
 [node name="WASDControl" type="HBoxContainer" parent="Margin/MainControl" unique_id=2027442690]
 layout_mode = 1
@@ -63,6 +166,7 @@ offset_top = -230.0
 offset_bottom = -230.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="Control" type="Control" parent="Margin/MainControl/WASDControl" unique_id=967639574]
 custom_minimum_size = Vector2(70, 0)
@@ -191,6 +295,7 @@ offset_top = -130.0
 offset_bottom = -130.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="Control" type="Control" parent="Margin/MainControl/PerksControl" unique_id=1533132493]
 custom_minimum_size = Vector2(70, 0)
@@ -283,5 +388,65 @@ theme_override_constants/shadow_outline_size = 10
 theme_override_fonts/font = ExtResource("1_hii45")
 theme_override_font_sizes/font_size = 50
 text = "Perks"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HonkControl" type="HBoxContainer" parent="Margin/MainControl" unique_id=647960271]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -30.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="Margin/MainControl/HonkControl" unique_id=233064321]
+custom_minimum_size = Vector2(105, 0)
+layout_mode = 2
+
+[node name="LShiftKey" type="TextureRect" parent="Margin/MainControl/HonkControl/Control" unique_id=1851859630]
+texture_filter = 1
+texture_repeat = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("10_mccn3")
+metadata/_edit_lock_ = true
+
+[node name="Control5" type="Control" parent="Margin/MainControl/HonkControl" unique_id=2033743280]
+custom_minimum_size = Vector2(460, 0)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Margin/MainControl/HonkControl/Control5" unique_id=494188878]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -480.0
+offset_right = 480.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("1_hii45")
+theme_override_font_sizes/font_size = 50
+text = "Honk car"
 horizontal_alignment = 1
 vertical_alignment = 1

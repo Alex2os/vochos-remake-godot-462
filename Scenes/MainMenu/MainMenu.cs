@@ -13,6 +13,7 @@ public partial class MainMenu : Node2D
 	[Export] private Button _ExitButton;
 	[Export] private PackedScene _MiniCarScene;
 	[Export] private PackedScene _CloudScene;
+	[Export] private PackedScene _ControlsMenuScene;
 	[Export] private Timer _SpawnMiniCarTimer;
 	[Export] private Timer _SpawnCloudTimer;
 	[Export] private Node2D _MiniCarContainer;
@@ -42,6 +43,7 @@ public partial class MainMenu : Node2D
 		_SpawnCloudTimer.Timeout += SpawnCloud;
 		_SoundButton.Pressed += OnSoundButtonPressed;
 		_MusicButton.Pressed += OnMusicButtonPressed;
+		_ControlsButton.Pressed += OnControlsButtonPressed;
 
 		// we update the music and sound buttons when the scene is ready. it could be that the player disabled the music or sound inside the game, so to not have visual bugs when returning to the main menu, we do this.
 		GameManager.Instance.ChangeSoundButtonTextures(_SoundButton);
@@ -99,8 +101,12 @@ public partial class MainMenu : Node2D
 		Credits _credits = (Credits)_CreditsScene.Instantiate();
 		AddChild(_credits);
 
-		_credits.Position = new Vector2(500, 0); // positioning the credits scene to the center.
+	}
 
+	private void OnControlsButtonPressed()
+	{
+		ControlsMenu _controls_menu = (ControlsMenu)_ControlsMenuScene.Instantiate();
+		AddChild(_controls_menu);
 	}
 
 	private void SpawnMiniCar()
