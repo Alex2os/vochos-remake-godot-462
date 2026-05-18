@@ -144,6 +144,7 @@ offset_left = -120.0
 offset_right = 120.0
 offset_bottom = 80.0
 grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 15
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 0

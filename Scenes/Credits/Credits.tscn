@@ -45,6 +45,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qqh6l")
 _QuitCreditsButton = NodePath("MarginContainer/MainControl/Button")
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="TextureRect" parent="." unique_id=895965445]
 layout_mode = 1
@@ -77,6 +78,7 @@ metadata/_edit_lock_ = true
 
 [node name="MainControl" type="Control" parent="MarginContainer" unique_id=1342938321]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
 [node name="TitleAndCredits" type="Control" parent="MarginContainer/MainControl" unique_id=661034398]
 layout_mode = 1

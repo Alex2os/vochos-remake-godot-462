@@ -23,6 +23,7 @@ public partial class MainMenu : Node2D
 	[Export] private Button _SoundButton;
 	[Export] private Button _MusicButton;
 	[Export] private Button _ControlsButton;
+	[Export] private Control _ScreensContainer;
 	[Export] private AudioStreamPlayer _MainMenuMusic;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -98,15 +99,16 @@ public partial class MainMenu : Node2D
 
 	private void OnCreditsButtonPressed()
 	{
+
 		Credits _credits = (Credits)_CreditsScene.Instantiate();
-		AddChild(_credits);
+		_ScreensContainer.AddChild(_credits);
 
 	}
 
 	private void OnControlsButtonPressed()
 	{
 		ControlsMenu _controls_menu = (ControlsMenu)_ControlsMenuScene.Instantiate();
-		AddChild(_controls_menu);
+		_ScreensContainer.AddChild(_controls_menu);
 	}
 
 	private void SpawnMiniCar()
